@@ -1,0 +1,22 @@
+Man kann einen Pool von Belohnungen erstellen und dann einzelen Tasks Belohnungen zuteilen
+
+Es gibt Statistiken wie birndown etc. Auch grafisch
+
+Speichern der TODOs für die einzelnen Benutzer zentral in der Cloud -> damit App auf verschiedenen Geräten gleichermaßen verwendet werden kann -> Anmeldung/Registroerung nötig
+Auch Option ohne Registrierung mit lokalem Speicher anbieten!
+
+
+Wochenansicht und ich kann Aufgaben den eknzelnen Wochentagen zuordnen!
+-> bzw. Zuordnung sollte automatisch erfolgen da jede Aufgabe sowieso Fälligkeitsdatum enthält?
+
+Suchfunktion!
+
+wie groß ist Grad der Verschachtelung? -> 1
+was wird in einem Arbeitsschritt gespeichert? -> alles ausser Arbeitsschritte
+wird übergeordnete Aufgabe bei Erfüllung aller Arbeitsschritte ebenfalls abgeschlossen? ->
+wie sind Aufgaben sortiert? Kann der Benutzer eine eigene Sortierung vornehmen?
+gibt es eine Suchfunktion? Filter?
+
+
+Probleme bei Statistiken -> woher kommen die Daten?
+Abfrage von durchschnittlicher Bearbeitungsdauer setzt Speicherung von Erstellungsdatum für jede Aufgabe voraus!!!
