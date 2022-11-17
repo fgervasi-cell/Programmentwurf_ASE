@@ -20,3 +20,26 @@ gibt es eine Suchfunktion? Filter?
 
 Probleme bei Statistiken -> woher kommen die Daten?
 Abfrage von durchschnittlicher Bearbeitungsdauer setzt Speicherung von Erstellungsdatum für jede Aufgabe voraus!!!
+
+Immer RunTimeException erben um try-catch-Hölle zu vermeiden
+
+Exkurs zu Aggregaten und Projektionen:
+- Aggregate performancetechnisch schlecht, da immer über Aggregat-Root gegangen werden muss
+- Aggregate verhindern unkontrollierte Änderungen und Laden von Daten
+- Lösung für gute Performance: "Lesemodell"/Projektionen -> nur zum Lesen sodass keine Änderungen möglich
+- Projektionen bilden Lese-Queries in einer DB ab (können Aggregate umgehen)
+- s. CQS und CQRS
+- Die Projektionen sind die Ojekte (boiler plate code) mit nur Lesezugriff
+
+Referenz: https://github.com/mirkobeine/cleanproject
+
+1. Sprechstunde: Exkurs Architektur
+- Hexagonale Architektur bzw. "Ports and Adapters"
+- Onion Architektur
+- Clean Architektur
+    - Abhängigkeiten zeigen immer nach außen!!!
+    - Plugins
+    - Adapters
+    - Application
+    - Domain
+    - Abstractioncode

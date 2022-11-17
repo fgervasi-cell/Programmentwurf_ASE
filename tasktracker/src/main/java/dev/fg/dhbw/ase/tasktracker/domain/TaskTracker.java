@@ -1,4 +1,4 @@
-package dev.fg.dhbw.ase.tasktracker;
+package dev.fg.dhbw.ase.tasktracker.domain;
 
 class TaskTracker
 {
