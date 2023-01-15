@@ -1,24 +1,33 @@
-package dev.fg.dhbw.ase.tasktracker.domain;
+package dev.fg.dhbw.ase.tasktracker.domain.entities;
 
-import java.util.List;
 import java.util.UUID;
 
-public class Task 
+import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.exceptions.SubTaskWithoutTaskIdException;
+
+// Not needed :(
+public class SubTask
 {
     private final UUID id;
+    private final UUID taskId;
     private TaskTitle title;
     private DateInFuture dueDate;
-    private List<Task> subTasks;
     private String description;
     private DateInFuture reminder;
     private boolean done;
 
-    public Task(TaskTitle title, String description, DateInFuture dueDate, DateInFuture reminder, boolean done)
+    public SubTask(final UUID taskId, TaskTitle title, String description, DateInFuture dueDate, DateInFuture reminder, boolean done)
     {
+        if (taskId == null)
+        {
+            throw new SubTaskWithoutTaskIdException();
+        }
         this.id = UUID.randomUUID();
+        this.taskId = taskId;
         this.title = title;
-        this.dueDate = dueDate;
         this.description = description;
+        this.dueDate = dueDate;
         this.reminder = reminder;
         this.done = done;
     }
@@ -26,6 +35,11 @@ public class Task
     public UUID getId()
     {
         return this.id;
+    }
+
+    public UUID getTaskId()
+    {
+        return this.taskId;
     }
 
     public TaskTitle getTitle()

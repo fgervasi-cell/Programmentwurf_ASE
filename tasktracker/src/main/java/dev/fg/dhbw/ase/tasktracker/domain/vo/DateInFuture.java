@@ -1,7 +1,12 @@
-package dev.fg.dhbw.ase.tasktracker.domain;
+package dev.fg.dhbw.ase.tasktracker.domain.vo;
 
 import java.util.Date;
 
+import javax.persistence.Embeddable;
+
+import dev.fg.dhbw.ase.tasktracker.exceptions.DateLiesInPastException;
+
+@Embeddable
 public final class DateInFuture
 {
     private final Date date;

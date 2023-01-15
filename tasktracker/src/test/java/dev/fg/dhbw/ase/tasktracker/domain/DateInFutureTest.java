@@ -5,6 +5,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
+import dev.fg.dhbw.ase.tasktracker.exceptions.DateLiesInPastException;
+
 public class DateInFutureTest 
 {
     @Test(expected = DateLiesInPastException.class)
