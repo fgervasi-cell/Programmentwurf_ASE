@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Text?>
 
-<VBox>
-    <Label text="Username" />
-</VBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css">
+    <top>
+        <HBox alignment="center" id="top">
+            <Text text="TaskTracker" id="headline" />
+        </HBox>
+    </top>
+    <center>
+        <HBox alignment="center">
+            <VBox spacing="30" alignment="center">
+                <VBox spacing="10">
+                    <Label text="E-Mail" />
+                    <TextField fx:id="eMailTextField" minWidth="300" />
+                </VBox>
+                <VBox spacing="10">
+                    <Label text="Password" />
+                    <PasswordField fx:id="passwordField" minWidth="300" />
+                </VBox>
+                <Button text="Login or register" onAction="#loginOrRegisterUser" id="login-register-button" />
+            </VBox>
+        </HBox>
+    </center>
+    <bottom>
+        <HBox alignment="center" id="bottom">
+            <Text text="Continue without an account..." onMouseClicked="#onContinueWithoutAccount" id="bottom-text" />
+        </HBox>
+    </bottom>
+</BorderPane>

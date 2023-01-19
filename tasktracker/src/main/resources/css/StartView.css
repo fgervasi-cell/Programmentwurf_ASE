@@ -1,0 +1,22 @@
+#headline {
+    -fx-font-size: 32px;
+    -fx-underline: true;
+    -fx-font-weight: bold;
+}
+
+#bottom-text {
+    -fx-fill: blue;
+    -fx-font-size: 18px;
+}
+
+#bottom-text:hover {
+    -fx-cursor: hand;
+}
+
+#login-register-button:hover {
+    -fx-cursor: hand;
+}
+
+#bottom, #top {
+    -fx-padding: 30px;
+}

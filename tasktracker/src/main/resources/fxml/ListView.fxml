@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <left>
+        <VBox>
+            <Text fx:id="userInformation" />
+            <Separator />
+            <Button text="Add List" />
+        </VBox>
+    </left>
+    <center>
+        <VBox>
+            <Text fx:id="selectedListName" />
+            <HBox>
+                <Text text="Done" />
+                <Separator />
+                <Text text="This is a sample task" />
+                <Separator />
+                <Text text="There is no due date set" />
+            </HBox>
+            <Button text="Add Task" />
+        </VBox>
+    </center>
+</BorderPane>

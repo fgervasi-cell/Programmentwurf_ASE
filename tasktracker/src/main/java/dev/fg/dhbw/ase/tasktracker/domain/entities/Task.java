@@ -22,8 +22,8 @@ public class Task
     private final UUID id;
     @Column(name = "task_list_id", columnDefinition = "BINARY(16)")
     private final UUID taskListId;
-    // TODO
-    private final UUID taskId = null;
+    @Column(name = "task_id", columnDefinition = "BINARY(16)")
+    private final UUID taskId;
     @Embedded
     private TaskTitle title;
     @Embedded
@@ -37,7 +37,7 @@ public class Task
     @Column(name = "done")
     private boolean done;
 
-    public Task(final UUID taskListId, TaskTitle title, String description, DateInFuture dueDate, DateInFuture reminder,
+    public Task(final UUID taskListId, UUID taskId, TaskTitle title, String description, DateInFuture dueDate, DateInFuture reminder,
             boolean done)
     {
         if (taskListId == null)
@@ -46,6 +46,7 @@ public class Task
         }
         this.id = UUID.randomUUID();
         this.taskListId = taskListId;
+        this.taskId = taskId;
         this.title = title;
         this.dueDate = dueDate;
         this.description = description;
