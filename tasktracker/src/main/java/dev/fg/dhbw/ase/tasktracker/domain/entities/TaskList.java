@@ -25,6 +25,13 @@ public class TaskList implements Serializable
     @Embedded
     private TaskTitle title;
 
+    @SuppressWarnings("unused")
+    private TaskList()
+    {
+        this.id = null;
+        this.userId = null;
+    }
+
     public TaskList(TaskTitle title)
     {
         if (title == null)

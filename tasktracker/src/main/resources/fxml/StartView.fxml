@@ -21,7 +21,7 @@
                     <Label text="E-Mail" />
                     <TextField fx:id="eMailTextField" minWidth="300" />
                 </VBox>
-                <VBox spacing="10">
+                <VBox spacing="10" fx:id="passwordContainer">
                     <Label text="Password" />
                     <PasswordField fx:id="passwordField" minWidth="300" />
                 </VBox>

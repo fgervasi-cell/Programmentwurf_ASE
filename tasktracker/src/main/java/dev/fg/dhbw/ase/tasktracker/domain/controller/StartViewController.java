@@ -3,16 +3,11 @@ package dev.fg.dhbw.ase.tasktracker.domain.controller;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.EMail;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Password;
-import dev.fg.dhbw.ase.tasktracker.persistence.UserDatabaseRepository;
+import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
+import dev.fg.dhbw.ase.tasktracker.persistence.UserRepository;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +15,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StartViewController
@@ -31,6 +30,8 @@ public class StartViewController
     private TextField eMailTextField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private VBox passwordContainer;
 
     public StartViewController(final Stage primaryStage)
     {
@@ -38,11 +39,21 @@ public class StartViewController
     }
 
     @FXML
+    private void initialize()
+    {
+        this.passwordField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER)
+            {
+                loginOrRegisterUser(event);
+            }
+        });
+    }
+
+    @FXML
     private void loginOrRegisterUser(Event e)
     {
         this.primaryStage.getScene().setCursor(Cursor.WAIT);
-        Session session = createSession();
-        UserDatabaseRepository userRepository = new UserDatabaseRepository(session);
+        UserRepository userRepository = PersistenceUtil.obtainUserRepository();
         User user = userRepository.getUserByEMail(new EMail(eMailTextField.getText()));
         if (user != null)
         {
@@ -54,19 +65,22 @@ public class StartViewController
                 return;
             }
             LOG.info("Password did not match.");
+            Text passwordDidNotMatchText = new Text("Password did not match.");
+            passwordContainer.getChildren().add(passwordDidNotMatchText);
+            this.primaryStage.getScene().setCursor(Cursor.DEFAULT);
             return;
         }
         LOG.info("User does not exist. Creating new user and logging in...");
         user = new User(new EMail(eMailTextField.getText()), new Password(passwordField.getText()));
         userRepository.createUser(user);
-        session.close();
         login(user);
     }
 
     @FXML
     public void onContinueWithoutAccount(Event e)
     {
-        System.out.println("Continue without an account...");
+        LOG.info("Continue without an account...");
+        login(null);
     }
 
     private void login(final User user)
@@ -85,12 +99,5 @@ public class StartViewController
             // TODO: show error in UI and handle it accordingly
             e.printStackTrace();
         }
-    }
-
-    private Session createSession()
-    {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        return sessionFactory.openSession();
     }
 }

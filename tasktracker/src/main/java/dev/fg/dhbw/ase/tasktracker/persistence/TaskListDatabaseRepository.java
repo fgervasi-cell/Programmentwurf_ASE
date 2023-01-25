@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
+import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
 
 class TaskListDatabaseRepository implements TaskListRepository
@@ -27,7 +29,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     @Override
     public List<TaskList> getTaskListsForUser(UUID user)
     {
-        Query<TaskList> query = session.createQuery("FROM TaskList WHERE userID = :user", TaskList.class);
+        Query<TaskList> query = session.createQuery("FROM TaskList WHERE userId = :user", TaskList.class);
         query.setParameter("user", user);
         return query.getResultList();
     }
@@ -50,5 +52,28 @@ class TaskListDatabaseRepository implements TaskListRepository
         TaskList taskList = session.find(TaskList.class, taskListId);
         taskList.changeTitle(name);
         session.merge(taskList);
+    }
+
+    @Override
+    public void createNewTaskListForUser(TaskTitle name, User user)
+    {
+        session.beginTransaction();
+        TaskList taskList = new TaskList(user.getId(), name);
+        session.save(taskList);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public List<Task> getTasksOfTaskListByTaskListName(TaskTitle name)
+    {
+        session.beginTransaction();
+        Query<TaskList> list = session.createQuery("FROM TaskList WHERE title = :name", TaskList.class);
+        list.setParameter("name", name);
+        UUID id = list.uniqueResult().getId();
+        Query<Task> getTasksOfListQuery = session.createQuery("FROM Task WHERE taskListId = :id", Task.class);
+        getTasksOfListQuery.setParameter("id", id);
+        List<Task> tasks = getTasksOfListQuery.getResultList();
+        session.getTransaction().commit();
+        return tasks;
     }
 }

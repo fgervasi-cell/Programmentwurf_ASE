@@ -6,25 +6,28 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css">
     <left>
         <VBox>
             <Text fx:id="userInformation" />
             <Separator />
-            <Button text="Add List" />
+            <VBox fx:id="listsContainer">
+
+            </VBox>
+            <Button text="Add List" onAction="#onAddListButtonClicked" />
         </VBox>
     </left>
     <center>
-        <VBox>
+        <VBox fx:id="taskContainer">
             <Text fx:id="selectedListName" />
-            <HBox>
+            <HBox styleClass="task">
                 <Text text="Done" />
-                <Separator />
+                <Separator styleClass="vertical" />
                 <Text text="This is a sample task" />
-                <Separator />
+                <Separator styleClass="vertical" />
                 <Text text="There is no due date set" />
             </HBox>
-            <Button text="Add Task" />
+            <Button text="Add Task" onAction="#onAddTaskButtonClicked" />
         </VBox>
     </center>
 </BorderPane>

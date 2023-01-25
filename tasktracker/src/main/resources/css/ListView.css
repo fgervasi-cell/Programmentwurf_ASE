@@ -1,0 +1,7 @@
+.task {
+    -fx-border-color: black;
+}
+
+.vertical {
+    -fx-orientation: vertical;
+}
