@@ -9,26 +9,28 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.DatePicker?> 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/Main.css">
     <top>
-        <Text text="Add Task" />
+        <HBox alignment="center">
+            <Text text="Add Task" styleClass="headline" />
+        </HBox>
     </top>
     <center>
         <VBox>
             <Label text="Title" />
-            <TextField />
+            <TextField fx:id="taskTitleTextField" />
             <Label text="Description" />
-            <TextArea />
+            <TextArea fx:id="taskDescriptionTextField" />
             <Label text="Pick A Due Date" />
-            <DatePicker />
+            <DatePicker fx:id="taskDueDatePicker" />
             <Label text="Pick A Reminder" />
-            <DatePicker />
+            <DatePicker fx:id="taskReminderDatePicker" />
         </VBox>
     </center>
     <bottom>
-        <HBox>
+        <HBox alignment="center">
             <Button text="Cancel" />
-            <Button text="Save" />
+            <Button text="Save" onAction="#onSaveTaskButtonClicked" />
         </HBox>
     </bottom>
 </BorderPane>

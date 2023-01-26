@@ -8,10 +8,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css,@../css/Main.css">
     <top>
         <HBox alignment="center" id="top">
-            <Text text="TaskTracker" id="headline" />
+            <Text text="TaskTracker" styleClass="headline" />
         </HBox>
     </top>
     <center>

@@ -1,5 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent;
@@ -10,13 +11,17 @@ import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ListViewController
@@ -68,7 +73,22 @@ public class ListViewController
     @FXML
     private void onAddTaskButtonClicked(Event e)
     {
-        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
+        try
+        {
+            BorderPane form = loader.<BorderPane>load();
+            Scene scene = new Scene(form);
+            Stage stage = new Stage();
+            stage.setTitle("TaskTracker - Add Task");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch (IOException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
     @FXML

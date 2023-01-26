@@ -1,11 +1,5 @@
-.button {
-
-}
-
-.label {
-
-}
-
-.link {
-    
+.headline {
+    -fx-font-size: 32px;
+    -fx-underline: true;
+    -fx-font-weight: bold;
 }

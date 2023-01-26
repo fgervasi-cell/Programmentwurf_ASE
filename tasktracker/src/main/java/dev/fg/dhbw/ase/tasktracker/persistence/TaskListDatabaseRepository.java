@@ -76,4 +76,11 @@ class TaskListDatabaseRepository implements TaskListRepository
         session.getTransaction().commit();
         return tasks;
     }
+
+    @Override
+    public void addTaskToTaskList(Task t, TaskTitle name)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
