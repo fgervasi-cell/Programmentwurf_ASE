@@ -6,7 +6,7 @@ import java.util.UUID;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 
 class TaskListFileSystemRepository implements TaskListRepository
 {
@@ -25,7 +25,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     }
 
     @Override
-    public void createNewTaskList(TaskTitle name)
+    public void createNewTaskList(Title name)
     {
         // TODO Auto-generated method stub
 
@@ -39,30 +39,37 @@ class TaskListFileSystemRepository implements TaskListRepository
     }
 
     @Override
-    public void updateTaskList(UUID taskListId, TaskTitle name)
+    public void updateTaskList(UUID taskListId, Title name)
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void createNewTaskListForUser(TaskTitle name, User user)
+    public void createNewTaskListForUser(Title name, User user)
     {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public List<Task> getTasksOfTaskListByTaskListName(TaskTitle name)
+    public List<Task> getTasksOfTaskListByTaskListName(Title name)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void addTaskToTaskList(Task t, TaskTitle name)
+    public void addTaskToTaskList(Task t)
     {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public TaskList getTaskListByName(Title name)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

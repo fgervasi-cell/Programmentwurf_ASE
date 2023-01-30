@@ -90,7 +90,7 @@ public class StartViewController
         try
         {
             BorderPane layout = loader.<BorderPane>load();
-            Scene scene = new Scene(layout);
+            Scene scene = new Scene(layout, this.primaryStage.getScene().widthProperty().doubleValue(), this.primaryStage.getScene().heightProperty().doubleValue());
             this.primaryStage.setTitle("TaskTracker - List");
             this.primaryStage.setScene(scene);
         }

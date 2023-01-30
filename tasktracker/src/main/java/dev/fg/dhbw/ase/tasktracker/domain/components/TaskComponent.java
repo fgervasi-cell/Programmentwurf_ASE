@@ -16,5 +16,6 @@ public class TaskComponent extends HBox // NOSONAR: just using the JavaFX librar
         this.getChildren().add(new Text(title));
         this.getChildren().add(new Separator(Orientation.VERTICAL));
         this.getChildren().add(new Text(dueDate != null ? dueDate.getDueDate().toString() : "There is no due date set"));
+        this.getStyleClass().add("task");
     }
 }

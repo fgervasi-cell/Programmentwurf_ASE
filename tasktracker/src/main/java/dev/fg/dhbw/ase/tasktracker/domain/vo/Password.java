@@ -37,4 +37,20 @@ public class Password implements Serializable
     {
         return passwordString.length() >= 8 && passwordString.matches("[A-Za-z0-9]*");
     }
+
+    @Override
+    public int hashCode()
+    {
+        return this.passwordString.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof Password)
+        {
+            return this.passwordString.equals(((Password) obj).passwordString);
+        }
+        return false;
+    }
 }

@@ -8,48 +8,48 @@ import javax.persistence.Embeddable;
 import dev.fg.dhbw.ase.tasktracker.exceptions.InvalidTitleException;
 
 @Embeddable
-public final class TaskTitle implements Serializable
+public final class Title implements Serializable
 {
     @Column(name = "title", nullable = false)
-    private final String title;
+    private final String titleString;
 
     @SuppressWarnings("unused")
-    private TaskTitle()
+    private Title()
     {
-        this.title = null;
+        this.titleString = null;
     }
 
-    public TaskTitle(final String title)
+    public Title(final String title)
     {
         if (title == null || title.isEmpty() || title.isBlank())
         {
             throw new InvalidTitleException();
         }
-        this.title = title;
+        this.titleString = title;
     }
 
-    public String getTitle()
+    public String getTitleString()
     {
-        return this.title;
+        return this.titleString;
     }
 
-    public TaskTitle changTitle(String newTitle)
+    public Title changTitle(String newTitle)
     {
-        return new TaskTitle(newTitle);
+        return new Title(newTitle);
     }
 
     @Override
     public int hashCode()
     {
-        return this.title.hashCode();
+        return this.titleString.hashCode();
     }
 
     @Override
     public boolean equals(Object obj)
     {
-        if (obj instanceof TaskTitle)
+        if (obj instanceof Title)
         {
-            return this.title.equals(((TaskTitle)obj).title);
+            return this.titleString.equals(((Title)obj).titleString);
         }
         return false;
     }

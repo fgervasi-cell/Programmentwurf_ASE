@@ -11,6 +11,12 @@ public final class DateInFuture
 {
     private final Date date;
 
+    @SuppressWarnings("unused")
+    private DateInFuture()
+    {
+        this.date = null;
+    }
+
     public DateInFuture(final Date date)
     {
         if (date.getTime() < System.currentTimeMillis())
@@ -31,17 +37,17 @@ public final class DateInFuture
     }
 
     @Override
-    public int hashCode() 
+    public int hashCode()
     {
         return this.date.hashCode();
     }
 
     @Override
-    public boolean equals(Object obj) 
+    public boolean equals(Object obj)
     {
         if (obj instanceof DateInFuture)
         {
-            return this.date.equals(((DateInFuture)obj).date);
+            return this.date.equals(((DateInFuture) obj).date);
         }
         return false;
     }

@@ -32,4 +32,20 @@ public class EMail implements Serializable
     {
         return this.mailString;
     }
+
+    @Override
+    public int hashCode()
+    {
+        return this.mailString.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof EMail)
+        {
+            return this.mailString.equals(((EMail) obj).mailString);
+        }
+        return false;
+    }
 }

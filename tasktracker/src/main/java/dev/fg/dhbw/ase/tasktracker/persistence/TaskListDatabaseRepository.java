@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 
 class TaskListDatabaseRepository implements TaskListRepository
 {
@@ -35,7 +35,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void createNewTaskList(TaskTitle name)
+    public void createNewTaskList(Title name)
     {
         session.save(new TaskList(name));
     }
@@ -47,7 +47,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void updateTaskList(UUID taskListId, TaskTitle name)
+    public void updateTaskList(UUID taskListId, Title name)
     {
         TaskList taskList = session.find(TaskList.class, taskListId);
         taskList.changeTitle(name);
@@ -55,7 +55,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void createNewTaskListForUser(TaskTitle name, User user)
+    public void createNewTaskListForUser(Title name, User user)
     {
         session.beginTransaction();
         TaskList taskList = new TaskList(user.getId(), name);
@@ -64,7 +64,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public List<Task> getTasksOfTaskListByTaskListName(TaskTitle name)
+    public List<Task> getTasksOfTaskListByTaskListName(Title name)
     {
         session.beginTransaction();
         Query<TaskList> list = session.createQuery("FROM TaskList WHERE title = :name", TaskList.class);
@@ -78,9 +78,21 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void addTaskToTaskList(Task t, TaskTitle name)
+    public void addTaskToTaskList(Task t)
     {
-        // TODO Auto-generated method stub
-        
+        session.beginTransaction();
+        session.save(t);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public TaskList getTaskListByName(Title name)
+    {
+        session.beginTransaction();
+        Query<TaskList> query = session.createQuery("FROM TaskList WHERE title = :name", TaskList.class);
+        query.setParameter("name", name);
+        TaskList list = query.uniqueResult();
+        session.getTransaction().commit();
+        return list;
     }
 }

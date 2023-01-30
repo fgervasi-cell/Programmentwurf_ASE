@@ -6,16 +6,17 @@ import java.util.UUID;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 
 public interface TaskListRepository 
 {
     public TaskList getTaskList(final UUID taskListId);
+    public TaskList getTaskListByName(final Title name);
     public List<TaskList> getTaskListsForUser(final UUID user);
-    public void createNewTaskList(final TaskTitle name);
-    public void createNewTaskListForUser(final TaskTitle name, final User user);
+    public void createNewTaskList(final Title name);
+    public void createNewTaskListForUser(final Title name, final User user);
     public void deleteTaskList(final TaskList taskList);
-    public void updateTaskList(final UUID taskListId, final TaskTitle name);
-    public List<Task> getTasksOfTaskListByTaskListName(TaskTitle name);
-    public void addTaskToTaskList(final Task t, final TaskTitle name);
+    public void updateTaskList(final UUID taskListId, final Title name);
+    public List<Task> getTasksOfTaskListByTaskListName(Title name);
+    public void addTaskToTaskList(final Task t);
 }

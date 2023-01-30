@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.exceptions.InvalidTitleException;
 
 @Entity
@@ -23,7 +23,7 @@ public class TaskList implements Serializable
     private final UUID userId;
     @Id
     @Embedded
-    private TaskTitle title;
+    private Title title;
 
     @SuppressWarnings("unused")
     private TaskList()
@@ -32,7 +32,7 @@ public class TaskList implements Serializable
         this.userId = null;
     }
 
-    public TaskList(TaskTitle title)
+    public TaskList(Title title)
     {
         if (title == null)
         {
@@ -43,7 +43,7 @@ public class TaskList implements Serializable
         this.title = title;
     }
 
-    public TaskList(UUID userId, TaskTitle title)
+    public TaskList(UUID userId, Title title)
     {
         if (title == null)
         {
@@ -64,12 +64,12 @@ public class TaskList implements Serializable
         return this.userId;
     }
 
-    public TaskTitle getTitle()
+    public Title getTitle()
     {
         return this.title;
     }
 
-    public void changeTitle(TaskTitle title)
+    public void changeTitle(Title title)
     {
         this.title = title;
     }

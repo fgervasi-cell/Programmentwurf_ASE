@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.TaskTitle;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.exceptions.TaskWithoutTaskListIdException;
 
 @Entity
@@ -25,7 +25,7 @@ public class Task
     @Column(name = "task_id", columnDefinition = "BINARY(16)")
     private final UUID taskId;
     @Embedded
-    private TaskTitle title;
+    private Title title;
     @Embedded
     @AttributeOverride(name = "date", column = @Column(name = "due_date"))
     private DateInFuture dueDate;
@@ -37,7 +37,15 @@ public class Task
     @Column(name = "done")
     private boolean done;
 
-    public Task(final UUID taskListId, UUID taskId, TaskTitle title, String description, DateInFuture dueDate, DateInFuture reminder,
+    @SuppressWarnings("unused")
+    private Task()
+    {
+        this.id = null;
+        this.taskListId = null;
+        this.taskId = null;
+    }
+
+    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate, DateInFuture reminder,
             boolean done)
     {
         if (taskListId == null)
@@ -64,7 +72,7 @@ public class Task
         return this.taskListId;
     }
 
-    public TaskTitle getTitle()
+    public Title getTitle()
     {
         return this.title;
     }

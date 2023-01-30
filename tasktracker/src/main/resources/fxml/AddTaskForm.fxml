@@ -29,7 +29,7 @@
     </center>
     <bottom>
         <HBox alignment="center">
-            <Button text="Cancel" />
+            <Button text="Cancel" onAction="#onCancel" />
             <Button text="Save" onAction="#onSaveTaskButtonClicked" />
         </HBox>
     </bottom>

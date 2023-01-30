@@ -11,22 +11,14 @@
         <VBox>
             <Text fx:id="userInformation" />
             <Separator />
-            <VBox fx:id="listsContainer">
-
-            </VBox>
+            <VBox fx:id="listsContainer"></VBox>
             <Button text="Add List" onAction="#onAddListButtonClicked" />
         </VBox>
     </left>
     <center>
-        <VBox fx:id="taskContainer">
+        <VBox>
             <Text fx:id="selectedListName" />
-            <HBox styleClass="task">
-                <Text text="Done" />
-                <Separator styleClass="vertical" />
-                <Text text="This is a sample task" />
-                <Separator styleClass="vertical" />
-                <Text text="There is no due date set" />
-            </HBox>
+            <VBox fx:id="taskContainer"></VBox>
             <Button text="Add Task" onAction="#onAddTaskButtonClicked" />
         </VBox>
     </center>
