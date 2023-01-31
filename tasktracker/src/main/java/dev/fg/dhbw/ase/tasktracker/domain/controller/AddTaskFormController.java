@@ -6,9 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 
-import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
+import dev.fg.dhbw.ase.tasktracker.domain.factories.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
@@ -39,27 +37,27 @@ public class AddTaskFormController
     @FXML
     private void onSaveTaskButtonClicked()
     {
-        Title title = new Title(this.taskTitleTextField.getText());
+        String title = this.taskTitleTextField.getText();
         String description = this.taskDescriptionTextField.getText();
 
         LocalDate localDueDate = this.taskDueDatePicker.getValue();
-        DateInFuture dueDate = null;
+        Date dueDate = null;
         if (localDueDate != null)
         {
             Instant dueDateInstant = localDueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-            dueDate = new DateInFuture(Date.from(dueDateInstant));
+            dueDate = Date.from(dueDateInstant);
         }
 
         LocalDate localReminderDate = this.taskReminderDatePicker.getValue();
-        DateInFuture reminderDate = null;
+        Date reminderDate = null;
         if (localReminderDate != null)
         {
             Instant reminderDateInstant = localReminderDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-            reminderDate = new DateInFuture(Date.from(reminderDateInstant));
+            reminderDate = Date.from(reminderDateInstant);
         }
 
         TaskListRepository repository = PersistenceUtil.obtainTaskListRepository();
-        repository.addTaskToTaskList(new Task(this.taskListId, null, title, description, dueDate, reminderDate, false));
+        repository.addTaskToTaskList(TaskFactory.createTask(this.taskListId, title, description, dueDate, reminderDate));
 
         this.stage.close();
     }

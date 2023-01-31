@@ -1,9 +1,11 @@
 package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
+import dev.fg.dhbw.ase.tasktracker.domain.util.Modal;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.EMail;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Password;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
@@ -71,6 +73,7 @@ public class StartViewController
             return;
         }
         LOG.info("User does not exist. Creating new user and logging in...");
+        Modal.show("New User", "There is not an existing user with that e-mail address. Do you want to create an account?", Modal.Type.INFO);
         user = new User(new EMail(eMailTextField.getText()), new Password(passwordField.getText()));
         userRepository.createUser(user);
         login(user);
@@ -96,7 +99,8 @@ public class StartViewController
         }
         catch (IOException e)
         {
-            // TODO: show error in UI and handle it accordingly
+            Modal.show("Exception", "There was an error loading the screen. Please contact the developers and report this issue.", Modal.Type.ERROR);
+            LOG.log(Level.SEVERE, "Error loading the FXML file of the list view.");
             e.printStackTrace();
         }
     }

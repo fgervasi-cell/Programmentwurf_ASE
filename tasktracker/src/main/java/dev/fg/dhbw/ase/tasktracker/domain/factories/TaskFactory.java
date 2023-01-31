@@ -14,23 +14,11 @@ public class TaskFactory
 
     }
 
-    public static Task createTask(final String title, final UUID taskListId)
-    {
-        Title taskTitle = new Title(title);
-        return new Task(taskListId, null, taskTitle, title, null, null, false);
-    }
-
-    public static Task createTask(final String title, final Date dueDate, final Date reminder)
+    public static Task createTask(UUID taskListId, String title, String description, Date dueDate, Date reminder)
     {
         Title taskTitle = new Title(title);
         DateInFuture futureDueDate = new DateInFuture(dueDate);
-        DateInFuture futureReminder = new DateInFuture(reminder);
-        return new Task(null, null, taskTitle, title, futureDueDate, futureReminder, false);
-    }
-
-    public static Task createSubTask(final String title, final UUID taskId)
-    {
-        Title taskTitle = new Title(title);
-        return new Task(null, taskId, taskTitle, title, null, null, false);
+        DateInFuture futureReminderDate = new DateInFuture(reminder);
+        return new Task(taskListId, null, taskTitle, description, futureDueDate, futureReminderDate, false);
     }
 }
