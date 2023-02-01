@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css,@../css/Main.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css,@../css/Main.css" styleClass="root">
     <top>
         <HBox alignment="center" id="top">
             <Text text="TaskTracker" styleClass="headline" />
@@ -18,20 +18,20 @@
         <HBox alignment="center">
             <VBox spacing="30" alignment="center">
                 <VBox spacing="10">
-                    <Label text="E-Mail" />
-                    <TextField fx:id="eMailTextField" minWidth="300" />
+                    <Label text="E-Mail" styleClass="label" />
+                    <TextField fx:id="eMailTextField" minWidth="300" styleClass="text-input" />
                 </VBox>
                 <VBox spacing="10" fx:id="passwordContainer">
-                    <Label text="Password" />
-                    <PasswordField fx:id="passwordField" minWidth="300" />
+                    <Label text="Password" styleClass="label" />
+                    <PasswordField fx:id="passwordField" minWidth="300" styleClass="text-input" />
                 </VBox>
-                <Button text="Login or register" onAction="#loginOrRegisterUser" id="login-register-button" />
+                <Button text="Login or register" onAction="#loginOrRegisterUser" id="login-or-register-button" styleClass="button-primary" />
             </VBox>
         </HBox>
     </center>
     <bottom>
         <HBox alignment="center" id="bottom">
-            <Text text="Continue without an account..." onMouseClicked="#onContinueWithoutAccount" id="bottom-text" />
+            <Text text="Continue without an account..." onMouseClicked="#onContinueWithoutAccount" styleClass="link" />
         </HBox>
     </bottom>
 </BorderPane>

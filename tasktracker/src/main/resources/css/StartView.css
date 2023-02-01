@@ -1,14 +1,5 @@
-#bottom-text {
-    -fx-fill: blue;
-    -fx-font-size: 18px;
-}
-
-#bottom-text:hover {
-    -fx-cursor: hand;
-}
-
-#login-register-button:hover {
-    -fx-cursor: hand;
+#login-or-register-button {
+    -fx-pref-width: 215px;
 }
 
 #bottom, #top {

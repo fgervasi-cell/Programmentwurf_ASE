@@ -6,20 +6,20 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css,@../css/Main.css">
     <left>
         <VBox>
             <Text fx:id="userInformation" />
             <Separator />
             <VBox fx:id="listsContainer"></VBox>
-            <Button text="Add List" onAction="#onAddListButtonClicked" />
+            <Button text="Add List" onAction="#onAddListButtonClicked" styleClass="button-primary" />
         </VBox>
     </left>
     <center>
         <VBox>
             <Text fx:id="selectedListName" />
             <VBox fx:id="taskContainer"></VBox>
-            <Button text="Add Task" onAction="#onAddTaskButtonClicked" />
+            <Button text="Add Task" onAction="#onAddTaskButtonClicked" styleClass="button-primary" />
         </VBox>
     </center>
 </BorderPane>
