@@ -24,6 +24,14 @@ public class PersistenceUtil
         return new UserDatabaseRepository(createSessionIfNotPresent());
     }
 
+    public static void closeSessionIfPresent()
+    {
+        if (session != null)
+        {
+            session.close();
+        }
+    }
+
     private static Session createSessionIfNotPresent()
     {
         if (session != null)

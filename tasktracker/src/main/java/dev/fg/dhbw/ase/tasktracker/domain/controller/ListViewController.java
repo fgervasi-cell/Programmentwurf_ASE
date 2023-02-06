@@ -2,12 +2,16 @@ package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
+import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,12 +23,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ListViewController
+public class ListViewController implements Observer
 {
     private final Stage primaryStage;
     private final User user;
@@ -46,15 +51,28 @@ public class ListViewController
     @FXML
     private void initialize()
     {
+        this.selectedListName.getStyleClass().add("headline");
         this.userInformation.setText(String.format("Logged in as %s", this.user.getEMail().getMailAdress()));
         List<TaskList> taskLists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
+        // TODO: I need a list to store the task that are done (should not be editable by the user!)
+        if (taskLists.stream().filter(tl -> !tl.getTitle().getTitleString().equals("Done")).collect(Collectors.toList()).isEmpty())
+        {
+            PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title("Done"), this.user);
+            taskLists.add(new TaskList(new Title("Done")));
+        }
         for (TaskList taskList : taskLists)
         {
+            // TODO: maybe now it would be better to extract this to a TaskListComponent.fxml file?
+            HBox box = new HBox();
+            FontIcon icon = new FontIcon();
+            icon.setIconLiteral("mdi-delete-forever:24:RED");
             final Title taskListTitle = taskList.getTitle();
             Text listName = new Text(taskListTitle.getTitleString());
+            listName.getStyleClass().add("link");
             listName.addEventFilter(MouseEvent.MOUSE_CLICKED,
                     event -> this.handleListNameClicked(event, taskListTitle));
-            this.listsContainer.getChildren().add(listName);
+            box.getChildren().addAll(icon, listName);
+            this.listsContainer.getChildren().add(box);
         }
     }
 
@@ -70,7 +88,7 @@ public class ListViewController
             {
                 if (!t.isDone())
                 {
-                    this.taskContainer.getChildren().add(new TaskComponent(t.getTitle().getTitleString(), t.getDueDate()));
+                    this.taskContainer.getChildren().add(new TaskComponent(t));
                 }
             }
         }
@@ -107,6 +125,7 @@ public class ListViewController
     @FXML
     private void onAddListButtonClicked(Event e)
     {
+        // TODO: Refactor this. Extract it to another method to reuse it (e.g. in the initialization phase).
         final TextField newList = new TextField();
         newList.addEventFilter(KeyEvent.KEY_PRESSED, event ->
         {
@@ -123,6 +142,7 @@ public class ListViewController
             }
             PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title(input), user);
             Text newListName = new Text(input);
+            newListName.getStyleClass().add("link");
             Title taskListTitle = new Title(input);
             newListName.addEventFilter(MouseEvent.MOUSE_CLICKED,
                     mouseEvent -> this.handleListNameClicked(mouseEvent, taskListTitle));
@@ -130,5 +150,18 @@ public class ListViewController
             this.listsContainer.getChildren().remove(newList);
         });
         this.listsContainer.getChildren().add(newList);
+    }
+
+    @Override
+    public void notifyObserver(Object message)
+    {
+        if (message instanceof String)
+        {
+            String messageString = (String) message;
+            if (messageString.split(":")[1].equals(TaskComponent.Events.TASK_DELETE.toString()))
+            {
+                // TODO: update the UI
+            }
+        }
     }
 }

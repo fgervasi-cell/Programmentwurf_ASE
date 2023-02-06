@@ -95,4 +95,12 @@ class TaskListDatabaseRepository implements TaskListRepository
         session.getTransaction().commit();
         return list;
     }
+
+    @Override
+    public void removeTask(Task task)
+    {
+        session.beginTransaction();
+        session.remove(task);
+        session.getTransaction().commit();
+    }
 }

@@ -1,10 +1,10 @@
 package dev.fg.dhbw.ase.tasktracker.domain;
 
 import dev.fg.dhbw.ase.tasktracker.domain.controller.StartViewController;
+import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -27,5 +27,11 @@ public class TaskTracker extends Application
         primaryStage.setTitle("TaskTracker - Start");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception
+    {
+        PersistenceUtil.closeSessionIfPresent();
     }
 }

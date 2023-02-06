@@ -19,4 +19,5 @@ public interface TaskListRepository
     public void updateTaskList(final UUID taskListId, final Title name);
     public List<Task> getTasksOfTaskListByTaskListName(Title name);
     public void addTaskToTaskList(final Task t);
+    public void removeTask(final Task task);
 }
