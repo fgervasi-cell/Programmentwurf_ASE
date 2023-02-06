@@ -29,11 +29,6 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     private Task task;
     private List<Observer> observers = new ArrayList<>();
 
-    public enum Events
-    {
-        TASK_DELETE, TASK_DONE;
-    }
-
     public TaskComponent(final Task task)
     {
         this.task = task;
@@ -80,14 +75,14 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     {
         // TODO: move the task to the "Done" list (maybe I need to implement a new
         // method like "move(Task t, TaskList newList)" in the repository for that)
-        notifyObservers(TaskComponent.Events.TASK_DONE);
+        notifyObservers(ComponentEvent.TASK_DONE);
     }
 
     @FXML
     private void onTaskDelete()
     {
         PersistenceUtil.obtainTaskListRepository().removeTask(this.task);
-        notifyObservers(TaskComponent.Events.TASK_DELETE);
+        notifyObservers(ComponentEvent.TASK_DELETE);
     }
 
     @Override
@@ -101,7 +96,7 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     {
         for (Observer observer : this.observers)
         {
-            observer.notifyObserver(getClass().getName() + ":" + event);
+            observer.notifyObserver(event);
         }
     }
 }

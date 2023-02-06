@@ -2,11 +2,12 @@ package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.kordamp.ikonli.javafx.FontIcon;
-
+import dev.fg.dhbw.ase.tasktracker.domain.components.ComponentEvent;
 import dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent;
+import dev.fg.dhbw.ase.tasktracker.domain.components.TaskListComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
@@ -20,10 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -31,6 +29,7 @@ import javafx.stage.Stage;
 
 public class ListViewController implements Observer
 {
+    private static final Logger LOG = Logger.getLogger(ListViewController.class.getName());
     private final Stage primaryStage;
     private final User user;
     @FXML
@@ -54,42 +53,30 @@ public class ListViewController implements Observer
         this.selectedListName.getStyleClass().add("headline");
         this.userInformation.setText(String.format("Logged in as %s", this.user.getEMail().getMailAdress()));
         List<TaskList> taskLists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
-        // TODO: I need a list to store the task that are done (should not be editable by the user!)
-        if (taskLists.stream().filter(tl -> !tl.getTitle().getTitleString().equals("Done")).collect(Collectors.toList()).isEmpty())
+        // TODO: I need a list to store the task that are done (should not be editable
+        // by the user!)
+        if (taskLists.stream().filter(tl -> !tl.getTitle().getTitleString().equals("Done")).collect(Collectors.toList())
+                .isEmpty())
         {
             PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title("Done"), this.user);
             taskLists.add(new TaskList(new Title("Done")));
         }
-        for (TaskList taskList : taskLists)
-        {
-            // TODO: maybe now it would be better to extract this to a TaskListComponent.fxml file?
-            HBox box = new HBox();
-            FontIcon icon = new FontIcon();
-            icon.setIconLiteral("mdi-delete-forever:24:RED");
-            final Title taskListTitle = taskList.getTitle();
-            Text listName = new Text(taskListTitle.getTitleString());
-            listName.getStyleClass().add("link");
-            listName.addEventFilter(MouseEvent.MOUSE_CLICKED,
-                    event -> this.handleListNameClicked(event, taskListTitle));
-            box.getChildren().addAll(icon, listName);
-            this.listsContainer.getChildren().add(box);
-        }
+        this.refreshListsContainer(taskLists);
     }
 
-    private void handleListNameClicked(MouseEvent event, Title taskListTitle)
+    private void selectListWithName(Title taskListTitle)
     {
-        if (event.getButton() == MouseButton.PRIMARY)
+        this.selectedListName.setText(taskListTitle.getTitleString());
+        List<Task> tasksForList = PersistenceUtil.obtainTaskListRepository()
+                .getTasksOfTaskListByTaskListName(taskListTitle);
+        this.taskContainer.getChildren().clear();
+        for (Task t : tasksForList)
         {
-            this.selectedListName.setText(taskListTitle.getTitleString());
-            List<Task> tasksForList = PersistenceUtil.obtainTaskListRepository()
-                    .getTasksOfTaskListByTaskListName(taskListTitle);
-            this.taskContainer.getChildren().clear();
-            for (Task t : tasksForList)
+            if (!t.isDone())
             {
-                if (!t.isDone())
-                {
-                    this.taskContainer.getChildren().add(new TaskComponent(t));
-                }
+                TaskComponent task = new TaskComponent(t);
+                task.registerObserver(this);
+                this.taskContainer.getChildren().add(task);
             }
         }
     }
@@ -125,42 +112,72 @@ public class ListViewController implements Observer
     @FXML
     private void onAddListButtonClicked(Event e)
     {
-        // TODO: Refactor this. Extract it to another method to reuse it (e.g. in the initialization phase).
+        // TODO: Refactor this. Extract it to another method to reuse it (e.g. in the
+        // initialization phase).
         final TextField newList = new TextField();
-        newList.addEventFilter(KeyEvent.KEY_PRESSED, event ->
-        {
-            if (event.getCode() != KeyCode.ENTER)
-            {
-                return;
-            }
-
-            String input = newList.getText();
-            if (input == null || input.isEmpty())
-            {
-                this.listsContainer.getChildren().remove(newList);
-                return;
-            }
-            PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title(input), user);
-            Text newListName = new Text(input);
-            newListName.getStyleClass().add("link");
-            Title taskListTitle = new Title(input);
-            newListName.addEventFilter(MouseEvent.MOUSE_CLICKED,
-                    mouseEvent -> this.handleListNameClicked(mouseEvent, taskListTitle));
-            this.listsContainer.getChildren().add(newListName);
-            this.listsContainer.getChildren().remove(newList);
-        });
+        newList.addEventFilter(KeyEvent.KEY_PRESSED, event -> this.handleSubmitNewListName(event, newList));
         this.listsContainer.getChildren().add(newList);
+    }
+
+    private void handleSubmitNewListName(KeyEvent event, TextField newList)
+    {
+        if (event.getCode() != KeyCode.ENTER)
+        {
+            return;
+        }
+
+        String input = newList.getText();
+        if (input == null || input.isEmpty())
+        {
+            this.listsContainer.getChildren().remove(newList);
+            return;
+        }
+        PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title(input), user);
+        TaskList list = PersistenceUtil.obtainTaskListRepository().getTaskListByName(new Title(input));
+        TaskListComponent taskListComponent = new TaskListComponent(list);
+        taskListComponent.registerObserver(this);
+        this.listsContainer.getChildren().add(taskListComponent);
+        this.listsContainer.getChildren().remove(newList);
+    }
+
+    private void refreshListsContainer(List<TaskList> lists)
+    {
+        this.listsContainer.getChildren().clear();
+        for (TaskList list : lists)
+        {
+            TaskListComponent taskListComponent = new TaskListComponent(list);
+            taskListComponent.registerObserver(this);
+            this.listsContainer.getChildren().add(taskListComponent);
+        }
+        this.taskContainer.getChildren().clear();
+        this.selectedListName.setText("Your Lists");
     }
 
     @Override
     public void notifyObserver(Object message)
     {
-        if (message instanceof String)
+        if (message instanceof ComponentEvent)
         {
-            String messageString = (String) message;
-            if (messageString.split(":")[1].equals(TaskComponent.Events.TASK_DELETE.toString()))
+            ComponentEvent event = (ComponentEvent) message;
+            if (event.name().equals(ComponentEvent.TASK_DELETE.name()))
             {
-                // TODO: update the UI
+                LOG.info("Received task deletion event.");
+                selectListWithName(new Title(this.selectedListName.getText()));
+                return;
+            }
+
+            if (event.name().equals(ComponentEvent.TASK_LIST_DELETE.name()))
+            {
+                LOG.info("Received task list delete event.");
+                List<TaskList> lists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
+                this.refreshListsContainer(lists);
+                return;
+            }
+
+            if (event.name().equals(ComponentEvent.TASK_LIST_NAME_CLICKED.name()))
+            {
+                LOG.info("Received task name clicked event.");
+                this.selectListWithName(new Title(event.getData()));
             }
         }
     }

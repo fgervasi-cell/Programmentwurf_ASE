@@ -101,3 +101,7 @@
 .bottom-and-top-padding {
     -fx-padding: 30px;
 }
+
+.background-color {
+    -fx-background-color: #F9F8FF;
+}
