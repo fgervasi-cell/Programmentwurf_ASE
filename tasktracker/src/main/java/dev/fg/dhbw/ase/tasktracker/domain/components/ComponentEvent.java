@@ -2,7 +2,7 @@ package dev.fg.dhbw.ase.tasktracker.domain.components;
 
 public enum ComponentEvent
 {
-    TASK_LIST_DELETE, TASK_LIST_NAME_CLICKED, TASK_DELETE, TASK_DONE;
+    TASK_LIST_DELETE, TASK_LIST_NAME_CLICKED, TASK_DELETE, TASK_DONE, ADD_TASK_FORM_SAVE;
 
     private String data;
 

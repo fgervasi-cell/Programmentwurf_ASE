@@ -92,7 +92,9 @@ public class ListViewController implements Observer
                 .getTaskListByName(new Title(this.selectedListName.getText()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
         Stage stage = new Stage();
-        loader.setController(new AddTaskFormController(list.getId(), stage));
+        AddTaskFormController addTaskFormController = new AddTaskFormController(list.getId(), stage);
+        addTaskFormController.registerObserver(this);
+        loader.setController(addTaskFormController);
         try
         {
             BorderPane form = loader.<BorderPane>load();
@@ -171,6 +173,13 @@ public class ListViewController implements Observer
                 LOG.info("Received task list delete event.");
                 List<TaskList> lists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
                 this.refreshListsContainer(lists);
+                return;
+            }
+
+            if (event.name().equals(ComponentEvent.ADD_TASK_FORM_SAVE.name()))
+            {
+                LOG.info("Received save event from task from controller.");
+                this.selectListWithName(new Title(this.selectedListName.getText()));
                 return;
             }
 

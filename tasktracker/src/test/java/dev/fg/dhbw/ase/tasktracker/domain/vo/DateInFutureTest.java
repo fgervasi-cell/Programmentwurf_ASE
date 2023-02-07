@@ -1,11 +1,10 @@
-package dev.fg.dhbw.ase.tasktracker.domain;
+package dev.fg.dhbw.ase.tasktracker.domain.vo;
 
 import static org.junit.Assert.assertEquals;
 import java.util.Date;
 
 import org.junit.Test;
 
-import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
 import dev.fg.dhbw.ase.tasktracker.exceptions.DateLiesInPastException;
 
 public class DateInFutureTest 
