@@ -43,7 +43,9 @@ class TaskListDatabaseRepository implements TaskListRepository
     @Override
     public void deleteTaskList(TaskList taskList)
     {
+        session.beginTransaction();
         session.delete(taskList);
+        session.getTransaction().commit();
     }
 
     @Override

@@ -54,7 +54,7 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
     private void onListDelete()
     {
         PersistenceUtil.obtainTaskListRepository().deleteTaskList(list);
-        ComponentEvent event = ComponentEvent.TASK_LIST_NAME_CLICKED;
+        ComponentEvent event = ComponentEvent.TASK_LIST_DELETE;
         event.setData(this.listName.getText());
         notifyObservers(event);
     }
