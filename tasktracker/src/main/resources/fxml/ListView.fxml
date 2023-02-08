@@ -27,7 +27,7 @@
         <VBox id="center" styleClass="bottom-and-top-padding" spacing="30">
             <Text fx:id="selectedListName" text="Your Lists" />
             <VBox fx:id="taskContainer" spacing="30"></VBox>
-            <Button text="Add Task" onAction="#onAddTaskButtonClicked" styleClass="button-primary-sm">
+            <Button text="Add Task" onAction="#onAddTaskButtonClicked" styleClass="button-primary-sm" fx:id="addTaskButton">
                 <tooltip>
                     <Tooltip text="Add a new task to this list. This will open another window." />
                 </tooltip>

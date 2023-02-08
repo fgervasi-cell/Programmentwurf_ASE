@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Tooltip ?>
 
 <HBox xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/Main.css">
-    <Button onAction="#onListDelete" styleClass="background-color, hover-hand">
+    <Button onAction="#onListDelete" styleClass="background-color, hover-hand" fx:id="deleteButton">
         <graphic>
             <FontIcon iconLiteral="mdi-delete-forever:24:RED" />
         </graphic>

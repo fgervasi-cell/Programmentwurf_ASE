@@ -21,4 +21,10 @@ public class TaskFactory
         DateInFuture futureReminderDate = new DateInFuture(reminder);
         return new Task(taskListId, null, taskTitle, description, futureDueDate, futureReminderDate, false);
     }
+
+    public static Task createTaskDone(final Task task, final UUID taskList)
+    {
+        return new Task(taskList, task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
+                task.getReminder(), true);
+    }
 }

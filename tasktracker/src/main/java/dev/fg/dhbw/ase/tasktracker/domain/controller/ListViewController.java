@@ -18,6 +18,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -40,6 +41,8 @@ public class ListViewController implements Observer
     private VBox listsContainer;
     @FXML
     private VBox taskContainer;
+    @FXML
+    private Button addTaskButton;
 
     public ListViewController(final Stage primaryStage, final User user)
     {
@@ -50,6 +53,7 @@ public class ListViewController implements Observer
     @FXML
     private void initialize()
     {
+        this.addTaskButton.setVisible(false);
         this.selectedListName.getStyleClass().add("headline");
         this.userInformation.setText(String.format("Logged in as %s", this.user.getEMail().getMailAdress()));
         List<TaskList> taskLists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
@@ -66,25 +70,31 @@ public class ListViewController implements Observer
 
     private void selectListWithName(Title taskListTitle)
     {
+        this.addTaskButton.setVisible(true);
+        if (taskListTitle.getTitleString().equals("Done") || taskListTitle.getTitleString().equals("Your Lists"))
+        {
+            this.addTaskButton.setVisible(false);
+        }
         this.selectedListName.setText(taskListTitle.getTitleString());
         List<Task> tasksForList = PersistenceUtil.obtainTaskListRepository()
                 .getTasksOfTaskListByTaskListName(taskListTitle);
         this.taskContainer.getChildren().clear();
         for (Task t : tasksForList)
         {
-            if (!t.isDone())
-            {
-                TaskComponent task = new TaskComponent(t);
-                task.registerObserver(this);
-                this.taskContainer.getChildren().add(task);
-            }
+            // TODO: if (!t.isDone()) -> better because we do not need to remember the list where the task was stored!
+
+            TaskComponent task = new TaskComponent(t);
+            task.registerObserver(this);
+            this.taskContainer.getChildren().add(task);
         }
     }
 
     @FXML
     private void onAddTaskButtonClicked(Event e)
     {
-        if (this.selectedListName == null || this.selectedListName.getText() == null)
+        if (this.selectedListName == null || this.selectedListName.getText() == null
+                || this.selectedListName.getText().equals("Done")
+                || this.selectedListName.getText().equals("Your Lists"))
         {
             return;
         }
@@ -168,10 +178,18 @@ public class ListViewController implements Observer
                 return;
             }
 
+            if (event.name().equals(ComponentEvent.TASK_DONE.name()))
+            {
+                LOG.info("Received task done event.");
+                this.selectListWithName(new Title(this.selectedListName.getText()));
+                return;
+            }
+
             if (event.name().equals(ComponentEvent.TASK_LIST_DELETE.name()))
             {
                 LOG.info("Received task list delete event.");
-                List<TaskList> lists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
+                List<TaskList> lists = PersistenceUtil.obtainTaskListRepository()
+                        .getTaskListsForUser(this.user.getId());
                 this.refreshListsContainer(lists);
                 return;
             }

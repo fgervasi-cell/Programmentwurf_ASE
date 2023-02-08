@@ -7,10 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
+import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
+import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.observer.Observable;
 import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
+import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -73,8 +76,9 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     @FXML
     private void onMarkTaskAsDone()
     {
-        // TODO: move the task to the "Done" list (maybe I need to implement a new
-        // method like "move(Task t, TaskList newList)" in the repository for that)
+        TaskListRepository listRepository = PersistenceUtil.obtainTaskListRepository();
+        TaskList list = listRepository.getTaskListByName(new Title("Done"));
+        listRepository.moveTaskToList(this.task, list);
         notifyObservers(ComponentEvent.TASK_DONE);
     }
 

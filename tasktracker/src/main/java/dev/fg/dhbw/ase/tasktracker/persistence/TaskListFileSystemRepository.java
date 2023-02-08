@@ -79,4 +79,11 @@ class TaskListFileSystemRepository implements TaskListRepository
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void moveTaskToList(Task task, TaskList list)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

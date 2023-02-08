@@ -10,6 +10,7 @@ import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -19,6 +20,8 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
 {
     @FXML
     private Text listName;
+    @FXML
+    private Button deleteButton;
     private TaskList list;
     private List<Observer> observers = new ArrayList<>();
 
@@ -32,6 +35,10 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
             this.getChildren().add(loader.<HBox>load());
             this.listName.setText(list.getTitle().getTitleString());
             this.listName.addEventFilter(MouseEvent.MOUSE_CLICKED, this::handleListNameClicked);
+            if (this.listName.getText().equals("Done"))
+            {
+                this.deleteButton.setVisible(false);
+            }
         }
         catch (IOException e)
         {
@@ -53,6 +60,11 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
     @FXML
     private void onListDelete()
     {
+        if (this.listName.getText().equals("Done"))
+        {
+            return;
+        }
+
         PersistenceUtil.obtainTaskListRepository().deleteTaskList(list);
         ComponentEvent event = ComponentEvent.TASK_LIST_DELETE;
         event.setData(this.listName.getText());

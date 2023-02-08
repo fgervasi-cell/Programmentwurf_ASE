@@ -20,4 +20,5 @@ public interface TaskListRepository
     public List<Task> getTasksOfTaskListByTaskListName(Title name);
     public void addTaskToTaskList(final Task t);
     public void removeTask(final Task task);
+    public void moveTaskToList(final Task task, final TaskList list);
 }

@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
+import dev.fg.dhbw.ase.tasktracker.domain.factories.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 
 class TaskListDatabaseRepository implements TaskListRepository
@@ -103,6 +104,16 @@ class TaskListDatabaseRepository implements TaskListRepository
     {
         session.beginTransaction();
         session.remove(task);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public void moveTaskToList(Task task, TaskList list)
+    {
+        session.beginTransaction();
+        session.delete(task);
+        Task newTask = TaskFactory.createTaskDone(task, list.getId());
+        session.save(newTask);
         session.getTransaction().commit();
     }
 }
