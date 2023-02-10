@@ -21,4 +21,5 @@ public interface TaskListRepository
     public void addTaskToTaskList(final Task t);
     public void removeTask(final Task task);
     public void moveTaskToList(final Task task, final TaskList list);
+    public List<Task> getTasksDoneForUser(final UUID user);
 }

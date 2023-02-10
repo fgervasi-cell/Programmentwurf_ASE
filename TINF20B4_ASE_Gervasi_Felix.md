@@ -179,23 +179,84 @@ Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifische
 - "Das Prinizip xyz besagt, ... Dies wird z.B. in der Klasse xyz berücksichtigt, weil..."
 -->
 
-#### Low Coupling
+GRASP ist ein Akronym und steht für _General Responsibility Assignment Software Patterns_. GRASP vereint eine Reihe an Prinzipien und Mustern die im Folgenden näher erläutert werden sollen.
 
-#### High Cohesion
+#### Low Coupling (lose Kopplung)
 
-#### Information Expert
+<!-- Was versteht man unter Low Coupling? -->
 
-#### Polymorphism
+Unter dem Begriff der Kopplung versteht man den Grad der Abhängigkeit von zwei Softwarekomponenten. Ziel bei der Entwicklung von Software ist meist eine lose Kopplung d.h., dass die Abhängigkeiten zwischen den Komponenten auf ein Minimum reduziert werden sollen.
 
-#### Pure Fabrication
+<!-- Wo habe ich in meinem Projekt Low Coupling eingesetzt und warum? -->
 
-#### Indirection/Delegation
+#### High Cohesion (hohe Kohäsion)
 
-#### Protected Variations
+<!-- Was versteht man unter dem Begriff High Cohesion? -->
 
-#### Controller
+Unter Kohäsion versteht man den Grad von Zusammengehörigkeit innerhalb einer Softwarekomponente. Es sollte versucht werden eine möglichst hohe Kohäsion zu erreichen d.h., dass bspw. Variablen und Methoden einer Klasse inhaltlich zusammenpassen. Innerhalb einer Softwarekomponente versucht man also den Zusammenhalt der Bestandteile hoch zu halten wohingegen die Softwarekomponenten untereinander möglichst schwach aneinander gebunden sein sollten.
 
-#### Creator
+<!-- Wo habe ich in meinem Projekt High Cohesion eingesetzt und warum? -->
+
+#### Information Expert (Informationsexperte)
+
+<!-- Was versteht man unter dem Begriff Information Expert? -->
+
+Hinter dem Experten-Prinzip verbirgt sich der Gedanke, dass eine neue Aufgabe von derjenigen Softwarekomponente übernommen werden sollte, die bereits das meiste _Wissen_ zur Erfüllung der Aufgabe besitzt. Dadurch werden beispielsweise unnötige _Hilfsklassen_ verhindert.
+
+<!-- Wo habe ich in meinem Projekt Information Expert eingesetzt und warum? -->
+
+#### Polymorphism (Polymorphie)
+
+<!-- Was versteht man unter dem Begriff Polymorphism? -->
+
+Unter dem Begriff der Polymorphie versteht man im Zusammenhang mit GRASP das Prinzip unterschiedliches Verhalten eines Typs durch Polymorphie auszudrücken.
+
+<!-- Wo habe ich in meinem Projekt Polymorphism eingesetzt und warum? -->
+
+#### Pure Fabrication (reine Erfindung)
+
+<!-- Was versteht man unter dem Begriff Pure Fabrication? -->
+
+Unter der _Pure Fabrication_ versteht man Klassen oder Module die in der Problemdomäne nicht existieren (deshalb _reine Erfindung_). Sie implementieren Methoden für die sie nicht Experte sind. Dies wird in diesem Fall toleriert, da somit eine Trennung zwischen Technologiewissen und Domänenwissen stattfinden kann. Allerdings sollte mit _reinen Erfindungen_ sehr sparsam umgegangen werden (nur wenn es wirklich notwendig ist).
+
+<!-- Wo habe ich in meinem Projekt Pure Fabrication eingesetzt und warum? -->
+
+#### Indirection/Delegation (Indirektion/Delegation)
+
+<!-- Was versteht man unter dem Begriff Indirection/Delegation? -->
+
+Mit Indirektion/Delegation ist gemeint, dass ein Objekt Aufgaben an ein weiteres Objekt delegiert. Das Objekt zu dem deligiert wird ist meist besser zur Erfüllung der Aufgabe geeignet (kann bspw. Experte sein). Das Prinzip kann Vererbung ersetzen da die Funktionsweise analog ist zu einer Kindklasse die Methodenaufrufe zu ihrer Elternklasse delegiert. Außerdem kann dadurch eine hohe Kohäsion gefördert werden, da inhaltlich zusammengehörige Betsandteile in Klassen ausgelagert und die Kommunikation über Delegation geregelt werden kann.
+
+<!-- Wo habe ich in meinem Projekt Indirection/Delegation eingesetzt und warum? -->
+
+#### Protected Variations (geschützte Veränderungen)
+
+<!-- Was versteht man unter dem Begriff Protected Variations? -->
+
+Das Prinzip der geschützten Veränderungen besagt, dass konkrete Implementierung mit Hilfe von Interfaces _versteckt_ werden sollten. Die Softwarekomponenten greifen nur auf das Interface zu. Dadurch können im Hintergund die Implementierungen ausgetauscht oder angepasst werden ohne, dass dies Auswirkungen auf das restliche System hat. Das System ist also _geschützt vor Veränderungen_.
+
+<!-- Wo habe ich in meinem Projekt Protected Variations eingesetzt und warum? -->
+
+#### Controller (Steuereinheit)
+
+<!-- Was versteht man unter dem Begriff Controller? -->
+
+Ein Controller stell die erste Instanz nach dem GUI dar. Er nimmt Events aus der Benutzerschnittstelle entgegen und delegiert diese an andere Klassen, welche die Events verarbeiten können. Der Controller beinhaltet das Domänenwissen und sollte möglichst wenig selbst tun und stattdessen Aufgaben delegieren.
+
+<!-- Wo habe ich in meinem Projekt Controller eingesetzt und warum? -->
+
+#### Creator (Erzeuger)
+
+<!-- Was versteht man unter dem Begriff Creator? -->
+
+Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von Instanzen zuständig sein darf. Klasse A darf eine Instanz von Klasse B erzeugen, wenn:
+
+- A eine Aggregation von B ist oder Objekte von B enthält
+- A Objekte von B verarbeitet
+- A von B abhängt (starke Kopplung)
+- A der Informationsträger/-experte für die Erzeugung von B ist (bspw. Factory)
+
+<!-- Wo habe ich in meinem Projekt Creator eingesetzt und warum? -->
 
 ### Analyse und Begründung für DRY
 
@@ -209,6 +270,21 @@ Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifische
 
 ### Code Smells identifizieren
 
+<!-- 
+- Code Smells können im aktuellen Code existieren oder können im Laufe der Entwicklung beseitigt worden sein (dann Verweis auf Commit hinzufügen)
+- An in der Vorlesung genannten Code Smells oder https://refactoring.guru/refactoring/smells orientieren
+- Keine schwachen Code Smells wie "unused import", "unused variable", "parameter could be final" etc.
+- Mindestens 4 Stück!!!
+ -->
+
+#### Code Smell 1: TODO
+
+#### Code Smell 2: TODO
+
+#### Code Smell 3: TODO
+
+#### Code Smell 4: TODO
+
 ### Begründung durchgeführter Refactorings
 
 <!--
@@ -216,7 +292,12 @@ Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifische
 - Wo habe ich das Refactoring durchgeführt? (Stellen im Code und Commits angeben)
 - Warum habe ich das Refactoring durchgeführt?
 - Evtl. Screenshots vom Code?
+- An in der Vorlesung genannten Refactoring oder  https://refactoring.guru/refactoring/techniques orientieren
 -->
+
+#### Refactoring 1: TODO
+
+#### Refactoring 2: TODO
 
 ## Entwurfsmuster
 

@@ -86,4 +86,11 @@ class TaskListFileSystemRepository implements TaskListRepository
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public List<Task> getTasksDoneForUser(UUID user)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -1,8 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
 import dev.fg.dhbw.ase.tasktracker.domain.util.Modal;
@@ -26,7 +24,6 @@ import javafx.stage.Stage;
 
 public class StartViewController
 {
-    private static final Logger LOG = Logger.getLogger(StartViewController.class.getName());
     private final Stage primaryStage;
     @FXML
     private TextField eMailTextField;
@@ -59,20 +56,16 @@ public class StartViewController
         User user = userRepository.getUserByEMail(new EMail(eMailTextField.getText()));
         if (user != null)
         {
-            LOG.info("User does already exist. Checking password...");
             if (user.getPassword().getPassword().equals(this.passwordField.getText()))
             {
-                LOG.info("Password correct. Logging in...");
                 login(user);
                 return;
             }
-            LOG.info("Password did not match.");
             Text passwordDidNotMatchText = new Text("Password did not match.");
             passwordContainer.getChildren().add(passwordDidNotMatchText);
             this.primaryStage.getScene().setCursor(Cursor.DEFAULT);
             return;
         }
-        LOG.info("User does not exist. Creating new user and logging in...");
         Modal.show("New User", "There is not an existing user with that e-mail address. Do you want to create an account?", Modal.Type.INFO);
         user = new User(new EMail(eMailTextField.getText()), new Password(passwordField.getText()));
         userRepository.createUser(user);
@@ -82,7 +75,6 @@ public class StartViewController
     @FXML
     public void onContinueWithoutAccount(Event e)
     {
-        LOG.info("Continue without an account...");
         login(null);
     }
 
@@ -100,7 +92,6 @@ public class StartViewController
         catch (IOException e)
         {
             Modal.show("Exception", "There was an error loading the screen. Please contact the developers and report this issue.", Modal.Type.ERROR);
-            LOG.log(Level.SEVERE, "Error loading the FXML file of the list view.");
             e.printStackTrace();
         }
     }

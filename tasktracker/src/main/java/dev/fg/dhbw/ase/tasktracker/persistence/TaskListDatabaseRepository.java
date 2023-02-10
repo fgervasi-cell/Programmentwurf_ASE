@@ -112,8 +112,17 @@ class TaskListDatabaseRepository implements TaskListRepository
     {
         session.beginTransaction();
         session.delete(task);
-        Task newTask = TaskFactory.createTaskDone(task, list.getId());
-        session.save(newTask);
+        Task newTask1 = TaskFactory.createTaskDone(task, list.getId());
+        Task newTask2 = TaskFactory.createTaskDone(task, task.getTaskListId());
+        session.save(newTask1);
+        session.save(newTask2);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public List<Task> getTasksDoneForUser(UUID user)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
