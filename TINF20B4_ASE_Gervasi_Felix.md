@@ -233,9 +233,11 @@ Mit Indirektion/Delegation ist gemeint, dass ein Objekt Aufgaben an ein weiteres
 
 <!-- Was versteht man unter dem Begriff Protected Variations? -->
 
-Das Prinzip der geschützten Veränderungen besagt, dass konkrete Implementierung mit Hilfe von Interfaces _versteckt_ werden sollten. Die Softwarekomponenten greifen nur auf das Interface zu. Dadurch können im Hintergund die Implementierungen ausgetauscht oder angepasst werden ohne, dass dies Auswirkungen auf das restliche System hat. Das System ist also _geschützt vor Veränderungen_.
+Das Prinzip der geschützten Veränderungen besagt, dass konkrete Implementierungen mit Hilfe von Interfaces _versteckt_ werden sollten. Die Softwarekomponenten greifen nur auf das Interface zu. Dadurch können im Hintergund die Implementierungen ausgetauscht oder angepasst werden ohne, dass dies Auswirkungen auf das restliche System hat. Das System ist also _geschützt vor Veränderungen_.
 
 <!-- Wo habe ich in meinem Projekt Protected Variations eingesetzt und warum? -->
+
+In dem Package _dev.fg.dhbw.ase.tasktracker.persistence_ befinden sich die Klassen zur Persistierung und Bereitstellung von Daten mit denen die Anwendung arbeitet. Für jede Aggregate-Root existiert ein Repository welches die Schnittstellen für den domänenspezifischen Teil der Anwendung definiert. Innerhalb diesen Teils der Anwendung wird nur mit dem Interface (bzw. dem Repository) gearbeitet, sodass die Implementierungsdetails der Persistenzschicht für die Domäne unsichtbar bleiben und beliebig ausgetauscht werden können. Dadurch bleibt die Domäne nicht nur von _Accidental Complexity_ befreit sondern es wird auch das _Protected Variations Pattern_ unterstützt, da durch die Abstraktion der Implementierung mit Hilfe von Interfaces die Domäne vor Veränderungen geschützt bleibt.
 
 #### Controller (Steuereinheit)
 
