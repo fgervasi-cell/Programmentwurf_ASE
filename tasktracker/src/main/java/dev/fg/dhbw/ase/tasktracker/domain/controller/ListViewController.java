@@ -29,6 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+// TODO: Controllers are meant to delegate most of the work which is not the case here. Maybe refactoring is needed?
 public class ListViewController implements Observer
 {
     private final Stage primaryStage;

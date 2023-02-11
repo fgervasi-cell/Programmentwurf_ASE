@@ -245,6 +245,8 @@ Ein Controller stell die erste Instanz nach dem GUI dar. Er nimmt Events aus der
 
 <!-- Wo habe ich in meinem Projekt Controller eingesetzt und warum? -->
 
+Das in diesem Projekt eingesetzte UI-Framework _JavaFX_ unterstützt die Verwendung von Controllern standardmäßig. Dabei kann eine beliebige Java-Klasse als Controller auf einem Root-Element der UI gesetzt werden. Die UI kann vollständig vom Code entkoppelt und im XML-Format in sog. FXML-Dateien ausgelagert werden (s. _/main/resources/fxml/_). Beispiele für Controller-Klassen sind im Package _dev.fg.dhbw.ase.tasktracker.domain.controller_ zu finden. Beispielsweise wird der _ListViewController_ als Controller-Klasse auf dem Root-Element der _ListView.fxml_ gesetzt. Durch Annotationen können Elemente aus FXML-Dateien im Code zugegriffen und Events verarbeitet werden. Dadurch sind alle Controller-Klasse die erste Instanz nach der UI und die Logik liegt im Controller und ist von der UI entkoppelt.
+
 #### Creator (Erzeuger)
 
 <!-- Was versteht man unter dem Begriff Creator? -->
