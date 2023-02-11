@@ -150,15 +150,52 @@ Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifische
 
 ### Analyse und Begründung für SOLID
 
+SOLID ist ein Akronym welches mehrere Programmierparadigmen unter sich vereint, die im Folgenden vorgstellt und analysiert werden sollen.
+
 #### Single Responsibility Principle (SRP)
+
+<!-- Was ist SRP? -->
+
+Das SRP besagt, dass eine Softwarekomponente nur eine einzige bestimmte Aufgabe haben sollte für die sie zuständig ist. Das SRP lässt sich auf mehreren Ebenen anwenden:
+
+- Module
+- Klassen
+- Methoden
+- Variablen
+
+<!-- Wo habe ich SRP eingesetzt? -->
 
 #### Open/Closed Principle (OCP)
 
+<!-- Was ist OCP? -->
+
+Das OCP besagt, dass Module offen für Erweiterungen aber geschlossen für Änderungen sein sollten. Mit anderen Worten sollte eine Software so designt sein, dass sich leicht neue Features hinzufügen lassen ohne große Änderungen an (öffentlichen) Schnittstellen vornehmen zu müssen, da dies zu weiteren Änderungen an allen möglichen Stellen in der Software führt.
+
+<!-- Wo habe ich OCP eingesetzt? -->
+
 #### Liskov Substitution Principle (LSP)
+
+<!-- Was ist LSP? -->
+
+Das LSP besagt, dass eine Klasse an jeder beliebigen Stelle durch ihre Basisklasse ersetzt werden können muss ohne, dass es zu unerwünschten Nebeneffekten kommt.
+
+<!-- Wo habe ich LSP eingesetzt? -->
 
 #### Interface Segregation Principle (ISP)
 
+<!-- Was ist LSP? -->
+
+Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben als ein allgemeines, welches alle Clientanforerdungen in sich vereint. Dadurch lässt sich die Anwendung unter Umständen leichter erweitern und es wird verhindert, dass viele leere Implementierungen bei Clients entstehen, die nur einen Bruchteil der Funktionalität des allgemeinen Interfaces brauchen.
+
+<!-- Wo habe ich LSP eingesetzt? -->
+
 #### Dependency Inversion Principle (DIP)
+
+<!-- Was ist DIP? -->
+
+Module auf höherer Ebene sollten keine Abhängigkeiten zu Modulen auf niedrigerer Ebene aufweisen. Stattdessen sollte eine Abstraktion dazwischen geschaltet werden von denen beide Ebenen abhängen. Abstraktionen sollten wiederum unabhängig von Details sein. Stattdessen sollte die Details von der Abstaktion abhängen.
+
+<!-- Wo habe ich DIP eingesetzt? -->
 
 ### Analyse und Begründung für GRASP
 
