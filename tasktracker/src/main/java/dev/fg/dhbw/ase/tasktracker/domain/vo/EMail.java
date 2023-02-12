@@ -21,7 +21,7 @@ public class EMail implements Serializable
 
     public EMail(final String mailString)
     {
-        if (!mailString.contains("@"))
+        if (!this.isValid(mailString))
         {
             throw new InvalidEMailException();
         }
@@ -33,10 +33,35 @@ public class EMail implements Serializable
         return this.mailString;
     }
 
+    private boolean isValid(String mail)
+    {
+        if (!mail.contains("@"))
+        {
+            return false;
+        }
+
+        String[] split = mail.split("@");
+
+        if (split.length != 2)
+        {
+            return false;
+        }
+
+        String user = split[0];
+        String domain = split[1];
+
+        if (!user.matches("[A-Za-z0-9]*"))
+        {
+            return false;
+        }
+
+        return domain.split(".").length == 2;
+    }
+
     @Override
     public int hashCode()
     {
-        return this.mailString.hashCode();
+        return this.mailString.toLowerCase().hashCode();
     }
 
     @Override
@@ -44,7 +69,7 @@ public class EMail implements Serializable
     {
         if (obj instanceof EMail)
         {
-            return this.mailString.equals(((EMail) obj).mailString);
+            return this.mailString.equalsIgnoreCase(((EMail) obj).mailString);
         }
         return false;
     }

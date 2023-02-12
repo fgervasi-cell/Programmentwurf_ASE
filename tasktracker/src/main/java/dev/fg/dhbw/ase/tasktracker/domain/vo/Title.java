@@ -33,7 +33,7 @@ public final class Title implements Serializable
         return this.titleString;
     }
 
-    public Title changTitle(String newTitle)
+    public Title changeTitle(String newTitle)
     {
         return new Title(newTitle);
     }
