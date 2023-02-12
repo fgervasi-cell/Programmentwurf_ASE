@@ -108,7 +108,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void moveTaskToList(Task task, TaskList list)
+    public void moveTaskToList(Task task, TaskList list) // TODO: wrong name or not needed
     {
         session.beginTransaction();
         session.delete(task);
@@ -124,5 +124,25 @@ class TaskListDatabaseRepository implements TaskListRepository
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void markTaskAsDone(Task task)
+    {
+        session.beginTransaction();
+        session.delete(task);
+        Task taskDone = TaskFactory.createTaskDone(task, task.getTaskListId());
+        session.save(taskDone);
+        session.getTransaction().commit();
+    }
+
+    @Override
+    public void markTaskAsUndone(Task task)
+    {
+        session.beginTransaction();
+        session.delete(task);
+        Task taskUndone = TaskFactory.createTaskUndone(task);
+        session.save(taskUndone);
+        session.getTransaction().commit();
     }
 }

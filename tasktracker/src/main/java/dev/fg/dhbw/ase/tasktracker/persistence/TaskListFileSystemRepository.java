@@ -93,4 +93,18 @@ class TaskListFileSystemRepository implements TaskListRepository
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public void markTaskAsDone(Task task)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void markTaskAsUndone(Task task)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

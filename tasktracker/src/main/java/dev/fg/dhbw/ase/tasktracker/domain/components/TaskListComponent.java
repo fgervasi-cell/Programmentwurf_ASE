@@ -60,7 +60,9 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
     @FXML
     private void onListDelete()
     {
-        if (this.listName.getText().equals("Done"))
+        // TODO: Would it not be better to create a whole other class for this so I do not need all those checks (like "ImmutableListComponent" or so)?
+        // TOOD: Maybe I could also design an Interface for that like "ListComponent" or so
+        if (this.listName.getText().equals("Done")) 
         {
             return;
         }

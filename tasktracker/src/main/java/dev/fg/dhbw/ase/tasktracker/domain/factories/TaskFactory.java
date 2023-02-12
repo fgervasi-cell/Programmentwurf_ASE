@@ -27,4 +27,10 @@ public class TaskFactory
         return new Task(taskList, task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
                 task.getReminder(), true);
     }
+
+    public static Task createTaskUndone(final Task task)
+    {
+        return new Task(task.getTaskListId(), task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
+                task.getReminder(), false);
+    }
 }

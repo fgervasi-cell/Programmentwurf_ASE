@@ -6,16 +6,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.kordamp.ikonli.javafx.FontIcon;
+
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
-import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
-import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.observer.Observable;
 import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -29,6 +30,8 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     private Text taskDueDate;
     @FXML
     private Text taskReminderDate;
+    @FXML
+    private Button button;
     private Task task;
     private List<Observer> observers = new ArrayList<>();
 
@@ -41,6 +44,12 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
         try
         {
             this.getChildren().add(loader.<HBox>load());
+            if (task.isDone())
+            {
+                button.getTooltip().setText("Undo this task. It will be returned to its originating list.");
+                button.setGraphic(new FontIcon("mdi-window-close:34"));
+                taskTitle.getStyleClass().add("strikethrough");
+            }
             this.taskTitle.setText(task.getTitle().getTitleString());
             String description = task.getDescription();
             // TODO: For some reason this is not working
@@ -59,6 +68,10 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
         }
     }
 
+    // TODO: I think this validates the High Cohesion and Information Expert
+    // principles because this task does not fit in here.
+    // TODO: I think it would be better to make this a static utility method in the
+    // DateInFuture class or something like that to increase reusablity.
     private String formatDate(DateInFuture futureDate)
     {
         String dateString = null;
@@ -77,9 +90,18 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     private void onMarkTaskAsDone()
     {
         TaskListRepository listRepository = PersistenceUtil.obtainTaskListRepository();
-        TaskList list = listRepository.getTaskListByName(new Title("Done"));
-        listRepository.moveTaskToList(this.task, list);
-        notifyObservers(ComponentEvent.TASK_DONE);
+        // TODO: Interface Segregation principle. Make an Interface TaskComponent and
+        // seperate the implementations of done and open tasks to reduce the use of if
+        // statements!!!
+        if (this.task.isDone())
+        {
+            listRepository.markTaskAsUndone(this.task);
+            notifyObservers(ComponentEvent.TASK_DONE);
+            return;
+        }
+
+        listRepository.markTaskAsDone(this.task);
+        notifyObservers(ComponentEvent.TASK_DONE); // TODO: rename this event
     }
 
     @FXML
