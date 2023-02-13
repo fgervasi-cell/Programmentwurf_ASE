@@ -52,8 +52,8 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
             }
             this.taskTitle.setText(task.getTitle().getTitleString());
             String description = task.getDescription();
-            // TODO: For some reason this is not working
-            this.taskDescription.setText(description != null ? description : "There is no description");
+            this.taskDescription
+                    .setText((description != null && !description.isBlank()) ? description : "There is no description");
             DateInFuture dueDate = task.getDueDate();
             DateInFuture reminder = task.getReminder();
             String dueDateString = formatDate(dueDate);

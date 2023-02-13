@@ -8,4 +8,4 @@ Run: Navigate into folder where the pom.xml is located. Run the command `mvn jav
 
 Run tests: Navigate into folder where the pom.xml is located. Run the command `mvn test`.
 
-Debug: Navigate into folder where the pom.xml is located. Run the command `mvn javafx:run@debug`. Attach the Java debugger by running the attach configuration in the launch.json.
+Debug: Navigate into folder where the pom.xml is located. Run the command `mvn clean javafx:run@debug`. Attach the Java debugger by running the attach configuration in the launch.json.
