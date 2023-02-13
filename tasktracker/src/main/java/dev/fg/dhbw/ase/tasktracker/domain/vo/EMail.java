@@ -40,9 +40,14 @@ public class EMail implements Serializable
             return false;
         }
 
+        if (this.containsMultiple('@', mail))
+        {
+            return false;
+        }
+
         String[] split = mail.split("@");
 
-        if (split.length != 2)
+        if (split.length != 2 || split[0].isBlank() || split[1].isBlank())
         {
             return false;
         }
@@ -55,7 +60,12 @@ public class EMail implements Serializable
             return false;
         }
 
-        return domain.split(".").length == 2;
+        return domain.split("[.]").length == 2;
+    }
+
+    private boolean containsMultiple(char c, String s)
+    {
+        return s.chars().filter(x -> x == c).count() > 1;
     }
 
     @Override
