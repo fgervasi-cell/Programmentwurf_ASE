@@ -147,6 +147,25 @@
           <groupId>org.openjfx</groupId>
           <artifactId>javafx-maven-plugin</artifactId>
           <version>0.0.8</version>
+          <executions>
+            <execution>
+              <!-- Default configuration for running -->
+              <id>default-cli</id>
+              <configuration>
+                <mainClass>dev.fg.dhbw.ase.tasktracker.domain.TaskTracker</mainClass>
+              </configuration>
+            </execution>
+            <execution>
+              <!-- Configuration for debugging -->
+              <id>debug</id>
+              <configuration>
+                <options>
+                  <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
+                </options>
+                <mainClass>dev.fg.dhbw.ase.tasktracker.domain.TaskTracker</mainClass>
+              </configuration>
+            </execution>
+          </executions>
           <configuration>
               <mainClass>dev.fg.dhbw.ase.tasktracker.domain.TaskTracker</mainClass>
           </configuration>
