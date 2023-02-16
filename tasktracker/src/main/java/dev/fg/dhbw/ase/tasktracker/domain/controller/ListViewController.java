@@ -191,6 +191,7 @@ public class ListViewController implements Observer
     @Override
     public void notifyObserver(Object message)
     {
+        // TODO: maybe I could use inheritance to prevent this method from getting very long?
         if (message instanceof ComponentEvent)
         {
             ComponentEvent event = (ComponentEvent) message;

@@ -318,11 +318,31 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 - Mindestens 4 Stück!!!
  -->
 
-#### Code Smell 1: TODO
+#### Code Smell 1: Large Class
 
-#### Code Smell 2: TODO
+<!-- 
+- e.g. ListViewController 
+- um was für eine Art von Smell handelt es sich?
+- woran erkennt man ihn?
+- was ist schlecht daran?
+-->
 
-#### Code Smell 3: TODO
+#### Code Smell 2: Switch Statements
+
+<!-- 
+- e.g. ListViewController.notifyObserver(Object)
+- um was für eine Art von Smell handelt es sich?
+- woran erkennt man ihn?
+- was ist schlecht daran?
+-->
+
+Dieser Code Smell gehört zur Klasse der _Object-Orientation Abusers_. Diese Klasse fasst Code Smells zusammen, welche eine unvollständige oder falsche Anwendung von objektorientierten Programmierprinzipien darstellen. Der Smell _Switch Statements_ bezieht sich auf das Vorkommen komplexer `switch`-Statements sowie Abfolgen von `if`-Statements. Ein Beispiel für eine solche Abfolge findet sich in der Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController`. Die Methode `notifyObserver(Object)` führt eine Reihe von Prüfungen durch, die die Art des Events feststellen sollen. Dies führt zu einer überaus langen und unübersichtlichen Methode, die mit der Zeit immer weiter anwächst, falls neue Events dazu kommen. Kommt ein neues Event hinzu muss außerdem die Methode um ein weiteres `if`-Statement erweitert werden. Der Code ist also gegenüber Erweiterungen sehr unflexibel.
+
+<!-- Wie könnte man den Smell lösen -->
+
+Eine Mögliche Lösung für das Problem ist der Einsatz von Polymorphie. Durch die Einführung einer neuen Klasse für jedes Event und einem gemeinsamen Interface könnte der gesamte Körper der Methode durch einen einzigen Methodenaufruf ersetzt werden. Dafür würde jede Event-Klasse das Event-Interface implementieren. Dieses würde dann stellvertretend für die einzelnen Events als Übergabeparameter verwendet werden (`notifyObserver(IEvent)`). Anschließend kann auf dem Interface die Methode aufgerufen werden, die von jeder Event-Klasse implementiert wird. (vgl. [switch-statements](https://refactoring.guru/smells/switch-statements), [oo-abusers](https://refactoring.guru/refactoring/smells/oo-abusers) und [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/598ea36ac2cfd159b2904be4c7b7bb61a487b58b/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
+
+#### Code Smell 3: Long Method
 
 #### Code Smell 4: TODO
 
