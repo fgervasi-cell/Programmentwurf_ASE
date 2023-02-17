@@ -34,7 +34,7 @@ Alle Bestandteile, außer dem Namen, sind optional. Die Anzahl Arbeitsschritte i
 
 Fälligkeitsdatum (Due Date):
 
-Ein Fälligkeitsdatum kann auf einer Aufgabe gesetzt werden. Es ist darauf zu achten, dass das Fälligkeitsdatum nicht in der Vergangenheit liegen darf. Ist das Fälligkeitsdatum auf einer Aufgabe erreicht muss dies in der Aufgabe gekennzeichnet werden.
+Ein Fälligkeitsdatum kann auf einer Aufgabe gesetzt werden. Es ist darauf zu achten, dass das Fälligkeitsdatum nicht in der Vergangenheit liegen darf. Ist das Fälligkeitsdatum auf einer Aufgabe erreicht muss dies in der Aufgabe gekennzeichnet werden. Als Fälligkeitsdatum werden nur Jahr, Monat und Tag betrachtet.
 
 Aufgabenliste (Task List):
 
@@ -46,7 +46,7 @@ Ein Arbeitsschritt kann selbst wieder als Aufgabe verstanden werden, mit dem Unt
 
 Erinnerung (Reminder):
 
-Eine Erinnerung kann auf einer Aufgabe gesetzt werden. Es ist erneut darauf zu achten, dass das Erinnerungsdatum nicht in der Vergangenheit liegt. Ist das Erinnerungsdatum auf einer Aufgabe erreicht, muss der Benutzer darüber in Kenntnis gesetzt werden.
+Eine Erinnerung kann auf einer Aufgabe gesetzt werden. Es ist erneut darauf zu achten, dass das Erinnerungsdatum nicht in der Vergangenheit liegt. Ist das Erinnerungsdatum auf einer Aufgabe erreicht, muss der Benutzer darüber in Kenntnis gesetzt werden. Als Erinnerungsdatum werden nur Jahr, Monat und Tag betrachtet.
 
 Liste anlegen:
 
