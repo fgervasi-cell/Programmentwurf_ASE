@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -18,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class TaskComponent extends HBox implements Observable // NOSONAR: just using the JavaFX library
@@ -60,6 +62,10 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
             String reminderString = formatDate(reminder);
             this.taskDueDate.setText(dueDateString != null ? dueDateString : "There is no due date set");
             this.taskReminderDate.setText(reminderString != null ? reminderString : "There is no reminder set");
+            if (this.dueDateIsReached(dueDate.getDueDate()))
+            {
+                this.taskDueDate.setFill(Color.RED);
+            }
         }
         catch (IOException e)
         {
@@ -84,6 +90,27 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
                     calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
         }
         return dateString;
+    }
+
+    // TODO: same like above. This should maybe be moved to the DateInFuture class
+    // like "dateReached" or smth
+    private boolean dueDateIsReached(Date dueDate)
+    {
+        Calendar currentDateCalendar = Calendar.getInstance(TimeZone.getDefault());
+        Calendar dueDateCalendar = Calendar.getInstance();
+        dueDateCalendar.setTime(dueDate);
+
+        if (currentDateCalendar.get(Calendar.YEAR) > dueDateCalendar.get(Calendar.YEAR))
+        {
+            return false;
+        }
+
+        if (currentDateCalendar.get(Calendar.MONTH) > dueDateCalendar.get(Calendar.MONTH))
+        {
+            return false;
+        }
+
+        return currentDateCalendar.get(Calendar.DAY_OF_MONTH) >= dueDateCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
     @FXML

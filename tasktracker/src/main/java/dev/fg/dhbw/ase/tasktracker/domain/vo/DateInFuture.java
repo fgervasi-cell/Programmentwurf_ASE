@@ -1,6 +1,8 @@
 package dev.fg.dhbw.ase.tasktracker.domain.vo;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.Embeddable;
 
@@ -19,11 +21,22 @@ public final class DateInFuture
 
     public DateInFuture(final Date date)
     {
-        if (date.getTime() < System.currentTimeMillis())
+        if (!this.isFutureDate(date))
         {
             throw new DateLiesInPastException();
         }
         this.date = date;
+    }
+
+    private boolean isFutureDate(Date date)
+    {
+        Calendar today = Calendar.getInstance(TimeZone.getDefault());
+        Calendar future = Calendar.getInstance(TimeZone.getDefault());
+        future.setTime(date);
+
+        return today.get(Calendar.MONTH) <= future.get(Calendar.MONTH)
+                && today.get(Calendar.DAY_OF_MONTH) <= future.get(Calendar.DAY_OF_MONTH)
+                && today.get(Calendar.YEAR) <= future.get(Calendar.YEAR);
     }
 
     public Date getDueDate()

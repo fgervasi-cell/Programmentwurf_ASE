@@ -1,7 +1,11 @@
 package dev.fg.dhbw.ase.tasktracker.domain.vo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -12,8 +16,17 @@ public class DateInFutureTest
     @Test(expected = DateLiesInPastException.class)
     public void testInvalidInstantiation()
     {
-        Date date = new Date(System.currentTimeMillis());
-        new DateInFuture(date);
+        Calendar date = Calendar.getInstance(TimeZone.getDefault());
+        date.set(1970, 12, 29);
+        new DateInFuture(date.getTime());
+    }
+
+    @Test
+    public void testTaskDueToday()
+    {
+        Date today = Calendar.getInstance(TimeZone.getDefault()).getTime();
+        DateInFuture future = new DateInFuture(today);
+        assertNotNull(future.getDueDate());
     }
 
     @Test
