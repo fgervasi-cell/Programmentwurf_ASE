@@ -327,6 +327,10 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 - was ist schlecht daran?
 -->
 
+Dieser Code Smell gehört zur Klasse der _Bloaters_. Diese Klasse fasst Code Smells zusammen, die dafür sorgen, dass der Code an manchen Stellen gigantische Ausmaße annimmt und dadurch schwer zu Pflegen ist. Der Smell _Large Class_ bezieht sich dabei speziell auf besonders große Klassen. Ein Beispiel ist die Klasse...
+
+<!-- Wie könnte man den Smell lösen -->
+
 #### Code Smell 2: Switch Statements
 
 <!-- 
@@ -343,6 +347,19 @@ Dieser Code Smell gehört zur Klasse der _Object-Orientation Abusers_. Diese Kla
 Eine Mögliche Lösung für das Problem ist der Einsatz von Polymorphie. Durch die Einführung einer neuen Klasse für jedes Event und einem gemeinsamen Interface könnte der gesamte Körper der Methode durch einen einzigen Methodenaufruf ersetzt werden. Dafür würde jede Event-Klasse das Event-Interface implementieren. Dieses würde dann stellvertretend für die einzelnen Events als Übergabeparameter verwendet werden (`notifyObserver(IEvent)`). Anschließend kann auf dem Interface die Methode aufgerufen werden, die von jeder Event-Klasse implementiert wird. (vgl. [switch-statements](https://refactoring.guru/smells/switch-statements), [oo-abusers](https://refactoring.guru/refactoring/smells/oo-abusers) und [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/598ea36ac2cfd159b2904be4c7b7bb61a487b58b/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
 #### Code Smell 3: Long Method
+
+<!-- 
+- e.g. ListViewController
+- um was für eine Art von Smell handelt es sich?
+- woran erkennt man ihn?
+- was ist schlecht daran?
+-->
+
+Dieser Code Smell gehört ebenfalls zur Klasse der _Bloaters_ und bezieht sich auf besonders lange Methoden mit vielen Codezeilen. Als Daumenregel gilt, dass eine Methode nicht mehr als zehn Zeilen Code enthalten sollte. Eine sehr lange Methode legt nahe, dass diese Methode eine Reihe verschiedener Aufgaben übernimmt, die eigentlich in separate Methoden ausgelagert werden sollten. Beispielsweise wird auch das _Single Responsibility Principle_ dadurch verletzt. Beispiele für lange Methoden finden sich aktuell in der Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController`. Diese Klasse enthält leider viele lange und komplexe Methoden, die teilweise mehrere Aufgaben übernehmen. Als konkretes Beispiel kann wieder die Methode `notifyObserver(Object)` herangezogen werden, die außerdem Gefahr läuft immer weiter anzuwachsen. Diese hat 33 Zeilen also mehr als dreimal so viel wie im optimalen Fall.
+
+<!-- Wie könnte man den Smell lösen -->
+
+Code Smells dieser Art lassen sich durch das extrahieren von Methoden lösen. Dabei werden die Codezeilen, die zusammen eine bestimmte Aufgabe erfüllen, in eine separate Methode ausgelagert. Dadurch entstehen viele kleine, leicht wartbare und verständliche Methoden und die Größe der ursprünglichen Methode wird deutlich verkleinert. (vgl. [bloaters](https://refactoring.guru/refactoring/smells/bloaters), [long-method](https://refactoring.guru/smells/long-method) und [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/598ea36ac2cfd159b2904be4c7b7bb61a487b58b/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
 #### Code Smell 4: TODO
 
