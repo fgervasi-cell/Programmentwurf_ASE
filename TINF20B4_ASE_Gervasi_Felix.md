@@ -373,7 +373,9 @@ Code Smells dieser Art lassen sich durch das extrahieren von Methoden lösen. Da
 - An in der Vorlesung genannten Refactoring oder  https://refactoring.guru/refactoring/techniques orientieren
 -->
 
-#### Refactoring 1: TODO
+#### Refactoring 1: Extract Method
+
+<!-- e.g. ListViewController.onAddTaskButtonClicked(Event) -->
 
 #### Refactoring 2: TODO
 

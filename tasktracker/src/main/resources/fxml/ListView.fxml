@@ -15,7 +15,7 @@
             <VBox fx:id="listsContainer" spacing="15"></VBox>
             <HBox spacing="15">
                 <Button text="Add List" onAction="#onAddListButtonClicked" styleClass="button-primary-sm" />
-                <Button text="Statistics" styleClass="button-primary-sm">
+                <Button text="Statistics" styleClass="button-primary-sm" onAction="#showStatistics">
                     <tooltip>
                         <Tooltip text="View statistics about your behavior." />
                     </tooltip>

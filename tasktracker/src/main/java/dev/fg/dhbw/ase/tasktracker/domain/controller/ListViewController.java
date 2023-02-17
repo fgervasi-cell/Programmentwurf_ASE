@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -121,7 +122,7 @@ public class ListViewController implements Observer
         {
             return;
         }
-        TaskList list = PersistenceUtil.obtainTaskListRepository()
+        TaskList list = PersistenceUtil.obtainTaskListRepository() // TODO: extract that to sth like "openAddTaskWindow"
                 .getTaskListByName(new Title(this.selectedListName.getText()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
         Stage stage = new Stage();
@@ -152,6 +153,24 @@ public class ListViewController implements Observer
         final TextField newList = new TextField();
         newList.addEventFilter(KeyEvent.KEY_PRESSED, event -> this.handleSubmitNewListName(event, newList));
         this.listsContainer.getChildren().add(newList);
+    }
+
+    @FXML
+    private void showStatistics(Event e)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StatisticsView.fxml"));
+        loader.setController(new StatisticsViewController(this.user));
+        try
+        {
+            Scene statisticsScene = new Scene(loader.<FlowPane>load());
+            this.primaryStage.setTitle("TaskTracker - Statistics");
+            this.primaryStage.setScene(statisticsScene);
+        }
+        catch (IOException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
     private void handleSubmitNewListName(KeyEvent event, TextField newList)
