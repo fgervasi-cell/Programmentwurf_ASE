@@ -24,4 +24,6 @@ public interface TaskListRepository
     public List<Task> getTasksDoneForUser(final UUID user);
     public void markTaskAsDone(final Task task);
     public void markTaskAsUndone(final Task task);
+    public int getNumberOfDoneTasksForUser(final User user);
+    public int getNumberOfOpenTasksForUser(final User user);
 }

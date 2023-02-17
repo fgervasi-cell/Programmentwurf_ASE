@@ -107,4 +107,18 @@ class TaskListFileSystemRepository implements TaskListRepository
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public int getNumberOfDoneTasksForUser(User user)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getNumberOfOpenTasksForUser(User user)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

@@ -1,5 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -120,10 +121,19 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public List<Task> getTasksDoneForUser(UUID user)
+    public List<Task> getTasksDoneForUser(UUID user) // TODO: Is this very elegant?
     {
-        // TODO Auto-generated method stub
-        return null;
+        List<TaskList> lists = this.getTaskListsForUser(user);
+        session.beginTransaction();
+        List<Task> result = new ArrayList<>();
+        for (TaskList list : lists)
+        {
+            Query<Task> query = session.createQuery("FROM Task WHERE taskListId = :id AND done = true", Task.class);
+            query.setParameter("id", list.getId());
+            result.addAll(query.getResultList());
+        }
+        session.getTransaction().commit();
+        return result;
     }
 
     @Override
@@ -144,5 +154,28 @@ class TaskListDatabaseRepository implements TaskListRepository
         Task taskUndone = TaskFactory.createTaskUndone(task);
         session.save(taskUndone);
         session.getTransaction().commit();
+    }
+
+    @Override
+    public int getNumberOfDoneTasksForUser(User user)
+    {
+        List<Task> tasks = this.getTasksDoneForUser(user.getId());
+        return tasks.size();
+    }
+
+    @Override
+    public int getNumberOfOpenTasksForUser(User user)
+    {
+        List<TaskList> lists = this.getTaskListsForUser(user.getId()); // TODO: extract this to "getOpenTasksForUser" > see "getTasksDoneForUser"
+        List<Task> result = new ArrayList<>();
+        session.beginTransaction();
+        for (TaskList list : lists)
+        {
+            Query<Task> query = session.createQuery("FROM Task WHERE taskListId = :id AND done = false", Task.class);
+            query.setParameter("id", list.getId());
+            result.addAll(query.getResultList());
+        }
+        session.getTransaction().commit();
+        return result.size();
     }
 }

@@ -159,10 +159,12 @@ public class ListViewController implements Observer
     private void showStatistics(Event e)
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/StatisticsView.fxml"));
-        loader.setController(new StatisticsViewController(this.user));
+        StatisticsViewController controller = new StatisticsViewController(this.user);
+        loader.setController(controller);
         try
         {
             Scene statisticsScene = new Scene(loader.<FlowPane>load());
+            controller.addWidgetsToContainer();
             this.primaryStage.setTitle("TaskTracker - Statistics");
             this.primaryStage.setScene(statisticsScene);
         }
