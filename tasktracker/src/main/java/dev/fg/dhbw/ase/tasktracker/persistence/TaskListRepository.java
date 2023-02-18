@@ -26,4 +26,5 @@ public interface TaskListRepository
     public void markTaskAsUndone(final Task task);
     public int getNumberOfDoneTasksForUser(final User user);
     public int getNumberOfOpenTasksForUser(final User user);
+    public List<Task> getDoneTasksOfLastWeek(final User user);
 }

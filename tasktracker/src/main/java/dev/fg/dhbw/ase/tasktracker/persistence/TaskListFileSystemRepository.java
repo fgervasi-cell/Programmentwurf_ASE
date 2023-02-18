@@ -121,4 +121,11 @@ class TaskListFileSystemRepository implements TaskListRepository
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public List<Task> getDoneTasksOfLastWeek(User user)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

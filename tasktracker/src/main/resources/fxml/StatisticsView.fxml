@@ -2,5 +2,6 @@
 <?import javafx.scene.layout.FlowPane ?>
 
 <FlowPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/Main.css" styleClass="root" fx:id="statisticsContainer">
-
+    <vgap>30</vgap>
+    <hgap>30</hgap>
 </FlowPane>

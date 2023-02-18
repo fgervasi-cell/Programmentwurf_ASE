@@ -1,10 +1,18 @@
 package dev.fg.dhbw.ase.tasktracker.domain.controller;
 
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import dev.fg.dhbw.ase.tasktracker.domain.components.WidgetComponent;
+import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.User;
 import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -57,15 +65,34 @@ public class StatisticsViewController
 
     private WidgetComponent createAverageNumberOfTasksDoneWidget() // TODO: make those plain number over all time and also charts (two more widgets?)
     {
-        final NumberAxis xAxis = new NumberAxis();
+        List<Task> tasksDoneLastWeek = this.repository.getDoneTasksOfLastWeek(this.user);
+        final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Test");
-        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data<>(10, 10));
-        series.getData().add(new XYChart.Data<>(30, 30));
+        xAxis.setLabel("Day of the week");
+        LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_WEEK, -7);
+        for (int i = 0; i < 7; i++)
+        {
+            long yValue = tasksDoneLastWeek.stream().filter(task -> {
+                Calendar c = Calendar.getInstance();
+                c.setTime(task.getCompletionDate());
+                return c.get(Calendar.DAY_OF_WEEK) == today.get(Calendar.DAY_OF_WEEK);
+            }).count();
+            series.getData().add(new XYChart.Data<>(today.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH), yValue));
+            today.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        chart.getData().add(series);
         return new WidgetComponent("Average number of tasks done", chart);
     }
+
+    private WidgetComponent createTasksDoneLastWeekLineChartWidget()
+    {
+        return null;
+    }
+
+    // private WidgetComponent createTasks
 
     private WidgetComponent createAverageProcessingTimeWidget()
     {

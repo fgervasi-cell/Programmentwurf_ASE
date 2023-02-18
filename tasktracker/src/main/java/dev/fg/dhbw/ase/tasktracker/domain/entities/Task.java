@@ -1,5 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.domain.entities;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.AttributeOverride;
@@ -36,6 +37,10 @@ public class Task
     private DateInFuture reminder;
     @Column(name = "done")
     private boolean done;
+    @Column(name = "creation_date")
+    private final Date creationDate;
+    @Column(name = "completion_date")
+    private Date completionDate;
 
     @SuppressWarnings("unused")
     private Task()
@@ -43,6 +48,7 @@ public class Task
         this.id = null;
         this.taskListId = null;
         this.taskId = null;
+        this.creationDate = null;
     }
 
     public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate, DateInFuture reminder,
@@ -60,6 +66,14 @@ public class Task
         this.description = description;
         this.reminder = reminder;
         this.done = done;
+        this.creationDate = new Date(System.currentTimeMillis());
+    }
+
+    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate, DateInFuture reminder,
+            boolean done, Date completionDate)
+    {
+        this(taskListId, taskId, title, description, dueDate, reminder, done);
+        this.completionDate = completionDate;
     }
 
     public UUID getId()
@@ -100,5 +114,15 @@ public class Task
     public boolean isSubTask()
     {
         return this.taskId != null;
+    }
+
+    public Date getCreationDate()
+    {
+        return this.creationDate;
+    }
+
+    public Date getCompletionDate()
+    {
+        return this.completionDate;
     }
 }

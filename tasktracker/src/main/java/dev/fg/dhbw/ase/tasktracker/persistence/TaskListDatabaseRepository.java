@@ -1,6 +1,8 @@
 package dev.fg.dhbw.ase.tasktracker.persistence;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -166,7 +168,8 @@ class TaskListDatabaseRepository implements TaskListRepository
     @Override
     public int getNumberOfOpenTasksForUser(User user)
     {
-        List<TaskList> lists = this.getTaskListsForUser(user.getId()); // TODO: extract this to "getOpenTasksForUser" > see "getTasksDoneForUser"
+        List<TaskList> lists = this.getTaskListsForUser(user.getId()); // TODO: extract this to "getOpenTasksForUser" >
+                                                                       // see "getTasksDoneForUser"
         List<Task> result = new ArrayList<>();
         session.beginTransaction();
         for (TaskList list : lists)
@@ -177,5 +180,28 @@ class TaskListDatabaseRepository implements TaskListRepository
         }
         session.getTransaction().commit();
         return result.size();
+    }
+
+    @Override
+    public List<Task> getDoneTasksOfLastWeek(User user)
+    {
+        session.beginTransaction();
+        Query<TaskList> taskLists = session.createQuery("FROM TaskList WHERE userId = :userId", TaskList.class);
+        taskLists.setParameter("userId", user.getId());
+        List<Task> doneTasksOfLastWeek = new ArrayList<>();
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_MONTH, -5);
+        for (TaskList list : taskLists.getResultList())
+        {
+            Query<Task> tasks = session.createQuery(
+                    "FROM Task WHERE taskListId = :taskListId AND done = true AND completionDate BETWEEN :startDate AND :endDate",
+                    Task.class);
+            tasks.setParameter("taskListId", list.getId());
+            tasks.setParameter("startDate", today.getTime());
+            tasks.setParameter("endDate", new Date(System.currentTimeMillis()));
+            doneTasksOfLastWeek.addAll(tasks.getResultList());
+        }
+        session.getTransaction().commit();
+        return doneTasksOfLastWeek;
     }
 }
