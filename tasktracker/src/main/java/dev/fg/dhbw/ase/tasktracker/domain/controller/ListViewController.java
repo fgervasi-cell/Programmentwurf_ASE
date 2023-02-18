@@ -35,6 +35,7 @@ public class ListViewController implements Observer
 {
     private final Stage primaryStage;
     private final User user;
+    private final TaskListRepository repository;
     @FXML
     private Text userInformation;
     @FXML
@@ -50,22 +51,37 @@ public class ListViewController implements Observer
     {
         this.primaryStage = primaryStage;
         this.user = user;
+        this.repository = PersistenceUtil.obtainTaskListRepository();
     }
 
     @FXML
     private void initialize()
     {
+        this.prepareUI();
+        this.refreshListsContainer(this.getTaskListsForUser());
+    }
+
+    private void prepareUI()
+    {
         this.addTaskButton.setVisible(false);
         this.selectedListName.getStyleClass().add("headline");
         this.userInformation.setText(String.format("Logged in as %s", this.user.getEMail().getMailAdress()));
-        List<TaskList> taskLists = PersistenceUtil.obtainTaskListRepository().getTaskListsForUser(this.user.getId());
-        if (taskLists.stream().filter(tl -> tl.getTitle().getTitleString().equals("Done")).collect(Collectors.toList())
-                .isEmpty())
+    }
+
+    private List<TaskList> getTaskListsForUser()
+    {
+        List<TaskList> taskLists = this.repository.getTaskListsForUser(this.user.getId());
+        return this.addTaskListForDoneTasksIfNotPresent(taskLists);
+    }
+
+    private List<TaskList> addTaskListForDoneTasksIfNotPresent(List<TaskList> taskLists)
+    {
+        if (taskLists.stream().filter(tl -> tl.getTitle().getTitleString().equals("Done")).count() == 0)
         {
-            PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title("Done"), this.user);
+            this.repository.createNewTaskListForUser(new Title("Done"), this.user);
             taskLists.add(new TaskList(new Title("Done")));
         }
-        this.refreshListsContainer(taskLists);
+        return taskLists;
     }
 
     private void selectListWithName(Title taskListTitle)
@@ -212,7 +228,8 @@ public class ListViewController implements Observer
     @Override
     public void notifyObserver(Object message)
     {
-        // TODO: maybe I could use inheritance to prevent this method from getting very long?
+        // TODO: maybe I could use inheritance to prevent this method from getting very
+        // long?
         if (message instanceof ComponentEvent)
         {
             ComponentEvent event = (ComponentEvent) message;

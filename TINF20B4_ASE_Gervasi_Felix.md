@@ -165,6 +165,14 @@ Das SRP besagt, dass eine Softwarekomponente nur eine einzige bestimmte Aufgabe 
 
 <!-- Wo habe ich SRP eingesetzt? -->
 
+Ein Beispiel für den Einsatz von SRP stellt die Methode `initialize()` dar, die sich in der Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController` befindet. Die Methode wird von dem JavaFX-Framework automatisch aufgerufen, sobald alle mit der Annotation `@FXML` markierten Felder _befüllt_ wurden und erfüllt damit eine ähnliche Funktion wie der Konstruktor. Die Befehle die innerhalb der Methode ausgeführt werden lassen sich in drei Aufgaben unterteilen:
+
+1. Vorbereitung der UI
+2. Erstellen der, von der Applikation verwalteten, Liste zur Speicherung abgeschlossener Aufgaben, falls diese nicht vorhanden ist
+3. Abrufen aller vorhandenen Aufgabenlisten für den angemeldeten Benutzer und deren Darstellung in der UI
+
+Das SRP fordert, dass diese Aufgaben in einzelne Methoden ausgelagert werden (oder falls dies angebracht ist auch in separate Klassen). Deshalb wurde für die Vorbereitung der UI die Methode `prepareUI` eingeführt. Anschließend wird die Methode `List<TaskList> getTaskListsForUser()` aufgerufen, die die Liste für die abgeschlossenen Aufgaben automatisch hinzufügt falls sie noch nicht vorhanden ist. Der Rückgabewert der Methode wird anschließend verwendet um die UI zu aktualisieren. (vgl. )
+
 #### Open/Closed Principle (OCP)
 
 <!-- Was ist OCP? -->
@@ -172,6 +180,8 @@ Das SRP besagt, dass eine Softwarekomponente nur eine einzige bestimmte Aufgabe 
 Das OCP besagt, dass Module offen für Erweiterungen aber geschlossen für Änderungen sein sollten. Mit anderen Worten sollte eine Software so designt sein, dass sich leicht neue Features hinzufügen lassen ohne große Änderungen an (öffentlichen) Schnittstellen vornehmen zu müssen, da dies zu weiteren Änderungen an allen möglichen Stellen in der Software führt.
 
 <!-- Wo habe ich OCP eingesetzt? -->
+
+TODO
 
 #### Liskov Substitution Principle (LSP)
 
@@ -181,6 +191,8 @@ Das LSP besagt, dass eine Klasse an jeder beliebigen Stelle durch ihre Basisklas
 
 <!-- Wo habe ich LSP eingesetzt? -->
 
+TODO
+
 #### Interface Segregation Principle (ISP)
 
 <!-- Was ist LSP? -->
@@ -189,6 +201,8 @@ Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben 
 
 <!-- Wo habe ich LSP eingesetzt? -->
 
+TODO
+
 #### Dependency Inversion Principle (DIP)
 
 <!-- Was ist DIP? -->
@@ -196,6 +210,8 @@ Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben 
 Module auf höherer Ebene sollten keine Abhängigkeiten zu Modulen auf niedrigerer Ebene aufweisen. Stattdessen sollte eine Abstraktion dazwischen geschaltet werden von denen beide Ebenen abhängen. Abstraktionen sollten wiederum unabhängig von Details sein. Stattdessen sollte die Details von der Abstaktion abhängen.
 
 <!-- Wo habe ich DIP eingesetzt? -->
+
+TODO
 
 ### Analyse und Begründung für GRASP
 
@@ -226,6 +242,8 @@ Unter dem Begriff der Kopplung versteht man den Grad der Abhängigkeit von zwei 
 
 <!-- Wo habe ich in meinem Projekt Low Coupling eingesetzt und warum? -->
 
+TODO
+
 #### High Cohesion (hohe Kohäsion)
 
 <!-- Was versteht man unter dem Begriff High Cohesion? -->
@@ -233,6 +251,8 @@ Unter dem Begriff der Kopplung versteht man den Grad der Abhängigkeit von zwei 
 Unter Kohäsion versteht man den Grad von Zusammengehörigkeit innerhalb einer Softwarekomponente. Es sollte versucht werden eine möglichst hohe Kohäsion zu erreichen d.h., dass bspw. Variablen und Methoden einer Klasse inhaltlich zusammenpassen. Innerhalb einer Softwarekomponente versucht man also den Zusammenhalt der Bestandteile hoch zu halten wohingegen die Softwarekomponenten untereinander möglichst schwach aneinander gebunden sein sollten.
 
 <!-- Wo habe ich in meinem Projekt High Cohesion eingesetzt und warum? -->
+
+TODO
 
 #### Information Expert (Informationsexperte)
 
@@ -242,6 +262,8 @@ Hinter dem Experten-Prinzip verbirgt sich der Gedanke, dass eine neue Aufgabe vo
 
 <!-- Wo habe ich in meinem Projekt Information Expert eingesetzt und warum? -->
 
+TODO
+
 #### Polymorphism (Polymorphie)
 
 <!-- Was versteht man unter dem Begriff Polymorphism? -->
@@ -249,6 +271,8 @@ Hinter dem Experten-Prinzip verbirgt sich der Gedanke, dass eine neue Aufgabe vo
 Unter dem Begriff der Polymorphie versteht man im Zusammenhang mit GRASP das Prinzip unterschiedliches Verhalten eines Typs durch Polymorphie auszudrücken.
 
 <!-- Wo habe ich in meinem Projekt Polymorphism eingesetzt und warum? -->
+
+TODO
 
 #### Pure Fabrication (reine Erfindung)
 
@@ -258,6 +282,8 @@ Unter der _Pure Fabrication_ versteht man Klassen oder Module die in der Problem
 
 <!-- Wo habe ich in meinem Projekt Pure Fabrication eingesetzt und warum? -->
 
+TODO
+
 #### Indirection/Delegation (Indirektion/Delegation)
 
 <!-- Was versteht man unter dem Begriff Indirection/Delegation? -->
@@ -265,6 +291,8 @@ Unter der _Pure Fabrication_ versteht man Klassen oder Module die in der Problem
 Mit Indirektion/Delegation ist gemeint, dass ein Objekt Aufgaben an ein weiteres Objekt delegiert. Das Objekt zu dem deligiert wird ist meist besser zur Erfüllung der Aufgabe geeignet (kann bspw. Experte sein). Das Prinzip kann Vererbung ersetzen da die Funktionsweise analog ist zu einer Kindklasse die Methodenaufrufe zu ihrer Elternklasse delegiert. Außerdem kann dadurch eine hohe Kohäsion gefördert werden, da inhaltlich zusammengehörige Betsandteile in Klassen ausgelagert und die Kommunikation über Delegation geregelt werden kann.
 
 <!-- Wo habe ich in meinem Projekt Indirection/Delegation eingesetzt und warum? -->
+
+TODO
 
 #### Protected Variations (geschützte Veränderungen)
 
@@ -299,6 +327,8 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 
 <!-- Wo habe ich in meinem Projekt Creator eingesetzt und warum? -->
 
+TODO
+
 ### Analyse und Begründung für DRY
 
 <!--
@@ -306,6 +336,8 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 - Was bedeutet das?
 - An welchen Stellen habe ich DRY angewendet und warum?
 -->
+
+TODO
 
 ## Refactoring
 
@@ -330,6 +362,8 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 Dieser Code Smell gehört zur Klasse der _Bloaters_. Diese Klasse fasst Code Smells zusammen, die dafür sorgen, dass der Code an manchen Stellen gigantische Ausmaße annimmt und dadurch schwer zu Pflegen ist. Der Smell _Large Class_ bezieht sich dabei speziell auf besonders große Klassen. Ein Beispiel ist die Klasse...
 
 <!-- Wie könnte man den Smell lösen -->
+
+TODO
 
 #### Code Smell 2: Switch Statements
 

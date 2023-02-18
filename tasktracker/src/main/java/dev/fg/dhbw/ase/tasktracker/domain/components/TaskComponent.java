@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+// TODO: extends HBox is not that ideal I think. Make it like in WidgetComponent.
 public class TaskComponent extends HBox implements Observable // NOSONAR: just using the JavaFX library
 {
     @FXML

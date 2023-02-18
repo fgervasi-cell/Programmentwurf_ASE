@@ -72,7 +72,7 @@ public class StatisticsViewController
         LineChart<String, Number> chart = new LineChart<>(xAxis, yAxis);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         Calendar today = Calendar.getInstance();
-        today.add(Calendar.DAY_OF_WEEK, -7);
+        today.add(Calendar.DAY_OF_WEEK, -6);
         for (int i = 0; i < 7; i++)
         {
             long yValue = tasksDoneLastWeek.stream().filter(task -> {
