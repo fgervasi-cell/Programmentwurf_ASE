@@ -171,7 +171,7 @@ Ein Beispiel für den Einsatz von SRP stellt die Methode `initialize()` dar, die
 2. Erstellen der, von der Applikation verwalteten, Liste zur Speicherung abgeschlossener Aufgaben, falls diese nicht vorhanden ist
 3. Abrufen aller vorhandenen Aufgabenlisten für den angemeldeten Benutzer und deren Darstellung in der UI
 
-Das SRP fordert, dass diese Aufgaben in einzelne Methoden ausgelagert werden (oder falls dies angebracht ist auch in separate Klassen). Deshalb wurde für die Vorbereitung der UI die Methode `prepareUI` eingeführt. Anschließend wird die Methode `List<TaskList> getTaskListsForUser()` aufgerufen, die die Liste für die abgeschlossenen Aufgaben automatisch hinzufügt falls sie noch nicht vorhanden ist. Der Rückgabewert der Methode wird anschließend verwendet um die UI zu aktualisieren. (vgl. )
+Das SRP fordert, dass diese Aufgaben in einzelne Methoden ausgelagert werden (oder falls dies angebracht ist auch in separate Klassen). Deshalb wurde für die Vorbereitung der UI die Methode `prepareUI` eingeführt. Anschließend wird die Methode `List<TaskList> getTaskListsForUser()` aufgerufen, die die Liste für die abgeschlossenen Aufgaben automatisch hinzufügt falls sie noch nicht vorhanden ist. Der Rückgabewert der Methode wird anschließend verwendet um die UI zu aktualisieren. (vgl. [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/56f652c0950a6215d79719b8ee5f6889679fd951/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
 #### Open/Closed Principle (OCP)
 
