@@ -175,8 +175,6 @@ public class ListViewController implements Observer
     @FXML
     private void onAddListButtonClicked(Event e)
     {
-        // TODO: Refactor this. Extract it to another method to reuse it (e.g. in the
-        // initialization phase).
         final TextField newList = new TextField();
         newList.addEventFilter(KeyEvent.KEY_PRESSED, event -> this.handleSubmitNewListName(event, newList));
         this.listsContainer.getChildren().add(newList);

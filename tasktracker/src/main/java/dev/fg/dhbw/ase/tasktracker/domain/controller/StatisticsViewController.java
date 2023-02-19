@@ -86,14 +86,6 @@ public class StatisticsViewController
         return new WidgetComponent("Average number of tasks done", chart);
     }
 
-    /*private WidgetComponent createAverageNumberOfTasksDoneWidget()
-    {
-        List<Task> doneTasks = this.repository.getTasksDoneForUser(this.user.getId());
-        return new WidgetComponent("Average number of done tasks (all time)", statisticsContainer);
-    }*/
-
-    // private WidgetComponent createTasks
-
     private WidgetComponent createAverageProcessingTimeWidget()
     {
         double averageProcessingTime = calculateAverageProcessingTime();
