@@ -7,7 +7,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon ?>
 <?import javafx.scene.text.Text ?>
 
-<HBox xmlns:fx="http://javafx.com/fxml" alignment="center" stylesheets="@../css/Main.css,@../css/TaskComponent.css" spacing="15">
+<HBox xmlns:fx="http://javafx.com/fxml" alignment="center_left" stylesheets="@../css/Main.css,@../css/TaskComponent.css" spacing="15" styleClass="task">
     <HBox><!-- filler --></HBox>
     <Button onAction="#onMarkTaskAsDone" styleClass="hover-hand, background-color" fx:id="button">
         <graphic>

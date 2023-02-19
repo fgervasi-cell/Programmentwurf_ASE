@@ -22,8 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-// TODO: extends HBox is not that ideal I think. Make it like in WidgetComponent.
-public class TaskComponent extends HBox implements Observable // NOSONAR: just using the JavaFX library
+public class TaskComponent implements Observable
 {
     @FXML
     private Text taskTitle;
@@ -36,17 +35,17 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
     @FXML
     private Button button;
     private Task task;
+    private HBox root;
     private List<Observer> observers = new ArrayList<>();
 
     public TaskComponent(final Task task)
     {
         this.task = task;
-        this.getStyleClass().add("task");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskComponent.fxml"));
         loader.setController(this);
         try
         {
-            this.getChildren().add(loader.<HBox>load());
+            this.root = loader.<HBox>load();
             if (task.isDone())
             {
                 button.getTooltip().setText("Undo this task. It will be returned to its originating list.");
@@ -112,6 +111,11 @@ public class TaskComponent extends HBox implements Observable // NOSONAR: just u
         }
 
         return currentDateCalendar.get(Calendar.DAY_OF_MONTH) >= dueDateCalendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public HBox getRoot()
+    {
+        return this.root;
     }
 
     @FXML

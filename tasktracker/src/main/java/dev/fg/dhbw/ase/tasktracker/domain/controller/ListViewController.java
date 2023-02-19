@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -108,12 +109,12 @@ public class ListViewController implements Observer
             {
                 TaskComponent task = new TaskComponent(t);
                 task.registerObserver(this);
-                this.taskContainer.getChildren().add(task);
+                this.taskContainer.getChildren().add(task.getRoot());
             }
         }
     }
 
-    private List<TaskComponent> getTaskComponentsForDoneTasks() // TODO: I should just use a database query for this...
+    private List<HBox> getTaskComponentsForDoneTasks() // TODO: I should just use a database query for this...
     {
         TaskListRepository taskListRepository = PersistenceUtil.obtainTaskListRepository();
         List<TaskList> lists = taskListRepository.getTaskListsForUser(this.user.getId());
@@ -128,7 +129,7 @@ public class ListViewController implements Observer
         }
         List<TaskComponent> components = doneTasks.stream().map(TaskComponent::new).collect(Collectors.toList());
         components.stream().forEach(comp -> comp.registerObserver(this));
-        return components;
+        return components.stream().map(TaskComponent::getRoot).collect(Collectors.toList());
     }
 
     @FXML
