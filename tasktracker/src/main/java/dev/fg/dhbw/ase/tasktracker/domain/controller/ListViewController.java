@@ -46,6 +46,8 @@ public class ListViewController implements Observer
     private VBox taskContainer;
     @FXML
     private Button addTaskButton;
+    // TODO: should also store the TaskList object itself that is currently selected
+    // because I need its ID
 
     public ListViewController(final Stage primaryStage, final User user)
     {
@@ -132,14 +134,23 @@ public class ListViewController implements Observer
     @FXML
     private void onAddTaskButtonClicked(Event e)
     {
-        if (this.selectedListName == null || this.selectedListName.getText() == null
-                || this.selectedListName.getText().equals("Done")
-                || this.selectedListName.getText().equals("Your Lists"))
+        if (this.selectedListNameIsInvalid())
         {
             return;
         }
-        TaskList list = PersistenceUtil.obtainTaskListRepository() // TODO: extract that to sth like "openAddTaskWindow"
-                .getTaskListByName(new Title(this.selectedListName.getText()));
+        this.openAddTaskWindow();
+    }
+
+    private boolean selectedListNameIsInvalid()
+    {
+        return this.selectedListName == null || this.selectedListName.getText() == null
+                || this.selectedListName.getText().equals("Done")
+                || this.selectedListName.getText().equals("Your Lists");
+    }
+
+    private void openAddTaskWindow()
+    {
+        TaskList list = this.repository.getTaskListByName(new Title(this.selectedListName.getText()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
         Stage stage = new Stage();
         AddTaskFormController addTaskFormController = new AddTaskFormController(list.getId(), stage);
