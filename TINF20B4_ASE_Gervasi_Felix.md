@@ -250,9 +250,14 @@ TODO
 
 Unter Kohäsion versteht man den Grad von Zusammengehörigkeit innerhalb einer Softwarekomponente. Es sollte versucht werden eine möglichst hohe Kohäsion zu erreichen d.h., dass bspw. Variablen und Methoden einer Klasse inhaltlich zusammenpassen. Innerhalb einer Softwarekomponente versucht man also den Zusammenhalt der Bestandteile hoch zu halten wohingegen die Softwarekomponenten untereinander möglichst schwach aneinander gebunden sein sollten.
 
-<!-- Wo habe ich in meinem Projekt High Cohesion eingesetzt und warum? -->
+<!-- 
+- Wo habe ich in meinem Projekt High Cohesion eingesetzt und warum? 
+- Bspw. Auslagern der einzelnen UI-Komponenten in separate Klassen
+- Idee: jede UI-Komponente verwaltet sich selbst und arbeitet nur mit den Daten die sie wirklich benötigt
+- Man hätte auch alles in den ListViewController packen können (geringe Kohäsion)
+-->
 
-TODO
+In dem vorliegenden Projekt wurde hohe Kohäsion bspw. dadurch gefördert, dass die einzelnen UI-Komponenten weitestgehend in separate Klassen ausgelagert wurden (s. das Paket `dev.fg.dhbw.ase.tasktracker.domain.components`). Die Idee hierbei ist, dass jede UI-Komponente sich selbst verwaltet und nur mit den Daten arbeitet, die sie wirklich benötigt. Zusammengehörige Variablen und Methoden werden somit in separate Klassen abgekapselt was zu einer erhöhten Kohäsion führt.
 
 #### Information Expert (Informationsexperte)
 
