@@ -409,7 +409,22 @@ Code Smells dieser Art lassen sich durch das extrahieren von Methoden lösen. Da
 
 #### Refactoring 1: Extract Method
 
-<!-- e.g. ListViewController.onAddTaskButtonClicked(Event) -->
+<!-- 
+- e.g. ListViewController.onAddTaskButtonClicked(Event)
+- zu welcher Klasse gehört das Refactoring?
+- was soll dabei erreicht werden?
+-->
+
+Das Refactoring _Extract Method_ gehört zur Kategorie _Composing Methods_. Diese fasst Refactorings zusammen, die dafür sorgen den Einsatz von Methoden zu verbessern, indem die Methodenlänge reduziert und der Codeduplizierung entgegengewirkt wird. _Extract Method_ bezieht sich im speziellen auf das Aufteilen einer Methode in viele kleine Methoden. Dabei werden Code-Fragmente die inhaltlich zusammengehören in eine separate Methode _extrahiert_. Dadurch wird der Code lesbarer und leichter verständlich, da die ursprüngliche Länge der Methode verringert wird und die neuen Methoden (zumindest sollte dies der Fall sein) mit sprechenden Namen versehen werden aus denen ihre Funktion hervorgeht.
+
+<!-- Wo habe ich dieses Refactoring eingesetzt und warum? -->
+
+Ein Beispiel für eine Methode bei der das Refactoring _Extract Method_ eingesetzt werden kann ist `onAddTaskButtonClicked(Event)` in der Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController`. Diese ist zum einen sehr lang und zum anderen erfüllt sie mehrere Aufgaben in einem, die stattdessen in separate Methoden ausgelagert werden könnten. Diese Aufgaben lassen sich wie folgt zusammenfassen:
+
+1. Prüfe ob aktuell eine Liste ausgewählt ist und ob es sich dabei um eine intern verwaltete Liste handelt (d.h. um die Liste zur Speicherung abgeschlossener Aufgaben oder die Überschrift, die direkt nach dem Start der Applikation angezeigt wird)
+2. Öffne das Fenster mit dem Formular zum Hinzufügen einer Aufgabe zu einer Liste
+
+Die beiden Aufgaben wurden in die Methoden `selectedListNameIsInvalid()` und `openAddTaskWindow()` extrahiert. (vgl. [composing-methods](https://refactoring.guru/refactoring/techniques/composing-methods), [extract-method](https://refactoring.guru/extract-method), [vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/120ca8f1a4cf48b493e3225fb7d0b6a4bee42ef2/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java) und [nachher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/40f0ac935823d35f653eb7783b37a4445759ccc9/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
 #### Refactoring 2: TODO
 
