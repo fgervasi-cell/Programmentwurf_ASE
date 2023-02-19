@@ -195,11 +195,11 @@ TODO
 
 #### Interface Segregation Principle (ISP)
 
-<!-- Was ist LSP? -->
+<!-- Was ist ISP? -->
 
 Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben als ein allgemeines, welches alle Clientanforerdungen in sich vereint. Dadurch lässt sich die Anwendung unter Umständen leichter erweitern und es wird verhindert, dass viele leere Implementierungen bei Clients entstehen, die nur einen Bruchteil der Funktionalität des allgemeinen Interfaces brauchen.
 
-<!-- Wo habe ich LSP eingesetzt? -->
+<!-- Wo habe ich ISP eingesetzt? -->
 
 TODO
 

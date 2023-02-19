@@ -5,7 +5,6 @@ import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import dev.fg.dhbw.ase.tasktracker.domain.components.WidgetComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
@@ -16,8 +15,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 
 public class StatisticsViewController
 {
@@ -40,7 +39,7 @@ public class StatisticsViewController
                                                                                   // Interface segregation pattern! >
                                                                                   // many client specific interfaces! Because this class will also grow indefinetely
         WidgetComponent totalTasksOpenWidget = this.createTotalTasksOpenWidget();
-        WidgetComponent averageNumberOfTasksDoneWidget = this.createAverageNumberOfTasksDoneWidget();
+        WidgetComponent averageNumberOfTasksDoneWidget = this.createTasksDoneLastWeekLineChartWidget();
         WidgetComponent averageProcessingTimeWidget = this.createAverageProcessingTimeWidget();
 
         this.statisticsContainer.getChildren().addAll(totalTasksDoneWidget.getRoot(), totalTasksOpenWidget.getRoot(),
@@ -50,7 +49,7 @@ public class StatisticsViewController
     private WidgetComponent createTotalTasksDoneWidget()
     {
         int totalTasksDone = this.repository.getNumberOfDoneTasksForUser(this.user);
-        Label totalTasksDoneLabel = new Label(String.valueOf(totalTasksDone));
+        Text totalTasksDoneLabel = new Text(String.valueOf(totalTasksDone));
         totalTasksDoneLabel.getStyleClass().add("label");
         return new WidgetComponent("Total tasks done", totalTasksDoneLabel);
     }
@@ -58,12 +57,12 @@ public class StatisticsViewController
     private WidgetComponent createTotalTasksOpenWidget()
     {
         int totalTasksOpen = this.repository.getNumberOfOpenTasksForUser(this.user);
-        Label totalTasksOpenLabel = new Label(String.valueOf(totalTasksOpen));
+        Text totalTasksOpenLabel = new Text(String.valueOf(totalTasksOpen));
         totalTasksOpenLabel.getStyleClass().add("label");
         return new WidgetComponent("Total tasks open", totalTasksOpenLabel);
     }
 
-    private WidgetComponent createAverageNumberOfTasksDoneWidget() // TODO: make those plain number over all time and also charts (two more widgets?)
+    private WidgetComponent createTasksDoneLastWeekLineChartWidget() // TODO: make those plain number over all time and also charts (two more widgets?)
     {
         List<Task> tasksDoneLastWeek = this.repository.getDoneTasksOfLastWeek(this.user);
         final CategoryAxis xAxis = new CategoryAxis();
@@ -87,22 +86,34 @@ public class StatisticsViewController
         return new WidgetComponent("Average number of tasks done", chart);
     }
 
-    private WidgetComponent createTasksDoneLastWeekLineChartWidget()
+    /*private WidgetComponent createAverageNumberOfTasksDoneWidget()
     {
-        return null;
-    }
+        List<Task> doneTasks = this.repository.getTasksDoneForUser(this.user.getId());
+        return new WidgetComponent("Average number of done tasks (all time)", statisticsContainer);
+    }*/
 
     // private WidgetComponent createTasks
 
     private WidgetComponent createAverageProcessingTimeWidget()
     {
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Test");
-        LineChart<Number, Number> chart = new LineChart<>(xAxis, yAxis);
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.getData().add(new XYChart.Data<>(10, 10));
-        series.getData().add(new XYChart.Data<>(30, 30));
-        return new WidgetComponent("Average processing time", chart);
+        double averageProcessingTime = calculateAverageProcessingTime();
+        return new WidgetComponent("Average processing time", new Text(String.valueOf(averageProcessingTime)));
+    }
+
+    private double calculateAverageProcessingTime()
+    {
+        // TODO: maybe it would be better to get this data just once 
+        List<Task> tasks = this.repository.getTasksDoneForUser(this.user.getId());
+        int totalProcessingTime = 0;
+        for (Task t : tasks)
+        {
+            Calendar c = Calendar.getInstance();
+            c.setTime(t.getCompletionDate());
+            int completionDay = c.get(Calendar.DAY_OF_YEAR);
+            c.setTime(t.getCreationDate());
+            int creationDay = c.get(Calendar.DAY_OF_YEAR);
+            totalProcessingTime += (completionDay - creationDay);
+        }
+        return (double) totalProcessingTime / tasks.size();
     }
 }
