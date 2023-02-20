@@ -342,7 +342,11 @@ TODO
 - An welchen Stellen habe ich DRY angewendet und warum?
 -->
 
-TODO
+DRY ist ein Akronym und steht für _Don't Repeat Yourself_ (z. Dt. wiederhole dich nicht). Die Idee ist hierbei, dass Redundanzen im Code vermieden werden sollten, d.h. bspw. die selbe Logik nicht mehr als einmal im Code implementiert wird.
+
+<!-- Wo habe ich DRY eingesetzt? -->
+
+DRY wurde in diesem Projekt beispielsweise bei der Umstellung des Observable-Interfaces auf eine abstrakte Klasse eingesetzt. Durch die Umsetzung von Observable als Interface musste jede Implementierung alle Methoden implementieren obwohl deren Implementierung eigentlich immer gleich ist (Observer der Liste hinzufügen, Observer aus der Liste entfernen usw.). Durch die Umsetzung als abstrakte Klasse ist dies nicht mehr der Fall und es können Wiederholungen aus dem Code entfernt werden.
 
 ## Refactoring
 
