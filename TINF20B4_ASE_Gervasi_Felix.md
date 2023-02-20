@@ -346,7 +346,7 @@ DRY ist ein Akronym und steht für _Don't Repeat Yourself_ (z. Dt. wiederhole di
 
 <!-- Wo habe ich DRY eingesetzt? -->
 
-DRY wurde in diesem Projekt beispielsweise bei der Umstellung des Observable-Interfaces auf eine abstrakte Klasse eingesetzt. Durch die Umsetzung von Observable als Interface musste jede Implementierung alle Methoden implementieren obwohl deren Implementierung eigentlich immer gleich ist (Observer der Liste hinzufügen, Observer aus der Liste entfernen usw.). Durch die Umsetzung als abstrakte Klasse ist dies nicht mehr der Fall und es können Wiederholungen aus dem Code entfernt werden.
+DRY wurde in diesem Projekt beispielsweise bei der Umstellung des Observable-Interfaces auf eine Klasse eingesetzt. Durch die Umsetzung von Observable als Interface musste jede Implementierung alle Methoden implementieren obwohl deren Implementierung eigentlich immer gleich ist (Observer der Liste hinzufügen, Observer aus der Liste entfernen usw.). Durch die Umsetzung als vollwertige Klasse ist dies nicht mehr der Fall und es können Wiederholungen aus dem Code entfernt werden. (vgl. [Beispielimplementierung vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/1487e48378322f1b1de5bc58b03e270994eb227b/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/AddTaskFormController.java) und [Umsetzung als Klasse](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/0e7d260ef6bd4113676d88797c2ac35f5c6200de/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/observer/Observable.java))
 
 ## Refactoring
 
