@@ -1,9 +1,27 @@
 package dev.fg.dhbw.ase.tasktracker.observer;
 
-public interface Observable
+import java.util.ArrayList;
+import java.util.List;
+
+public class Observable
 {
-    // TODO: maybe make this an abstract class because those implementations are always the same
-    public void registerObserver(final Observer observer);
-    public void unregisterObserver(Observer observer);
-    public void notifyObservers(Object event);
+    List<Observer> observers = new ArrayList<>();
+
+    public void registerObserver(final Observer observer)
+    {
+        this.observers.add(observer);
+    }
+
+    public void unregisterObserver(Observer observer)
+    {
+        this.observers.remove(observer);
+    }
+
+    public void notifyObservers(Object event)
+    {
+        for (Observer observer : this.observers)
+        {
+            observer.notifyObserver(event);
+        }
+    }
 }

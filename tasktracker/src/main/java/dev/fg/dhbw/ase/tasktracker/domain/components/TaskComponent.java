@@ -1,10 +1,8 @@
 package dev.fg.dhbw.ase.tasktracker.domain.components;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -12,7 +10,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
 import dev.fg.dhbw.ase.tasktracker.observer.Observable;
-import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
@@ -22,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class TaskComponent implements Observable
+public class TaskComponent extends Observable
 {
     @FXML
     private Text taskTitle;
@@ -36,7 +33,6 @@ public class TaskComponent implements Observable
     private Button button;
     private Task task;
     private HBox root;
-    private List<Observer> observers = new ArrayList<>();
 
     public TaskComponent(final Task task)
     {
@@ -141,27 +137,5 @@ public class TaskComponent implements Observable
     {
         PersistenceUtil.obtainTaskListRepository().removeTask(this.task);
         notifyObservers(ComponentEvent.TASK_DELETE);
-    }
-
-    @Override
-    public void registerObserver(Observer observer)
-    {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers(Object event)
-    {
-        for (Observer observer : this.observers)
-        {
-            observer.notifyObserver(event);
-        }
-    }
-
-    @Override
-    public void unregisterObserver(Observer observer)
-    {
-        // TODO Auto-generated method stub
-        
     }
 }

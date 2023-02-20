@@ -16,14 +16,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-public class TaskListComponent extends HBox implements Observable // NOSONAR: just using the JavaFX library
+public class TaskListComponent extends Observable
 {
     @FXML
     private Text listName;
     @FXML
     private Button deleteButton;
     private TaskList list;
-    private List<Observer> observers = new ArrayList<>();
 
     public TaskListComponent(TaskList list)
     {
@@ -71,27 +70,5 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
         ComponentEvent event = ComponentEvent.TASK_LIST_DELETE;
         event.setData(this.listName.getText());
         notifyObservers(event);
-    }
-
-    @Override
-    public void registerObserver(Observer observer)
-    {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers(Object event)
-    {
-        for (Observer observer : this.observers)
-        {
-            observer.notifyObserver(event);
-        }
-    }
-
-    @Override
-    public void unregisterObserver(Observer observer)
-    {
-        // TODO Auto-generated method stub
-        
     }
 }

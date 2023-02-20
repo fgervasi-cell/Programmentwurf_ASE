@@ -3,15 +3,12 @@ package dev.fg.dhbw.ase.tasktracker.domain.controller;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import dev.fg.dhbw.ase.tasktracker.domain.components.ComponentEvent;
 import dev.fg.dhbw.ase.tasktracker.domain.factories.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.observer.Observable;
-import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
 import javafx.fxml.FXML;
@@ -20,10 +17,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddTaskFormController implements Observable
+public class AddTaskFormController extends Observable
 {
     private final UUID taskListId;
-    private List<Observer> observers = new ArrayList<>();
     private final Stage stage;
     @FXML
     private TextField taskTitleTextField;
@@ -73,26 +69,5 @@ public class AddTaskFormController implements Observable
     private void onCancel()
     {
         this.stage.close();
-    }
-
-    @Override
-    public void registerObserver(Observer observer)
-    {
-        this.observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers(Object event)
-    {
-        for (Observer observer : this.observers)
-        {
-            observer.notifyObserver(event);
-        }
-    }
-
-    @Override
-    public void unregisterObserver(Observer observer)
-    {
-        this.observers.remove(observer);
     }
 }
