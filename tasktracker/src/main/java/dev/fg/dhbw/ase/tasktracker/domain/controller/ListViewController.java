@@ -218,7 +218,7 @@ public class ListViewController implements Observer
         TaskList list = PersistenceUtil.obtainTaskListRepository().getTaskListByName(new Title(input));
         TaskListComponent taskListComponent = new TaskListComponent(list);
         taskListComponent.registerObserver(this);
-        this.listsContainer.getChildren().add(taskListComponent);
+        this.listsContainer.getChildren().add(taskListComponent.getRoot());
         this.listsContainer.getChildren().remove(newList);
     }
 
@@ -229,7 +229,7 @@ public class ListViewController implements Observer
         {
             TaskListComponent taskListComponent = new TaskListComponent(list);
             taskListComponent.registerObserver(this);
-            this.listsContainer.getChildren().add(taskListComponent);
+            this.listsContainer.getChildren().add(taskListComponent.getRoot());
         }
         this.taskContainer.getChildren().clear();
         this.selectedListName.setText("Your Lists");

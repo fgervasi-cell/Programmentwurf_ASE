@@ -1,12 +1,9 @@
 package dev.fg.dhbw.ase.tasktracker.domain.components;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
 import dev.fg.dhbw.ase.tasktracker.observer.Observable;
-import dev.fg.dhbw.ase.tasktracker.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +20,7 @@ public class TaskListComponent extends Observable
     @FXML
     private Button deleteButton;
     private TaskList list;
+    private HBox root;
 
     public TaskListComponent(TaskList list)
     {
@@ -31,7 +29,7 @@ public class TaskListComponent extends Observable
         loader.setController(this);
         try
         {
-            this.getChildren().add(loader.<HBox>load());
+            this.root = loader.<HBox>load();
             this.listName.setText(list.getTitle().getTitleString());
             this.listName.addEventFilter(MouseEvent.MOUSE_CLICKED, this::handleListNameClicked);
             if (this.listName.getText().equals("Done"))
@@ -54,6 +52,11 @@ public class TaskListComponent extends Observable
             event.setData(this.listName.getText());
             notifyObservers(event);
         }
+    }
+
+    public HBox getRoot()
+    {
+        return this.root;
     }
 
     @FXML
