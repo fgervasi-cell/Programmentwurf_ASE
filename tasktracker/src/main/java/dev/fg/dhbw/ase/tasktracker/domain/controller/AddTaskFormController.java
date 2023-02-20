@@ -89,4 +89,10 @@ public class AddTaskFormController implements Observable
             observer.notifyObserver(event);
         }
     }
+
+    @Override
+    public void unregisterObserver(Observer observer)
+    {
+        this.observers.remove(observer);
+    }
 }

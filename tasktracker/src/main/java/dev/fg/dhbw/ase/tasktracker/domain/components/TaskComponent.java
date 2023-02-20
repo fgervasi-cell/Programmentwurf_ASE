@@ -157,4 +157,11 @@ public class TaskComponent implements Observable
             observer.notifyObserver(event);
         }
     }
+
+    @Override
+    public void unregisterObserver(Observer observer)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

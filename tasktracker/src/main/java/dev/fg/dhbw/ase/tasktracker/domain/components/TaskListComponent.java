@@ -87,4 +87,11 @@ public class TaskListComponent extends HBox implements Observable // NOSONAR: ju
             observer.notifyObserver(event);
         }
     }
+
+    @Override
+    public void unregisterObserver(Observer observer)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
