@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/fgervasi-cell/Programmentwurf_ASE/actions/workflows/maven.yml/badge.svg)](https://github.com/fgervasi-cell/Programmentwurf_ASE/actions/workflows/maven.yml)
+
 # Programmentwurf_ASE
 
 Project for Advanced Software Engineering at DHBW Karlsruhe.
