@@ -435,7 +435,22 @@ Ein Beispiel für eine Methode bei der das Refactoring _Extract Method_ eingeset
 
 Die beiden Aufgaben wurden in die Methoden `selectedListNameIsInvalid()` und `openAddTaskWindow()` extrahiert. (vgl. [composing-methods](https://refactoring.guru/refactoring/techniques/composing-methods), [extract-method](https://refactoring.guru/extract-method), [vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/120ca8f1a4cf48b493e3225fb7d0b6a4bee42ef2/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java) und [nachher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/40f0ac935823d35f653eb7783b37a4445759ccc9/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
-#### Refactoring 2: TODO
+#### Refactoring 2: Extract Class und Extract Superclass
+
+<!-- Um was für Refactorings handelt es sich? -->
+
+Bei dem _Extract Class_ Refactoring geht es um das Extrahieren von Funktionalität (Variablen und Methoden) einer Klasse in eine andere Klasse, d.h. aus einer Klasse werden zwei Klassen. Dies trägt zu einer erhöhten Modularität, Übersichtlichkeit und der Einhaltung des SRP bei. Das Refactoring kann dann sinnvoll eingesetzt werden, wenn eine Klasse mehrere Aufgaben übernimmt, die eigentlich besser von separaten Klassen übernommen werden könnten. Das Refactoring _Extract Superclass_ trägt dazu bei Redundanzen aus dem Code zu entfernen indem zwei Klassen, die ähnliche Felder und Methoden benutzen durch eine gemeinsame Elternklasse ergänzt werden, die die Funktionalität, welche von den beiden Unterklassen genutzt wird zu implementieren.
+
+<!-- 
+- Wo habe ich sie eingesetzt und warum? 
+- TaskComponent aufgeteilt in 2 Klassen (FinishedTaskComponent und Open...)
+- TaskComponent wurde zu komplex
+- If-Statements mussten verwendet werden, da die Klasse sowohl für abgeschlossene als auch offene Aufgaben verwendet wurde
+- Die beiden entstandenen Klassen teilen sich trotzdem den Großteil der Funktionalität
+- Ergibt Sinn die Gemeinsamkeiten in einer gemeinsamen Oberklasse zusammenzufassen
+-->
+
+In diesem Projekt wurde das oben beschriebene Refactoring bei der Klasse `dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent` eingesetzt. Zunächst erüllte die Klasse die Anforderungen von sowohl abgeschlossenen als auch offenen Aufgaben. Dies führte allerdings dazu, dass die Klasse an immer mehr Komplexität gewann und If-Statements verwendet werden mussten. Deshalb wurde die Klasse in zwei separate Klassen `FinishedTaskComponent` und `OpenTaskComponent` aufgeteilt. Die beiden entstandenen Klassen teilen einen Großteil der Funktionalität weshalb zusätzlich die gemeinsame Oberklasse `TaskComponent` eingeführt wurde (_Extract Superclass_). (vgl. [vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/8fe35d94b7a09c56163697e2f435bd09b5ec07c4/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/components), [nachher](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/main/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/components), [extract-class](https://refactoring.guru/extract-class) und [extract-superclass](https://refactoring.guru/extract-superclass))
 
 ## Entwurfsmuster
 
