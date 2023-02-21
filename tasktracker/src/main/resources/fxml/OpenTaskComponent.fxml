@@ -9,7 +9,7 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml" alignment="center_left" stylesheets="@../css/Main.css,@../css/TaskComponent.css" spacing="15" styleClass="task">
     <HBox><!-- filler --></HBox>
-    <Button onAction="#onMarkTaskAsDone" styleClass="hover-hand, background-color" fx:id="button">
+    <Button onAction="#onMarkTaskAsDoneOrUndone" styleClass="hover-hand, background-color" fx:id="button">
         <graphic>
             <FontIcon iconLiteral="mdi-checkbox-marked-circle-outline" iconSize="34" />
         </graphic>

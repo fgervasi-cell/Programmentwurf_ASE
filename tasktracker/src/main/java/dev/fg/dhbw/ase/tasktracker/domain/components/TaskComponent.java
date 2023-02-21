@@ -1,11 +1,10 @@
 package dev.fg.dhbw.ase.tasktracker.domain.components;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
@@ -19,8 +18,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class TaskComponent extends Observable
+public abstract class TaskComponent extends Observable
 {
+    private HBox root;
+    private Task task;
+    protected TaskListRepository repository;
     @FXML
     private Text taskTitle;
     @FXML
@@ -31,42 +33,39 @@ public class TaskComponent extends Observable
     private Text taskReminderDate;
     @FXML
     private Button button;
-    private Task task;
-    private HBox root;
 
-    public TaskComponent(final Task task)
+    protected TaskComponent(final Task task)
     {
         this.task = task;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskComponent.fxml"));
+        this.repository = PersistenceUtil.obtainTaskListRepository();
+        FXMLLoader loader = new FXMLLoader(this.getFXMLLocation());
         loader.setController(this);
         try
         {
             this.root = loader.<HBox>load();
-            if (task.isDone())
-            {
-                button.getTooltip().setText("Undo this task. It will be returned to its originating list.");
-                button.setGraphic(new FontIcon("mdi-window-close:34"));
-                taskTitle.getStyleClass().add("strikethrough");
-            }
-            this.taskTitle.setText(task.getTitle().getTitleString());
-            String description = task.getDescription();
-            this.taskDescription
-                    .setText((description != null && !description.isBlank()) ? description : "There is no description");
-            DateInFuture dueDate = task.getDueDate();
-            DateInFuture reminder = task.getReminder();
-            String dueDateString = formatDate(dueDate);
-            String reminderString = formatDate(reminder);
-            this.taskDueDate.setText(dueDateString != null ? dueDateString : "There is no due date set");
-            this.taskReminderDate.setText(reminderString != null ? reminderString : "There is no reminder set");
-            if (this.dueDateIsReached(dueDate.getDueDate()))
-            {
-                this.taskDueDate.setFill(Color.RED);
-            }
+            prepareUI();
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // TODO
+        }
+    }
+
+    private void prepareUI()
+    {
+        this.taskTitle.setText(this.task.getTitle().getTitleString());
+        String description = this.task.getDescription();
+        this.taskDescription
+                .setText((description != null && !description.isBlank()) ? description : "There is no description");
+        DateInFuture dueDate = this.task.getDueDate();
+        DateInFuture reminder = this.task.getReminder();
+        String dueDateString = formatDate(dueDate);
+        String reminderString = formatDate(reminder);
+        this.taskDueDate.setText(dueDateString != null ? dueDateString : "There is no due date set");
+        this.taskReminderDate.setText(reminderString != null ? reminderString : "There is no reminder set");
+        if (this.dueDateIsReached(dueDate.getDueDate()))
+        {
+            this.taskDueDate.setFill(Color.RED);
         }
     }
 
@@ -115,27 +114,13 @@ public class TaskComponent extends Observable
     }
 
     @FXML
-    private void onMarkTaskAsDone()
-    {
-        TaskListRepository listRepository = PersistenceUtil.obtainTaskListRepository();
-        // TODO: Interface Segregation principle. Make an Interface TaskComponent and
-        // seperate the implementations of done and open tasks to reduce the use of if
-        // statements!!!
-        if (this.task.isDone())
-        {
-            listRepository.markTaskAsUndone(this.task);
-            notifyObservers(ComponentEvent.TASK_DONE);
-            return;
-        }
-
-        listRepository.markTaskAsDone(this.task);
-        notifyObservers(ComponentEvent.TASK_DONE); // TODO: rename this event
-    }
-
-    @FXML
     private void onTaskDelete()
     {
-        PersistenceUtil.obtainTaskListRepository().removeTask(this.task);
+        this.repository.removeTask(this.task);
         notifyObservers(ComponentEvent.TASK_DELETE);
     }
+
+    protected abstract URL getFXMLLocation();
+
+    protected abstract void onMarkTaskAsDoneOrUndone();
 }

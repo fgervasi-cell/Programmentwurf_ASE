@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dev.fg.dhbw.ase.tasktracker.domain.components.ComponentEvent;
-import dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent;
+import dev.fg.dhbw.ase.tasktracker.domain.components.FinishedTaskComponent;
+import dev.fg.dhbw.ase.tasktracker.domain.components.OpenTaskComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.components.TaskListComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList;
@@ -107,7 +108,7 @@ public class ListViewController implements Observer
         {
             if (!t.isDone())
             {
-                TaskComponent task = new TaskComponent(t);
+                OpenTaskComponent task = new OpenTaskComponent(t);
                 task.registerObserver(this);
                 this.taskContainer.getChildren().add(task.getRoot());
             }
@@ -127,9 +128,9 @@ public class ListViewController implements Observer
             List<Task> done = tasks.stream().filter(Task::isDone).collect(Collectors.toList());
             doneTasks.addAll(done);
         }
-        List<TaskComponent> components = doneTasks.stream().map(TaskComponent::new).collect(Collectors.toList());
+        List<FinishedTaskComponent> components = doneTasks.stream().map(FinishedTaskComponent::new).collect(Collectors.toList());
         components.stream().forEach(comp -> comp.registerObserver(this));
-        return components.stream().map(TaskComponent::getRoot).collect(Collectors.toList());
+        return components.stream().map(FinishedTaskComponent::getRoot).collect(Collectors.toList());
     }
 
     @FXML
