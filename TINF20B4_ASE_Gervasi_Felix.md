@@ -368,11 +368,11 @@ DRY wurde in diesem Projekt beispielsweise bei der Umstellung des Observable-Int
 - was ist schlecht daran?
 -->
 
-Dieser Code Smell gehört zur Klasse der _Bloaters_. Diese Klasse fasst Code Smells zusammen, die dafür sorgen, dass der Code an manchen Stellen gigantische Ausmaße annimmt und dadurch schwer zu Pflegen ist. Der Smell _Large Class_ bezieht sich dabei speziell auf besonders große Klassen. Ein Beispiel ist die Klasse...
+Dieser Code Smell gehört zur Klasse der _Bloaters_. Diese Klasse fasst Code Smells zusammen, die dafür sorgen, dass der Code an manchen Stellen gigantische Ausmaße annimmt und dadurch schwer zu Pflegen ist. Der Smell _Large Class_ bezieht sich dabei speziell auf besonders große Klassen. Ein Beispiel ist die Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController`, die zum aktuellen Zeitpunkt fast 300 Zeilen umfasst. Die Größe wird sich wahrscheinlich noch weiter verschlimmern, da der `ListViewController` momentan die Hauptaufgaben der Anwendung erfüllt (Listen und Aufgaben anzeigen, erstellen, löschen, ...) und voraussichtlich immer mehr Features hinzugefügt werden.
 
 <!-- Wie könnte man den Smell lösen -->
 
-TODO
+Der Code Smell kann gelöst werden indem die Refactorings _Extract Class_, _Extract Subclass_ oder _Extract Interface_ angewendet werden. Dabei wird Funktionalität aus einer großen Klasse in andere Klassen ausgelagert. (vgl. [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/fed9e8343b77b490c5c0a9bcccd90bae49094f91/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
 #### Code Smell 2: Switch Statements
 
