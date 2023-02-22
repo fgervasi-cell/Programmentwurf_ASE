@@ -277,7 +277,7 @@ Unter dem Begriff der Polymorphie versteht man im Zusammenhang mit GRASP das Pri
 
 <!-- Wo habe ich in meinem Projekt Polymorphism eingesetzt und warum? -->
 
-TODO
+In diesem Projekt kommt Polymorphie bspw. zur Unterscheidung von offenen und abgeschlossenen Aufgaben zum Einsatz (s. `dev.fg.dhbw.ase.tasktracker.domain.components.FinishedTaskComponent` und `dev.fg.dhbw.ase.tasktracker.domain.components.OpenTaskComponent`).
 
 #### Pure Fabrication (reine Erfindung)
 
@@ -287,7 +287,7 @@ Unter der _Pure Fabrication_ versteht man Klassen oder Module die in der Problem
 
 <!-- Wo habe ich in meinem Projekt Pure Fabrication eingesetzt und warum? -->
 
-TODO
+Ein Beispiel für eine reine Erfindung ist die Klasse `dev.fg.dhbw.ase.tasktracker.persistence.TaskListDatabaseRepository`. Es handelt sich dabei um _Pure Fabrication_, da die Klasse kein Objekt aus der realen Welt bzw. der Problemdomäne darstellt.
 
 #### Indirection/Delegation (Indirektion/Delegation)
 
