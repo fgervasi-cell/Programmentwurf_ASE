@@ -69,10 +69,6 @@ public abstract class TaskComponent extends Observable
         }
     }
 
-    // TODO: I think this validates the High Cohesion and Information Expert
-    // principles because this task does not fit in here.
-    // TODO: I think it would be better to make this a static utility method in the
-    // DateInFuture class or something like that to increase reusablity.
     private String formatDate(DateInFuture futureDate)
     {
         String dateString = null;
