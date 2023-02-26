@@ -49,6 +49,16 @@ public final class DateInFuture
         return new DateInFuture(newDate);
     }
 
+    public String formatDate()
+    {
+        String dateString = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.getDueDate());
+        dateString = String.format("%s-%s-%s", calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.YEAR));
+        return dateString;
+    }
+
     @Override
     public int hashCode()
     {

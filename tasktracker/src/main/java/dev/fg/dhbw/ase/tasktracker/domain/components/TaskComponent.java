@@ -59,28 +59,14 @@ public abstract class TaskComponent extends Observable
                 .setText((description != null && !description.isBlank()) ? description : "There is no description");
         DateInFuture dueDate = this.task.getDueDate();
         DateInFuture reminder = this.task.getReminder();
-        String dueDateString = formatDate(dueDate);
-        String reminderString = formatDate(reminder);
+        String dueDateString = dueDate.formatDate();
+        String reminderString = reminder.formatDate();
         this.taskDueDate.setText(dueDateString != null ? dueDateString : "There is no due date set");
         this.taskReminderDate.setText(reminderString != null ? reminderString : "There is no reminder set");
         if (this.dueDateIsReached(dueDate.getDueDate()))
         {
             this.taskDueDate.setFill(Color.RED);
         }
-    }
-
-    private String formatDate(DateInFuture futureDate)
-    {
-        String dateString = null;
-        if (futureDate != null)
-        {
-            Date date = futureDate.getDueDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            dateString = String.format("%s-%s-%s", calendar.get(Calendar.DAY_OF_MONTH),
-                    calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
-        }
-        return dateString;
     }
 
     // TODO: same like above. This should maybe be moved to the DateInFuture class
