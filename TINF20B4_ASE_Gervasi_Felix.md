@@ -267,7 +267,7 @@ Hinter dem Experten-Prinzip verbirgt sich der Gedanke, dass eine neue Aufgabe vo
 
 <!-- Wo habe ich in meinem Projekt Information Expert eingesetzt und warum? -->
 
-TODO
+Das Prinzip des Informationsexperten wurde bspw. bei der Methode `formatDate(DateInFuture): String` eingesetzt die vormals in der Klasse `dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent` vorlag. Anstatt eine _unnötige_ Hilfsklasse wie bspw. `DateUtils` o.ä. einzuführen wurde versucht die Methode in diejenige Klasse zu verlagern, die zu der vorliegenden Thematik/dem vorliegenden Domänenproblem passt. Deshalb wurde die Methode zu einem späteren Zeitpunkt in die `DateInFuture` Klasse selbst ausgelagert. (vgl. [vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/cf1d3385f2358d5ebbc432a7c9c693434913e5ca/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/components/TaskComponent.java), [nachher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/b387a18199f501df227210e1dd319e0bc9cc9243/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/vo/DateInFuture.java))
 
 #### Polymorphism (Polymorphie)
 
