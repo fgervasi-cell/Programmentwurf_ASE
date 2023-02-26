@@ -332,7 +332,7 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 
 <!-- Wo habe ich in meinem Projekt Creator eingesetzt und warum? -->
 
-TODO
+Beispielsweise erzeugt in diesem Projekt die Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController` Objekte vom Typ `...domain.components.TaskListComponent`. Dies ist nach dem Erzeugerprinzip damit zu rechtfertigen, da die Klasse `ListViewController` eine klare semantische Verbindung zu `TaskListComponent` hat und Objekte diesen Typs verarbeiten muss.
 
 ### Analyse und Begründung für DRY
 
