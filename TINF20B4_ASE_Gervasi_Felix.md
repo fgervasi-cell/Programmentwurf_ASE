@@ -404,7 +404,9 @@ Dieser Code Smell gehört ebenfalls zur Klasse der _Bloaters_ und bezieht sich a
 
 Code Smells dieser Art lassen sich durch das extrahieren von Methoden lösen. Dabei werden die Codezeilen, die zusammen eine bestimmte Aufgabe erfüllen, in eine separate Methode ausgelagert. Dadurch entstehen viele kleine, leicht wartbare und verständliche Methoden und die Größe der ursprünglichen Methode wird deutlich verkleinert. (vgl. [bloaters](https://refactoring.guru/refactoring/smells/bloaters), [long-method](https://refactoring.guru/smells/long-method) und [ListViewController](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/598ea36ac2cfd159b2904be4c7b7bb61a487b58b/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller/ListViewController.java))
 
-#### Code Smell 4: TODO
+#### Code Smell 4: Verletzung des Informationsexperten-Prinzips
+
+Neue Features sollten immer in der Klasse hinzugefügt werden, die bereits die meisten Informationen für dieses Feature beinhaltet. Dadurch wird dafür gesorgt, dass zusammengehörige Informationen zusammen bleiben und unnötige Hilfsklassen werden verhindert. Eine Verletzung dieses Prinzips (_Smell_) fand in der Methode `TaskComponent.formatDate(DateInFuture)` statt. Zwar wurde eine unnötige Hilfsklasse in diesem Fall ausgespart - dennoch ist das Formatieren eines Datums naheliegenderweise die Aufgabe des Datums selbst und nicht die einer bestimmten UI-Komponente. Durch das anschließende Verlagern wird nicht nur das Informationsexperten-Prinzip eingehalten sondern auch dafür gesorgt, dass die allgemeine und evtl. häufiger benötigte Aufgabe der Datumsformatierung nun für andere Komponenten die das `DateInFuture`-Objekt benutzen verwendbar ist. (vgl. [vorher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/cf1d3385f2358d5ebbc432a7c9c693434913e5ca/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/components/TaskComponent.java), [nachher](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/b387a18199f501df227210e1dd319e0bc9cc9243/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/vo/DateInFuture.java))
 
 ### Begründung durchgeführter Refactorings
 
