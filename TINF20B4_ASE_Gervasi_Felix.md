@@ -242,7 +242,7 @@ Unter dem Begriff der Kopplung versteht man den Grad der Abhängigkeit von zwei 
 
 <!-- Wo habe ich in meinem Projekt Low Coupling eingesetzt und warum? -->
 
-TODO
+_Low Coupling_ kann bspw. durch den Einsatz von Interfaces erreicht werden, da diese von der eigentlichen Implementierung abstrahieren und die Komponenten, welche die definierte Schnittstelle nutzen, von der eigentlichen Implementierung entkoppelt werden (lose Kopplung). Dies ist bspw. durch den Einsatz von _Repositories_ an diesem Projekt zu sehen (s. `dev.fg.dhbw.ase.tasktracker.persistence`).
 
 #### High Cohesion (hohe Kohäsion)
 
