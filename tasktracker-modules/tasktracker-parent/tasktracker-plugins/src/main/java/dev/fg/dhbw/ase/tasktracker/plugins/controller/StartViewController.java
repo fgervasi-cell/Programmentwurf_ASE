@@ -7,7 +7,6 @@ import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.EMail;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Password;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
-import dev.fg.dhbw.ase.tasktracker.domain.user.UserRepository;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,8 +52,7 @@ public class StartViewController
     private void loginOrRegisterUser(Event e)
     {
         this.primaryStage.getScene().setCursor(Cursor.WAIT);
-        UserRepository userRepository = PersistenceUtil.obtainUserRepository();
-        UserService service = new UserService(userRepository);
+        UserService service = new UserService(PersistenceUtil.obtainUserRepository());
         User user = service.getUserByEMail(new EMail(eMailTextField.getText()));
         if (user != null)
         {

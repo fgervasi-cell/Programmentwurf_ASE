@@ -14,8 +14,8 @@ import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observer;
+import dev.fg.dhbw.ase.tasktracker.application.TaskListService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +37,7 @@ public class ListViewController implements Observer
 {
     private final Stage primaryStage;
     private final User user;
-    private final TaskListRepository repository;
+    private final TaskListService service;
     @FXML
     private Text userInformation;
     @FXML
@@ -55,7 +55,7 @@ public class ListViewController implements Observer
     {
         this.primaryStage = primaryStage;
         this.user = user;
-        this.repository = PersistenceUtil.obtainTaskListRepository();
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
     }
 
     @FXML
@@ -74,15 +74,14 @@ public class ListViewController implements Observer
 
     private List<TaskList> getTaskListsForUser()
     {
-        List<TaskList> taskLists = this.repository.getTaskListsForUser(this.user.getId());
-        return this.addTaskListForDoneTasksIfNotPresent(taskLists);
+        return this.addTaskListForDoneTasksIfNotPresent(this.service.getTaskLists(user));
     }
 
     private List<TaskList> addTaskListForDoneTasksIfNotPresent(List<TaskList> taskLists)
     {
         if (taskLists.stream().filter(tl -> tl.getTitle().getTitleString().equals("Done")).count() == 0)
         {
-            this.repository.createNewTaskListForUser(new Title("Done"), this.user);
+            this.service.createTaskList(new Title("Done"), this.user);
             taskLists.add(new TaskList(new Title("Done")));
         }
         return taskLists;
@@ -102,8 +101,7 @@ public class ListViewController implements Observer
             this.taskContainer.getChildren().addAll(this.getTaskComponentsForDoneTasks());
             return;
         }
-        List<Task> tasksForList = PersistenceUtil.obtainTaskListRepository()
-                .getTasksOfTaskListByTaskListName(taskListTitle);
+        List<Task> tasksForList = this.service.getTasksFromList(taskListTitle);
         for (Task t : tasksForList)
         {
             if (!t.isDone())
@@ -117,14 +115,13 @@ public class ListViewController implements Observer
 
     private List<HBox> getTaskComponentsForDoneTasks() // TODO: I should just use a database query for this...
     {
-        TaskListRepository taskListRepository = PersistenceUtil.obtainTaskListRepository();
-        List<TaskList> lists = taskListRepository.getTaskListsForUser(this.user.getId());
+        List<TaskList> lists = this.service.getTaskLists(this.user);
         lists = lists.stream().filter(list -> !list.getTitle().getTitleString().equals("Done"))
                 .collect(Collectors.toList());
         List<Task> doneTasks = new ArrayList<>();
         for (TaskList list : lists)
         {
-            List<Task> tasks = taskListRepository.getTasksOfTaskListByTaskListName(list.getTitle());
+            List<Task> tasks = this.service.getTasksFromList(list.getTitle());
             List<Task> done = tasks.stream().filter(Task::isDone).collect(Collectors.toList());
             doneTasks.addAll(done);
         }
@@ -152,7 +149,7 @@ public class ListViewController implements Observer
 
     private void openAddTaskWindow()
     {
-        TaskList list = this.repository.getTaskListByName(new Title(this.selectedListName.getText()));
+        TaskList list = this.service.getTaskList(new Title(this.selectedListName.getText()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
         Stage stage = new Stage();
         AddTaskFormController addTaskFormController = new AddTaskFormController(list.getId(), stage);
@@ -215,8 +212,8 @@ public class ListViewController implements Observer
             this.listsContainer.getChildren().remove(newList);
             return;
         }
-        PersistenceUtil.obtainTaskListRepository().createNewTaskListForUser(new Title(input), user);
-        TaskList list = PersistenceUtil.obtainTaskListRepository().getTaskListByName(new Title(input));
+        this.service.createTaskList(new Title(input), user);
+        TaskList list = this.service.getTaskList(new Title(input));
         TaskListComponent taskListComponent = new TaskListComponent(list);
         taskListComponent.registerObserver(this);
         this.listsContainer.getChildren().add(taskListComponent.getRoot());
@@ -258,8 +255,7 @@ public class ListViewController implements Observer
 
             if (event.name().equals(ComponentEvent.TASK_LIST_DELETE.name()))
             {
-                List<TaskList> lists = PersistenceUtil.obtainTaskListRepository()
-                        .getTaskListsForUser(this.user.getId());
+                List<TaskList> lists = this.service.getTaskLists(user);
                 this.refreshListsContainer(lists);
                 return;
             }
