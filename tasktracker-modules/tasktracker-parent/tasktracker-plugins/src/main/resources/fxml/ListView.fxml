@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css,@../css/Main.css">
+    <left>
+        <VBox id="left" styleClass="bottom-and-top-padding" spacing="30">
+            <Text fx:id="userInformation" styleClass="label" />
+            <Separator />
+            <VBox fx:id="listsContainer" spacing="15"></VBox>
+            <HBox spacing="15">
+                <Button text="Add List" onAction="#onAddListButtonClicked" styleClass="button-primary-sm" />
+                <Button text="Statistics" styleClass="button-primary-sm" onAction="#showStatistics">
+                    <tooltip>
+                        <Tooltip text="View statistics about your behavior." />
+                    </tooltip>
+                </Button>
+            </HBox>
+        </VBox>
+    </left>
+    <center>
+        <VBox id="center" styleClass="bottom-and-top-padding" spacing="30">
+            <Text fx:id="selectedListName" text="Your Lists" />
+            <VBox fx:id="taskContainer" spacing="30"></VBox>
+            <Button text="Add Task" onAction="#onAddTaskButtonClicked" styleClass="button-primary-sm" fx:id="addTaskButton">
+                <tooltip>
+                    <Tooltip text="Add a new task to this list. This will open another window." />
+                </tooltip>
+            </Button>
+        </VBox>
+    </center>
+</BorderPane>

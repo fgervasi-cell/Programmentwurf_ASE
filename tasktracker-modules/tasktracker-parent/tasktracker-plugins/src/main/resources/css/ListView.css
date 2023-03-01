@@ -1,0 +1,8 @@
+.vertical {
+    -fx-orientation: vertical;
+}
+
+#left, #center {
+    -fx-border-color: #5D5A88;
+    -fx-border-width: 1.5px;
+}

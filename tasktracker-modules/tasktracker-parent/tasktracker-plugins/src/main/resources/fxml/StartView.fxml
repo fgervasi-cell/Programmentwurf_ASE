@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/StartView.css,@../css/Main.css" styleClass="root">
+    <top>
+        <HBox alignment="center" styleClass="bottom-and-top-padding">
+            <Text text="TaskTracker" styleClass="headline" />
+        </HBox>
+    </top>
+    <center>
+        <HBox alignment="center">
+            <VBox spacing="30" alignment="center">
+                <VBox spacing="10">
+                    <Label text="E-Mail" styleClass="label" />
+                    <TextField fx:id="eMailTextField" minWidth="300" styleClass="tasktracker-text-input" />
+                </VBox>
+                <VBox spacing="10" fx:id="passwordContainer">
+                    <Label text="Password" styleClass="label" />
+                    <PasswordField fx:id="passwordField" minWidth="300" styleClass="tasktracker-text-input">
+                        <tooltip>
+                            <Tooltip text="Your password has to be at least 8 characters long and must consist only of letters and numbers." />
+                        </tooltip>
+                    </PasswordField>
+                </VBox>
+                <Button text="Login or register" onAction="#loginOrRegisterUser" id="login-or-register-button" styleClass="button-primary" />
+            </VBox>
+        </HBox>
+    </center>
+    <bottom>
+        <HBox alignment="center" styleClass="bottom-and-top-padding">
+            <Text text="Continue without an account..." onMouseClicked="#onContinueWithoutAccount" styleClass="link" />
+        </HBox>
+    </bottom>
+</BorderPane>

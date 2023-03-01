@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -18,6 +19,21 @@
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>19.0.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>19.0.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.6.8.Final</version>
+    </dependency>
   </dependencies>
 
   <parent>
@@ -25,4 +41,43 @@
     <groupId>dev.fg.dhbw.ase.tasktracker</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>0.0.8</version>
+          <executions>
+            <execution>
+              <!-- Default configuration for running -->
+              <id>default-cli</id>
+              <configuration>
+                <mainClass>dev.fg.dhbw.ase.tasktracker.TaskTracker</mainClass>
+              </configuration>
+            </execution>
+            <execution>
+              <!-- Configuration for debugging -->
+              <id>debug</id>
+              <configuration>
+                <options>
+                  <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
+                </options>
+                <mainClass>dev.fg.dhbw.ase.tasktracker.TaskTracker</mainClass>
+              </configuration>
+            </execution>
+          </executions>
+          <configuration>
+            <mainClass>dev.fg.dhbw.ase.tasktracker.TaskTracker</mainClass>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
