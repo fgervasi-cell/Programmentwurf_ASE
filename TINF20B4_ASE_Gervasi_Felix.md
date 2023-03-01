@@ -327,11 +327,11 @@ Ein Beispiel für eine reine Erfindung ist die Klasse `dev.fg.dhbw.ase.tasktrack
 
 <!-- Was versteht man unter dem Begriff Indirection/Delegation? -->
 
-Mit Indirektion/Delegation ist gemeint, dass ein Objekt Aufgaben an ein weiteres Objekt delegiert. Das Objekt zu dem deligiert wird ist meist besser zur Erfüllung der Aufgabe geeignet (kann bspw. Experte sein). Das Prinzip kann Vererbung ersetzen da die Funktionsweise analog ist zu einer Kindklasse die Methodenaufrufe zu ihrer Elternklasse delegiert. Außerdem kann dadurch eine hohe Kohäsion gefördert werden, da inhaltlich zusammengehörige Betsandteile in Klassen ausgelagert und die Kommunikation über Delegation geregelt werden kann.
+Mit Indirektion/Delegation ist gemeint, dass ein Objekt Aufgaben an ein weiteres Objekt delegiert. Das Objekt zu dem deligiert wird ist meist besser zur Erfüllung der Aufgabe geeignet (kann bspw. Experte sein). Das Prinzip kann Vererbung ersetzen da die Funktionsweise analog ist zu einer Kindklasse die Methodenaufrufe zu ihrer Elternklasse delegiert. Außerdem kann dadurch eine hohe Kohäsion gefördert werden, da inhaltlich zusammengehörige Bestandteile in Klassen ausgelagert und die Kommunikation über Delegation geregelt werden kann.
 
 <!-- Wo habe ich in meinem Projekt Indirection/Delegation eingesetzt und warum? -->
 
-TODO
+Beispielsweise delegieren die Controller aus der Plugin-Schicht des modularisierten Projekts Aufgaben an die Services aus der darunterliegenden Applikationsschicht zur Erfüllung der Use-Cases.
 
 #### Protected Variations (geschützte Veränderungen)
 
