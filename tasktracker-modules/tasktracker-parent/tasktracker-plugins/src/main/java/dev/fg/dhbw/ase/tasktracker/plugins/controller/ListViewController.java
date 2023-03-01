@@ -247,7 +247,7 @@ public class ListViewController implements Observer
                 return;
             }
 
-            if (event.name().equals(ComponentEvent.TASK_DONE.name()))
+            if (event.name().equals(ComponentEvent.TASK_DONE_OR_UNDONE.name()))
             {
                 this.selectListWithName(new Title(this.selectedListName.getText()));
                 return;

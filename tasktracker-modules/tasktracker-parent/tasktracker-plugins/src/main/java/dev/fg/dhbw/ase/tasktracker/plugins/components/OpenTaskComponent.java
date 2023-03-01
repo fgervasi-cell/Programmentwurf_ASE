@@ -22,12 +22,8 @@ public class OpenTaskComponent extends TaskComponent
     @Override
     protected void onMarkTaskAsDoneOrUndone()
     {
-        // TODO: Interface Segregation principle. Make an Interface TaskComponent and
-        // seperate the implementations of done and open tasks to reduce the use of if
-        // statements!!!
-
         service.markTaskAsDone(this.task);
-        notifyObservers(ComponentEvent.TASK_DONE); // TODO: rename this event
+        notifyObservers(ComponentEvent.TASK_DONE_OR_UNDONE);
     }
 
     @Override
