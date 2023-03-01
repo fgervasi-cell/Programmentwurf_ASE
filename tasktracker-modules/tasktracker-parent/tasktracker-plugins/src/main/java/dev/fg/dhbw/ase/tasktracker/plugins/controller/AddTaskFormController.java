@@ -9,8 +9,8 @@ import java.util.UUID;
 import dev.fg.dhbw.ase.tasktracker.plugins.components.ComponentEvent;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
+import dev.fg.dhbw.ase.tasktracker.application.TaskService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -21,6 +21,7 @@ public class AddTaskFormController extends Observable
 {
     private final UUID taskListId;
     private final Stage stage;
+    private TaskService service;
     @FXML
     private TextField taskTitleTextField;
     @FXML
@@ -34,6 +35,7 @@ public class AddTaskFormController extends Observable
     {
         this.taskListId = taskListId;
         this.stage = stage;
+        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository());
     }
 
     @FXML
@@ -58,8 +60,7 @@ public class AddTaskFormController extends Observable
             reminderDate = Date.from(reminderDateInstant);
         }
 
-        TaskListRepository repository = PersistenceUtil.obtainTaskListRepository();
-        repository.addTaskToTaskList(TaskFactory.createTask(this.taskListId, title, description, dueDate, reminderDate));
+        this.service.createTask(TaskFactory.createTask(this.taskListId, title, description, dueDate, reminderDate));
 
         notifyObservers(ComponentEvent.ADD_TASK_FORM_SAVE);
         this.stage.close();

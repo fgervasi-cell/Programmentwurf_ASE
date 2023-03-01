@@ -46,4 +46,24 @@ public class TaskListService
     {
         return this.repository.getTaskListByName(name);
     }
+
+    public int getNumberOfTasksDone(User user)
+    {
+        return this.repository.getNumberOfDoneTasksForUser(user);
+    }
+
+    public List<Task> getTasksDone(User user)
+    {
+        return this.repository.getTasksDoneForUser(user.getId());
+    }
+
+    public int getTasksOpen(User user)
+    {
+        return this.repository.getNumberOfOpenTasksForUser(user);
+    }
+
+    public List<Task> getDoneTasksOfLastWeek(User user)
+    {
+        return this.repository.getDoneTasksOfLastWeek(user);
+    }
 }

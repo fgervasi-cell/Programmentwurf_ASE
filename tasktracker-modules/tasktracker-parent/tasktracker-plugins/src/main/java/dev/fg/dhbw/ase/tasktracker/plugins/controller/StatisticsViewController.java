@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Locale;
 
 import dev.fg.dhbw.ase.tasktracker.plugins.components.WidgetComponent;
+import dev.fg.dhbw.ase.tasktracker.application.TaskListService;
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.user.User;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -22,12 +22,12 @@ public class StatisticsViewController
 {
     @FXML
     private FlowPane statisticsContainer;
-    private final TaskListRepository repository;
+    private final TaskListService service;
     private final User user;
 
     public StatisticsViewController(final User user)
     {
-        this.repository = PersistenceUtil.obtainTaskListRepository();
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
         this.user = user;
     }
 
@@ -48,7 +48,7 @@ public class StatisticsViewController
 
     private WidgetComponent createTotalTasksDoneWidget()
     {
-        int totalTasksDone = this.repository.getNumberOfDoneTasksForUser(this.user);
+        int totalTasksDone = this.service.getNumberOfTasksDone(this.user);
         Text totalTasksDoneLabel = new Text(String.valueOf(totalTasksDone));
         totalTasksDoneLabel.getStyleClass().add("label");
         return new WidgetComponent("Total tasks done", totalTasksDoneLabel);
@@ -56,7 +56,7 @@ public class StatisticsViewController
 
     private WidgetComponent createTotalTasksOpenWidget()
     {
-        int totalTasksOpen = this.repository.getNumberOfOpenTasksForUser(this.user);
+        int totalTasksOpen = this.service.getTasksOpen(this.user);
         Text totalTasksOpenLabel = new Text(String.valueOf(totalTasksOpen));
         totalTasksOpenLabel.getStyleClass().add("label");
         return new WidgetComponent("Total tasks open", totalTasksOpenLabel);
@@ -64,7 +64,7 @@ public class StatisticsViewController
 
     private WidgetComponent createTasksDoneLastWeekLineChartWidget() // TODO: make those plain number over all time and also charts (two more widgets?)
     {
-        List<Task> tasksDoneLastWeek = this.repository.getDoneTasksOfLastWeek(this.user);
+        List<Task> tasksDoneLastWeek = this.service.getDoneTasksOfLastWeek(this.user);
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Day of the week");
@@ -95,7 +95,7 @@ public class StatisticsViewController
     private double calculateAverageProcessingTime()
     {
         // TODO: maybe it would be better to get this data just once 
-        List<Task> tasks = this.repository.getTasksDoneForUser(this.user.getId());
+        List<Task> tasks = this.service.getTasksDone(this.user);
         int totalProcessingTime = 0;
         for (Task t : tasks)
         {
