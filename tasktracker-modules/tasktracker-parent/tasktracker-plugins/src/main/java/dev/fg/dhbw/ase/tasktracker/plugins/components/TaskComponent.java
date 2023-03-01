@@ -2,9 +2,6 @@ package dev.fg.dhbw.ase.tasktracker.plugins.components;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
@@ -47,7 +44,7 @@ public abstract class TaskComponent extends Observable
         }
         catch (IOException e)
         {
-            // TODO
+            e.printStackTrace();
         }
     }
 
@@ -63,31 +60,10 @@ public abstract class TaskComponent extends Observable
         String reminderString = reminder.formatDate();
         this.taskDueDate.setText(dueDateString != null ? dueDateString : "There is no due date set");
         this.taskReminderDate.setText(reminderString != null ? reminderString : "There is no reminder set");
-        if (this.dueDateIsReached(dueDate.getDueDate()))
+        if (dueDate.dateIsReached())
         {
             this.taskDueDate.setFill(Color.RED);
         }
-    }
-
-    // TODO: same like above. This should maybe be moved to the DateInFuture class
-    // like "dateReached" or smth
-    private boolean dueDateIsReached(Date dueDate)
-    {
-        Calendar currentDateCalendar = Calendar.getInstance(TimeZone.getDefault());
-        Calendar dueDateCalendar = Calendar.getInstance();
-        dueDateCalendar.setTime(dueDate);
-
-        if (currentDateCalendar.get(Calendar.YEAR) > dueDateCalendar.get(Calendar.YEAR))
-        {
-            return false;
-        }
-
-        if (currentDateCalendar.get(Calendar.MONTH) > dueDateCalendar.get(Calendar.MONTH))
-        {
-            return false;
-        }
-
-        return currentDateCalendar.get(Calendar.DAY_OF_MONTH) >= dueDateCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
     public HBox getRoot()

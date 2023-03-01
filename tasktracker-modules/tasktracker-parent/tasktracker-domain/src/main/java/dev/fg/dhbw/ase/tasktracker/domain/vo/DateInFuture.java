@@ -59,6 +59,25 @@ public final class DateInFuture
         return dateString;
     }
 
+    public boolean dateIsReached()
+    {
+        Calendar currentDateCalendar = Calendar.getInstance(TimeZone.getDefault());
+        Calendar dueDateCalendar = Calendar.getInstance();
+        dueDateCalendar.setTime(this.getDueDate());
+
+        if (currentDateCalendar.get(Calendar.YEAR) > dueDateCalendar.get(Calendar.YEAR))
+        {
+            return false;
+        }
+
+        if (currentDateCalendar.get(Calendar.MONTH) > dueDateCalendar.get(Calendar.MONTH))
+        {
+            return false;
+        }
+
+        return currentDateCalendar.get(Calendar.DAY_OF_MONTH) >= dueDateCalendar.get(Calendar.DAY_OF_MONTH);
+    }
+
     @Override
     public int hashCode()
     {

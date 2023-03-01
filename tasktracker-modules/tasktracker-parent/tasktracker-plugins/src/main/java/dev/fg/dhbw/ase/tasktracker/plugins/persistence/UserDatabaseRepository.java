@@ -1,8 +1,5 @@
 package dev.fg.dhbw.ase.tasktracker.plugins.persistence;
 
-import java.util.UUID;
-
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -17,13 +14,6 @@ public class UserDatabaseRepository implements UserRepository
     public UserDatabaseRepository(final Session session)
     {
         this.session = session;
-    }
-
-    @Override
-    public User getUserById(UUID user)
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
