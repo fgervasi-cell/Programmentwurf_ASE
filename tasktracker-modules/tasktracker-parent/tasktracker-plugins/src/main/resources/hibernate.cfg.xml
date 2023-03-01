@@ -10,8 +10,8 @@
         <property name="connection.password">password</property>
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.entities.TaskList" />
-        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.entities.Task" />
-        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.entities.User" />
+        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.task.TaskList" />
+        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.task.Task" />
+        <mapping class="dev.fg.dhbw.ase.tasktracker.domain.user.User" />
     </session-factory>
 </hibernate-configuration>

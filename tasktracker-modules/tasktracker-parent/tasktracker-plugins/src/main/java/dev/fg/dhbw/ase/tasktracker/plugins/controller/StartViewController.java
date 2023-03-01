@@ -1,4 +1,4 @@
-package dev.fg.dhbw.ase.tasktracker.plugins;
+package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker;
 
-import dev.fg.dhbw.ase.tasktracker.plugins.StartViewController;
+import dev.fg.dhbw.ase.tasktracker.plugins.controller.StartViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

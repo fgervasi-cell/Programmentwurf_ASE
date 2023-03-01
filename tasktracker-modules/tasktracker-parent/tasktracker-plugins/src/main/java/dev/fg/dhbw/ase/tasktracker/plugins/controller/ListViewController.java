@@ -1,21 +1,21 @@
-package dev.fg.dhbw.ase.tasktracker.domain.controller;
+package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dev.fg.dhbw.ase.tasktracker.domain.components.ComponentEvent;
-import dev.fg.dhbw.ase.tasktracker.domain.components.FinishedTaskComponent;
-import dev.fg.dhbw.ase.tasktracker.domain.components.OpenTaskComponent;
-import dev.fg.dhbw.ase.tasktracker.domain.components.TaskListComponent;
+import dev.fg.dhbw.ase.tasktracker.plugins.components.ComponentEvent;
+import dev.fg.dhbw.ase.tasktracker.plugins.components.FinishedTaskComponent;
+import dev.fg.dhbw.ase.tasktracker.plugins.components.OpenTaskComponent;
+import dev.fg.dhbw.ase.tasktracker.plugins.components.TaskListComponent;
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
-import dev.fg.dhbw.ase.tasktracker.observer.Observer;
-import dev.fg.dhbw.ase.tasktracker.persistence.PersistenceUtil;
-import dev.fg.dhbw.ase.tasktracker.persistence.TaskListRepository;
+import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observer;
+import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
+import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
