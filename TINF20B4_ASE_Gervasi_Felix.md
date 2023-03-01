@@ -245,7 +245,7 @@ Module auf höherer Ebene sollten keine Abhängigkeiten zu Modulen auf niedriger
 
 <!-- Wo habe ich DIP eingesetzt? -->
 
-TODO
+Dieses Prinzip wurde durch die Einhaltung geltender Regeln der _Clean Architecture_ umgesetzt. Die Anwendung ist in fünf Schichten eingeteilt. Die Abhängigkeiten der einzelnen Schichten gehen ausschließlich von den äußeren (niedrigere Ebene) zu den inneren (höhere Ebene) Schichten.
 
 ### Analyse und Begründung für GRASP
 
