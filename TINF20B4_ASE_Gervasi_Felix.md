@@ -144,7 +144,41 @@ Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifische
 
 ## Clean Architecture
 
+<!-- Was versteht man unter dem Begriff "Clean Architecture"? -->
+
+Das Ziel von _Clean Architecture_ ist es, Software so zu gestalten, dass sie über einen langen Zeitraum bestehen bleiben kann. Dies wird unter anderem dadurch erreicht, dass eine klare Trennung zwischen technologieabhängigen und technologieunabhängigen Komponenten stattfindet. Die Software muss so aufgebaut sein, dass die zugrundeliegenden Technologien ausgetauscht werden können ohne, dass der _langlebige Kern_ der Anwendung verändert werden muss.
+
 ### Schichtarchitektur planen und begründen
+
+In der _Clean Architecture_ wird eine Software in mehrere Schichten eingeteilt. Dabei ist es wichtig darauf zu achten, dass Abhängigkeiten zwischen den Schichten immer nur von außen nach innen gehen (innere Schichten wissen nichts von den Äußeren).
+
+<!--
+- Welche Schichten umfasst meine Anwendung und warum?
+- Welche Aufgaben erfüllt die jeweilige Schicht?
+- 2 Schichten im Code umsetzen
+-->
+
+In dem vorliegenden Projekt lassen sich theoretisch 5 Schichten unterscheiden. Diese sind (von außen nach innen):
+
+1. Plugins: In der Plugin-Schicht liegt das _User Interface_ und sonstige dafür benötigte Ressourcen. Außerdem befindet sich sonstiger Code dort, der direkte Abhängigkeiten zu externen Bibliotheken oder Frameworks besitzt.
+2. Adapters: Die Adapter-Schicht enthält zu großen Teilen _Mapping-Code_ der die Daten aus der Plugin-Schicht in ein Format umwandelt, welches von der Applikationsschicht verstanden wird und umgekehrt. Diese Schicht kann oft (zumindest am Anfang) weggelassen werden, da sich die Datenmodelle nicht groß unterscheiden.
+3. Application Code: Diese Schicht enthält Code der im direkten Zusammenhang zu den Anwendungsfällen und Anforderungen der vorliegenden Applikation steht. Er fasst Elemente aus dem Domänen-Code zusammen und verwendet diese zur Umsetzung der Anwendungsfälle (benutzt die Entitäten und VOs). Änderungen an dieser Schicht dürfen nicht den Domänencode beeinflussen und Änderungen an der Datenbank oder der graphischen Benutzeroberfläche nicht den _Application Code_. Den _Use Case_ des _Application Code_ darf nicht interessieren wer ihn aufgerufen hat und wie das Ergebnis das er zurückliefert präsentiert wird. Solche _Use Cases_ sind im folgenden Projekt bspw.: Aufgaben einer Liste abrufen, eine neue Aufgabe erstellen, eine neue Liste erstellen, eine Aufgabe löschen, eine Liste löschen, Statistiken abrufen...
+4. Domain Code: Wie der Name bereits andeutet enthält diese Schicht den Code, der direkt mit der Problemdomäne im Zusammenhang steht. Wie bereits in dem Abschnitt über das _Domain Driven Design_ festgestellt wurde sind dies im wesentlichen die Entitäten und _Value Objects_, die bereits in den Abschnitten _Entities_ und _Value Objects_ unter der Überschrift _Analyse und Begründung der verwendeten Muster_ herausgearbeitet wurden.
+5. Abstraction Code: Diese Schicht enthält domänenübergreifendes Wissen und Funktionalitäten die in vielen oder allen anderen Schichten benötigt werden. Sie abstrahiert bspw. vom Code (bzw. den Abhängigkeiten auf Code) der verwendeten Bibliotheken wie bspw. der verwendeten Bibliothek zur Umsetzung der Persistenz. Für das vorliegende Projekt wäre eine geeignete Abhängigkeit für diese Schicht das JUnit Test-Framework. Oft kann die Schicht aber auch eingespart werden.
+
+<!-- 
+- Wo finden sich zumindest 2 der oben beschriebenen Schichten in meinem Code wieder?
+- Evtl. kann ich mit den "Schichten" persistence und domain argumentieren
+- Dafür müssen aber auch Dinge geändert werden (im Domänen-Paket sollten eigentlich nur die Entitäten und VOs drinnen liegen)  
+-->
+
+Zunächst wurde das _TaskTracker_-Projekt ohne Bachtung der Regeln der _Clean Architecture_ entwickelt. Das alte Projekt liegt im Ordner _./tasktracker/_ vor. Das neue modularisierte Projekt befindet sich im Ordner _./tasktracker-modules/_. Die Schichten wurden als einzelne Maven-Module umgesetzt. Das Elternprojekt _tasktracker-parent_ enthält die folgenden Module:
+
+- _tasktracker-abstraction_: Repräsentiert die Abstraktionsschicht und definiert Abhängigkeiten zu der _javax.persistence_ API sowie dem _JUnit_-Test-Framework. Diese Abhängigkeiten befinden sich in der Abstraktionsschicht, da sie öfters im Projekt verwendet werden müssen und über einen langen Zeitraum besetehn bleiben werden. Außerdem befinden sich in der Schicht die Klassen zur Umsetzung des Beobachtermusters. Hier gilt dasselbe: der Code wird sich nur sehr selten ändern und sollte aber innerhalb des gesamten Projektes nutzbar sein.
+- _tasktracker-domain_: In der Domänenschicht befinden sich die Entitäten und VOs, da diese aus der Domäne und während des DDD-Prozesses entstanden sind und die dort geltenden Regeln einhalten müssen. Ebenfalls sind dort die Repositories für die vorhandenen Aggregate untergebracht, da die Verwaltung der Entitäten ebenfalls zur Problemdomäne gehört.
+- _tasktracker-application_: Die Applikationsschicht enthält Klassen und Methoden zur Umsetzung der Use-Cases. Sie verwendet dafür die Repositories, Entitäten und VOs aus der darunterliegenden Schicht. In diesem Projekt wurden Use-Cases unterschieden die Aufgabenlisten, Aufgaben oder den Benutzer betreffen und diese jeweils in einer Klasse zusammengefasst. Die von den Klassen beereitgestellte Methoden werden von der Plugin-/Adapter-Schicht verwendet.
+- _tasktracker-adapters_: Die Adapterschicht wurde in diesem Projekt ausgespart. Hier würde der nötige Mapping-Code liegen, um vom Datenmodell der Plugin-Schicht auf das Datenmodell der Applikationsschicht abzubilden.
+- _tasktracker-plugins_: Die Plugin-Schicht ist die am Weitesten außen liegende Schicht deren Code sich am häufigsten ändert, da er am konkretesten ist und direkte Abhängigkeiten zu externen Bibliotheken und Frameworks besitzt. Hier liegen alle UI-Elemente und die dafür benötigten Ressourcen (in diesem Fall abhängig von JavaFX). Außerdem werden die Repository-Interfaces durch konkrete Implementierungen ersetzt.
 
 ## Programming Principles
 
