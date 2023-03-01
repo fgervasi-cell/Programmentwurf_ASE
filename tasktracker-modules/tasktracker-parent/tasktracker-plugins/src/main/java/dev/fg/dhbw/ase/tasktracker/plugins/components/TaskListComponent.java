@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
+import dev.fg.dhbw.ase.tasktracker.application.TaskListService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +22,11 @@ public class TaskListComponent extends Observable
     private Button deleteButton;
     private TaskList list;
     private HBox root;
+    private TaskListService service;
 
     public TaskListComponent(TaskList list)
     {
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
         this.list = list;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskListComponent.fxml"));
         loader.setController(this);
@@ -69,7 +72,7 @@ public class TaskListComponent extends Observable
             return;
         }
 
-        PersistenceUtil.obtainTaskListRepository().deleteTaskList(list);
+        this.service.deleteTaskList(list);
         ComponentEvent event = ComponentEvent.TASK_LIST_DELETE;
         event.setData(this.listName.getText());
         notifyObservers(event);

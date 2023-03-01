@@ -23,9 +23,14 @@ public class TaskService
         repository.removeTask(task);
     }
 
-    public void updateTask()
+    public void markTaskAsDone(Task task)
     {
-        
+        this.repository.markTaskAsDone(task);
+    }
+
+    public void markTaskAsUndone(Task task)
+    {
+        this.repository.markTaskAsUndone(task);
     }
 
     public void moveTask(Task task, TaskList list)

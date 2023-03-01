@@ -9,8 +9,8 @@ import java.util.TimeZone;
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
+import dev.fg.dhbw.ase.tasktracker.application.TaskService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -22,7 +22,7 @@ public abstract class TaskComponent extends Observable
 {
     private HBox root;
     private Task task;
-    protected TaskListRepository repository;
+    protected TaskService service;
     @FXML
     private Text taskTitle;
     @FXML
@@ -37,7 +37,7 @@ public abstract class TaskComponent extends Observable
     protected TaskComponent(final Task task)
     {
         this.task = task;
-        this.repository = PersistenceUtil.obtainTaskListRepository();
+        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository());
         FXMLLoader loader = new FXMLLoader(this.getFXMLLocation());
         loader.setController(this);
         try
@@ -98,7 +98,7 @@ public abstract class TaskComponent extends Observable
     @FXML
     private void onTaskDelete()
     {
-        this.repository.removeTask(this.task);
+        this.service.deleteTask(this.task);
         notifyObservers(ComponentEvent.TASK_DELETE);
     }
 

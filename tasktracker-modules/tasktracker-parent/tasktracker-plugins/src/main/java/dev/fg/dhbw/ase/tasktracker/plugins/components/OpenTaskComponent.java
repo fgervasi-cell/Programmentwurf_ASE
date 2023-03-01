@@ -26,7 +26,7 @@ public class OpenTaskComponent extends TaskComponent
         // seperate the implementations of done and open tasks to reduce the use of if
         // statements!!!
 
-        repository.markTaskAsDone(this.task);
+        service.markTaskAsDone(this.task);
         notifyObservers(ComponentEvent.TASK_DONE); // TODO: rename this event
     }
 

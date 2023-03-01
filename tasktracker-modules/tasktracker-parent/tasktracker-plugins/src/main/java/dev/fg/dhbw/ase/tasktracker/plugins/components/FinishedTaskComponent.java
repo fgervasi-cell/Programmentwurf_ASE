@@ -22,7 +22,7 @@ public class FinishedTaskComponent extends TaskComponent
     @Override
     protected void onMarkTaskAsDoneOrUndone()
     {
-        repository.markTaskAsUndone(this.task);
+        service.markTaskAsUndone(this.task);
         notifyObservers(ComponentEvent.TASK_DONE);
     }
 
