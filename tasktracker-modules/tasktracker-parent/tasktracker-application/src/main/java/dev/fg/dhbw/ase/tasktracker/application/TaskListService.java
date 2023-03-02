@@ -1,5 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.application;
 
+import java.util.Collections;
 import java.util.List;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
@@ -34,7 +35,7 @@ public class TaskListService
 
     public List<TaskList> getTaskLists(User user)
     {
-        return this.repository.getTaskListsForUser(user.getId());
+        return this.repository.getTaskListsForUser(user != null ? user.getId() : null);
     }
 
     public List<Task> getTasksFromList(Title name)

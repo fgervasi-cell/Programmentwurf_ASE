@@ -1,6 +1,10 @@
 package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import dev.fg.dhbw.ase.tasktracker.application.UserService;
 import dev.fg.dhbw.ase.tasktracker.domain.user.User;
@@ -74,7 +78,33 @@ public class StartViewController
     @FXML
     public void onContinueWithoutAccount(Event e)
     {
+        createDataFiles();
         login(null);
+    }
+
+    private void createDataFiles()
+    {
+        try
+        {
+            Files.createDirectories(Paths.get(PersistenceUtil.BASE_PATH));
+            Path taskListsFilePath = Paths.get(PersistenceUtil.TASK_LISTS_FILE_PATH);
+            if (!Files.exists(taskListsFilePath))
+            {
+                Files.createFile(taskListsFilePath);
+                Files.writeString(taskListsFilePath, "<task-lists></task-lists>", StandardCharsets.UTF_8);
+            }
+            
+            Path tasksFilePath = Paths.get(PersistenceUtil.TASKS_FILE_PATH);
+            if (!Files.exists(tasksFilePath))
+            {
+                Files.createFile(tasksFilePath);
+                Files.writeString(tasksFilePath, "<tasks></tasks>", StandardCharsets.UTF_8);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void login(final User user)

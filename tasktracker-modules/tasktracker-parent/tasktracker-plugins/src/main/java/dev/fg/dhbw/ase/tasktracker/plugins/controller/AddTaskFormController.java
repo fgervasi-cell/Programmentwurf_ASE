@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import dev.fg.dhbw.ase.tasktracker.plugins.components.ComponentEvent;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskFactory;
+import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
 import dev.fg.dhbw.ase.tasktracker.application.TaskService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
@@ -31,11 +32,11 @@ public class AddTaskFormController extends Observable
     @FXML
     private DatePicker taskReminderDatePicker;
 
-    public AddTaskFormController(final UUID taskListId, final Stage stage)
+    public AddTaskFormController(final UUID taskListId, final Stage stage, User user)
     {
         this.taskListId = taskListId;
         this.stage = stage;
-        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository());
+        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(user));
     }
 
     @FXML

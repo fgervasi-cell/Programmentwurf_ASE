@@ -2,6 +2,7 @@ package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public class ListViewController implements Observer
     {
         this.primaryStage = primaryStage;
         this.user = user;
-        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository(user));
     }
 
     @FXML
@@ -69,7 +70,8 @@ public class ListViewController implements Observer
     {
         this.addTaskButton.setVisible(false);
         this.selectedListName.getStyleClass().add("headline");
-        this.userInformation.setText(String.format("Logged in as %s", this.user.getEMail().getMailAdress()));
+        String loggedInAs = this.user == null ? "anonymous user" : this.user.getEMail().getMailAdress();
+        this.userInformation.setText(String.format("Logged in as %s", loggedInAs));
     }
 
     private List<TaskList> getTaskListsForUser()
@@ -106,7 +108,7 @@ public class ListViewController implements Observer
         {
             if (!t.isDone())
             {
-                OpenTaskComponent task = new OpenTaskComponent(t);
+                OpenTaskComponent task = new OpenTaskComponent(t, user);
                 task.registerObserver(this);
                 this.taskContainer.getChildren().add(task.getRoot());
             }
@@ -125,7 +127,7 @@ public class ListViewController implements Observer
             List<Task> done = tasks.stream().filter(Task::isDone).collect(Collectors.toList());
             doneTasks.addAll(done);
         }
-        List<FinishedTaskComponent> components = doneTasks.stream().map(FinishedTaskComponent::new).collect(Collectors.toList());
+        List<FinishedTaskComponent> components = doneTasks.stream().map(task -> new FinishedTaskComponent(task, user)).collect(Collectors.toList());
         components.stream().forEach(comp -> comp.registerObserver(this));
         return components.stream().map(FinishedTaskComponent::getRoot).collect(Collectors.toList());
     }
@@ -152,7 +154,7 @@ public class ListViewController implements Observer
         TaskList list = this.service.getTaskList(new Title(this.selectedListName.getText()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskForm.fxml"));
         Stage stage = new Stage();
-        AddTaskFormController addTaskFormController = new AddTaskFormController(list.getId(), stage);
+        AddTaskFormController addTaskFormController = new AddTaskFormController(list.getId(), stage, user);
         addTaskFormController.registerObserver(this);
         loader.setController(addTaskFormController);
         try
@@ -214,7 +216,7 @@ public class ListViewController implements Observer
         }
         this.service.createTaskList(new Title(input), user);
         TaskList list = this.service.getTaskList(new Title(input));
-        TaskListComponent taskListComponent = new TaskListComponent(list);
+        TaskListComponent taskListComponent = new TaskListComponent(list, user);
         taskListComponent.registerObserver(this);
         this.listsContainer.getChildren().add(taskListComponent.getRoot());
         this.listsContainer.getChildren().remove(newList);
@@ -225,7 +227,7 @@ public class ListViewController implements Observer
         this.listsContainer.getChildren().clear();
         for (TaskList list : lists)
         {
-            TaskListComponent taskListComponent = new TaskListComponent(list);
+            TaskListComponent taskListComponent = new TaskListComponent(list, user);
             taskListComponent.registerObserver(this);
             this.listsContainer.getChildren().add(taskListComponent.getRoot());
         }

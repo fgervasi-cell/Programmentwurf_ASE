@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
+import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
 import dev.fg.dhbw.ase.tasktracker.application.TaskService;
@@ -31,10 +32,10 @@ public abstract class TaskComponent extends Observable
     @FXML
     private Button button;
 
-    protected TaskComponent(final Task task)
+    protected TaskComponent(final Task task, User user)
     {
         this.task = task;
-        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository());
+        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(user));
         FXMLLoader loader = new FXMLLoader(this.getFXMLLocation());
         loader.setController(this);
         try

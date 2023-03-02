@@ -5,12 +5,16 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 import dev.fg.dhbw.ase.tasktracker.domain.exceptions.DateLiesInPastException;
 
 @Embeddable
+@XmlRootElement(name = "date")
 public final class DateInFuture
 {
+    @XmlValue
     private final Date date;
 
     @SuppressWarnings("unused")

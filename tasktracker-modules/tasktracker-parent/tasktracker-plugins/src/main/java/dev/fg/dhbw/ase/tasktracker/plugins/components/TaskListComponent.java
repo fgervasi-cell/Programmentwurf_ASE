@@ -3,6 +3,7 @@ package dev.fg.dhbw.ase.tasktracker.plugins.components;
 import java.io.IOException;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
+import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable;
 import dev.fg.dhbw.ase.tasktracker.application.TaskListService;
 import dev.fg.dhbw.ase.tasktracker.plugins.persistence.PersistenceUtil;
@@ -24,9 +25,9 @@ public class TaskListComponent extends Observable
     private HBox root;
     private TaskListService service;
 
-    public TaskListComponent(TaskList list)
+    public TaskListComponent(TaskList list, User user)
     {
-        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository(user));
         this.list = list;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TaskListComponent.fxml"));
         loader.setController(this);

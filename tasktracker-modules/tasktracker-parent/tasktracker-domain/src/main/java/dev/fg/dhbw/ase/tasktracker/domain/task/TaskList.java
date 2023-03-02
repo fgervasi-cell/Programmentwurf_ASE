@@ -8,21 +8,28 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 import dev.fg.dhbw.ase.tasktracker.domain.exceptions.InvalidTitleException;
 
 @Entity
 @Table(name = "task_list")
+@XmlRootElement(name = "task-list")
 public class TaskList implements Serializable
 {
     @Id
     @Column(name = "id", columnDefinition = "BINARY(16)")
+    @XmlElement(name = "id")
     private final UUID id;
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
+    @XmlTransient
     private final UUID userId;
     @Id
     @Embedded
+    @XmlElement(name = "title")
     private Title title;
 
     @SuppressWarnings("unused")

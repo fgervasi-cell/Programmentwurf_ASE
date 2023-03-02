@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 import dev.fg.dhbw.ase.tasktracker.domain.exceptions.InvalidTitleException;
 
 @Embeddable
+@XmlRootElement(name = "title")
 public final class Title implements Serializable
 {
     @Column(name = "title", nullable = false)
+    @XmlValue
     private final String titleString;
 
     @SuppressWarnings("unused")

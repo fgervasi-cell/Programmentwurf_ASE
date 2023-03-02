@@ -27,7 +27,7 @@ public class StatisticsViewController
 
     public StatisticsViewController(final User user)
     {
-        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository());
+        this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository(user));
         this.user = user;
     }
 

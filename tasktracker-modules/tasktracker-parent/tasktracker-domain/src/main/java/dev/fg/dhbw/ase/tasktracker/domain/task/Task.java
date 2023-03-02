@@ -9,6 +9,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
@@ -16,30 +18,41 @@ import dev.fg.dhbw.ase.tasktracker.domain.exceptions.TaskWithoutTaskListIdExcept
 
 @Entity
 @Table(name = "task")
+@XmlRootElement(name = "task")
 public class Task
 {
     @Id
     @Column(name = "id", columnDefinition = "BINARY(16)")
+    @XmlElement(name = "id")
     private final UUID id;
     @Column(name = "task_list_id", columnDefinition = "BINARY(16)")
+    @XmlElement(name = "task-list-id")
     private final UUID taskListId;
     @Column(name = "task_id", columnDefinition = "BINARY(16)")
+    @XmlElement(name = "task-id")
     private final UUID taskId;
     @Embedded
+    @XmlElement(name = "title")
     private Title title;
     @Embedded
     @AttributeOverride(name = "date", column = @Column(name = "due_date"))
+    @XmlElement(name = "due-date")
     private DateInFuture dueDate;
     @Column(name = "description")
+    @XmlElement(name = "description")
     private String description;
     @Embedded
     @AttributeOverride(name = "date", column = @Column(name = "reminder"))
+    @XmlElement(name = "reminder")
     private DateInFuture reminder;
     @Column(name = "done")
+    @XmlElement(name = "done")
     private boolean done;
     @Column(name = "creation_date")
+    @XmlElement(name = "creation-date")
     private final Date creationDate;
     @Column(name = "completion_date")
+    @XmlElement(name = "completion-date")
     private Date completionDate;
 
     @SuppressWarnings("unused")
