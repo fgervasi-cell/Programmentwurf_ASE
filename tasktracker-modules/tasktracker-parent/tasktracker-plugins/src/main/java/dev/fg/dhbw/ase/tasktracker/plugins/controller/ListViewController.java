@@ -2,7 +2,6 @@ package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

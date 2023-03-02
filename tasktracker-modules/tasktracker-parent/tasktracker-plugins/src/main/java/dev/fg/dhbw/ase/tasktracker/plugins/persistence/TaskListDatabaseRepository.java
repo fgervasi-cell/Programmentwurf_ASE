@@ -112,19 +112,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     }
 
     @Override
-    public void moveTaskToList(Task task, TaskList list) // TODO: wrong name or not needed
-    {
-        session.beginTransaction();
-        session.delete(task);
-        Task newTask1 = TaskFactory.createTaskDone(task, list.getId());
-        Task newTask2 = TaskFactory.createTaskDone(task, task.getTaskListId());
-        session.save(newTask1);
-        session.save(newTask2);
-        session.getTransaction().commit();
-    }
-
-    @Override
-    public List<Task> getTasksDoneForUser(UUID user) // TODO: Is this very elegant?
+    public List<Task> getTasksDoneForUser(UUID user)
     {
         List<TaskList> lists = this.getTaskListsForUser(user);
         session.beginTransaction();
@@ -169,8 +157,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     @Override
     public int getNumberOfOpenTasksForUser(User user)
     {
-        List<TaskList> lists = this.getTaskListsForUser(user.getId()); // TODO: extract this to "getOpenTasksForUser" >
-                                                                       // see "getTasksDoneForUser"
+        List<TaskList> lists = this.getTaskListsForUser(user.getId());
         List<Task> result = new ArrayList<>();
         session.beginTransaction();
         for (TaskList list : lists)

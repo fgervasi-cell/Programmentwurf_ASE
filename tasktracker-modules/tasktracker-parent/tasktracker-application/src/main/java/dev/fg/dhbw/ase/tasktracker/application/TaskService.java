@@ -1,7 +1,6 @@
 package dev.fg.dhbw.ase.tasktracker.application;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 
 public class TaskService
@@ -31,10 +30,5 @@ public class TaskService
     public void markTaskAsUndone(Task task)
     {
         this.repository.markTaskAsUndone(task);
-    }
-
-    public void moveTask(Task task, TaskList list)
-    {
-        repository.moveTaskToList(task, list);
     }
 }

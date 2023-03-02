@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,8 +72,10 @@ class TaskListFileSystemRepository implements TaskListRepository
     @Override
     public void updateTaskList(UUID taskListId, Title name)
     {
-        // TODO Auto-generated method stub
-
+        loadTaskListsFromFile();
+        this.lists.removeIf(list -> list.getId().equals(taskListId));
+        this.lists.add(new TaskList(name));
+        writeTaskListsBackToFile();
     }
 
     @Override
@@ -111,12 +114,6 @@ class TaskListFileSystemRepository implements TaskListRepository
         loadTasksFromFile();
         this.tasks.removeIf(t -> t.getId().equals(task.getId()));
         writeTasksBackToFile();
-    }
-
-    @Override
-    public void moveTaskToList(Task task, TaskList list)
-    {
-        // TODO: not needed?
     }
 
     @Override
@@ -161,8 +158,20 @@ class TaskListFileSystemRepository implements TaskListRepository
     @Override
     public List<Task> getDoneTasksOfLastWeek(User user)
     {
-        // TODO Auto-generated method stub
-        return null;
+        loadTasksFromFile();
+        loadTaskListsFromFile();
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_MONTH, -5);
+        List<Task> doneTasksOfLastWeek = new ArrayList<>();
+        for (TaskList list : this.lists)
+        {
+            doneTasksOfLastWeek.addAll(this.tasks.stream()
+                    .filter(t -> t.getTaskListId().equals(list.getId()) && t.isDone()
+                            && t.getCompletionDate().getTime() > today.getTimeInMillis()
+                            && t.getCompletionDate().getTime() < System.currentTimeMillis())
+                    .toList());
+        }
+        return doneTasksOfLastWeek;
     }
 
     private void writeTaskListsBackToFile()

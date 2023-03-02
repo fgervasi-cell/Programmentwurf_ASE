@@ -1,6 +1,5 @@
 package dev.fg.dhbw.ase.tasktracker.application;
 
-import java.util.Collections;
 import java.util.List;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
