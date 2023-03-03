@@ -1,6 +1,10 @@
 package dev.fg.dhbw.ase.tasktracker.plugins.persistence;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBException;
 
@@ -16,10 +20,10 @@ import dev.fg.dhbw.ase.tasktracker.domain.user.UserRepository;
 
 public class PersistenceUtil
 {
-    public static final String BASE_PATH = System.getProperty("user.home") + System.getProperty("file.separator")
+    private static final String BASE_PATH = System.getProperty("user.home") + System.getProperty("file.separator")
             + "tasktracker" + System.getProperty("file.separator");
-    public static final String TASK_LISTS_FILE_PATH = BASE_PATH + "task-lists.xml";
-    public static final String TASKS_FILE_PATH = BASE_PATH + "tasks.xml";
+    private static final String TASK_LISTS_FILE_PATH = BASE_PATH + "task-lists.xml";
+    private static final String TASKS_FILE_PATH = BASE_PATH + "tasks.xml";
     private static Session session;
 
     private PersistenceUtil()
@@ -31,9 +35,10 @@ public class PersistenceUtil
         if (user == null)
             try
             {
-                return new TaskListFileSystemRepository();
+                createDataFiles();
+                return new TaskListFileSystemRepository(TASK_LISTS_FILE_PATH, TASKS_FILE_PATH);
             }
-            catch (FileNotFoundException | JAXBException e)
+            catch (JAXBException e)
             {
                 e.printStackTrace();
             }
@@ -64,5 +69,30 @@ public class PersistenceUtil
         SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         session = sessionFactory.openSession();
         return session;
+    }
+
+    private static void createDataFiles()
+    {
+        try
+        {
+            Files.createDirectories(Paths.get(PersistenceUtil.BASE_PATH));
+            Path taskListsFilePath = Paths.get(PersistenceUtil.TASK_LISTS_FILE_PATH);
+            if (!Files.exists(taskListsFilePath))
+            {
+                Files.createFile(taskListsFilePath);
+                Files.writeString(taskListsFilePath, "<task-lists></task-lists>", StandardCharsets.UTF_8);
+            }
+
+            Path tasksFilePath = Paths.get(PersistenceUtil.TASKS_FILE_PATH);
+            if (!Files.exists(tasksFilePath))
+            {
+                Files.createFile(tasksFilePath);
+                Files.writeString(tasksFilePath, "<tasks></tasks>", StandardCharsets.UTF_8);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

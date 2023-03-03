@@ -35,6 +35,8 @@ import javafx.stage.Stage;
 // TODO: Controllers are meant to delegate most of the work which is not the case here. Maybe refactoring is needed?
 public class ListViewController implements Observer
 {
+    private static final String DEFAULT_HEADING = "Your Lists";
+    private static final String NAME_OF_DONE_TASKS_LIST = "Done";
     private final Stage primaryStage;
     private final User user;
     private final TaskListService service;
@@ -80,10 +82,10 @@ public class ListViewController implements Observer
 
     private List<TaskList> addTaskListForDoneTasksIfNotPresent(List<TaskList> taskLists)
     {
-        if (taskLists.stream().filter(tl -> tl.getTitle().getTitleString().equals("Done")).count() == 0)
+        if (taskLists.stream().filter(tl -> tl.getTitle().getTitleString().equals(NAME_OF_DONE_TASKS_LIST)).count() == 0)
         {
-            this.service.createTaskList(new Title("Done"), this.user);
-            taskLists.add(new TaskList(new Title("Done")));
+            this.service.createTaskList(new Title(NAME_OF_DONE_TASKS_LIST), this.user);
+            taskLists.add(new TaskList(new Title(NAME_OF_DONE_TASKS_LIST)));
         }
         return taskLists;
     }
@@ -91,13 +93,13 @@ public class ListViewController implements Observer
     private void selectListWithName(Title taskListTitle)
     {
         this.addTaskButton.setVisible(true);
-        if (taskListTitle.getTitleString().equals("Done") || taskListTitle.getTitleString().equals("Your Lists"))
+        if (taskListTitle.getTitleString().equals(NAME_OF_DONE_TASKS_LIST) || taskListTitle.getTitleString().equals(DEFAULT_HEADING))
         {
             this.addTaskButton.setVisible(false);
         }
         this.selectedListName.setText(taskListTitle.getTitleString());
         this.taskContainer.getChildren().clear();
-        if (taskListTitle.getTitleString().equals("Done"))
+        if (taskListTitle.getTitleString().equals(NAME_OF_DONE_TASKS_LIST))
         {
             this.taskContainer.getChildren().addAll(this.getTaskComponentsForDoneTasks());
             return;
@@ -117,7 +119,7 @@ public class ListViewController implements Observer
     private List<HBox> getTaskComponentsForDoneTasks() // TODO: I should just use a database query for this...
     {
         List<TaskList> lists = this.service.getTaskLists(this.user);
-        lists = lists.stream().filter(list -> !list.getTitle().getTitleString().equals("Done"))
+        lists = lists.stream().filter(list -> !list.getTitle().getTitleString().equals(NAME_OF_DONE_TASKS_LIST))
                 .collect(Collectors.toList());
         List<Task> doneTasks = new ArrayList<>();
         for (TaskList list : lists)
@@ -144,8 +146,8 @@ public class ListViewController implements Observer
     private boolean selectedListNameIsInvalid()
     {
         return this.selectedListName == null || this.selectedListName.getText() == null
-                || this.selectedListName.getText().equals("Done")
-                || this.selectedListName.getText().equals("Your Lists");
+                || this.selectedListName.getText().equals(NAME_OF_DONE_TASKS_LIST)
+                || this.selectedListName.getText().equals(DEFAULT_HEADING);
     }
 
     private void openAddTaskWindow()
@@ -231,7 +233,7 @@ public class ListViewController implements Observer
             this.listsContainer.getChildren().add(taskListComponent.getRoot());
         }
         this.taskContainer.getChildren().clear();
-        this.selectedListName.setText("Your Lists");
+        this.selectedListName.setText(DEFAULT_HEADING);
     }
 
     @Override

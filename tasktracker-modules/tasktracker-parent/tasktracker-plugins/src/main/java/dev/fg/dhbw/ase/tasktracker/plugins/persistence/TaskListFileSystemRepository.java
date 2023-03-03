@@ -28,9 +28,13 @@ class TaskListFileSystemRepository implements TaskListRepository
     private List<TaskList> lists;
     private final Marshaller marshaller;
     private final Unmarshaller unmarshaller;
+    private final String taskListsFilePath;
+    private final String tasksFilePath;
 
-    public TaskListFileSystemRepository() throws JAXBException, FileNotFoundException
+    public TaskListFileSystemRepository(String tasksListsFilePath, String tasksFilePath) throws JAXBException
     {
+        this.taskListsFilePath = tasksListsFilePath;
+        this.tasksFilePath = tasksFilePath;
         JAXBContext context = JAXBContext.newInstance(TaskListXmlWrapper.class, TaskXmlWrapper.class);
         marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -65,7 +69,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     public void deleteTaskList(TaskList taskList)
     {
         loadTaskListsFromFile();
-        this.lists.remove(taskList);
+        this.lists.removeIf(list -> list.getId().equals(taskList.getId()));
         writeTaskListsBackToFile();
     }
 
@@ -178,7 +182,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     {
         try
         {
-            this.marshaller.marshal(new TaskListXmlWrapper(this.lists), new File(PersistenceUtil.TASK_LISTS_FILE_PATH));
+            this.marshaller.marshal(new TaskListXmlWrapper(this.lists), new File(this.taskListsFilePath));
         }
         catch (JAXBException e)
         {
@@ -190,7 +194,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     {
         try
         {
-            this.marshaller.marshal(new TaskXmlWrapper(this.tasks), new File(PersistenceUtil.TASKS_FILE_PATH));
+            this.marshaller.marshal(new TaskXmlWrapper(this.tasks), new File(this.tasksFilePath));
         }
         catch (JAXBException e)
         {
@@ -203,7 +207,7 @@ class TaskListFileSystemRepository implements TaskListRepository
         try
         {
             TaskXmlWrapper taskXmlWrapper = (TaskXmlWrapper) this.unmarshaller
-                    .unmarshal(new FileReader(PersistenceUtil.TASKS_FILE_PATH));
+                    .unmarshal(new FileReader(this.tasksFilePath));
             this.tasks = taskXmlWrapper.getTasks() != null ? taskXmlWrapper.getTasks() : new ArrayList<>();
         }
         catch (FileNotFoundException | JAXBException e)
@@ -217,7 +221,7 @@ class TaskListFileSystemRepository implements TaskListRepository
         try
         {
             TaskListXmlWrapper taskListXmlWrapper = (TaskListXmlWrapper) this.unmarshaller
-                    .unmarshal(new FileReader(PersistenceUtil.TASK_LISTS_FILE_PATH));
+                    .unmarshal(new FileReader(this.taskListsFilePath));
             this.lists = taskListXmlWrapper.getTaskLists() != null ? taskListXmlWrapper.getTaskLists()
                     : new ArrayList<>();
         }
