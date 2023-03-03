@@ -32,7 +32,7 @@ jobs:
     - name: Submit coverage report
       uses: codecov/codecov-action@v2
       with:
-        directory: ./tasktracker-modules/tasktracker-parent/
+        root_dir: ./tasktracker-modules/tasktracker-parent/
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
