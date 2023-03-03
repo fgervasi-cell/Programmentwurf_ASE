@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tooltip?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css,@../css/Main.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/ListView.css,@../css/Main.css" fx:id="root">
     <left>
         <VBox id="left" styleClass="bottom-and-top-padding" spacing="30">
             <Text fx:id="userInformation" styleClass="label" />

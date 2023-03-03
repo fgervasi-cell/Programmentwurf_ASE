@@ -50,6 +50,8 @@ public class ListViewController implements Observer
     private VBox taskContainer;
     @FXML
     private Button addTaskButton;
+    @FXML
+    private BorderPane root;
     // TODO: should also store the TaskList object itself that is currently selected
     // because I need its ID
 
@@ -109,7 +111,7 @@ public class ListViewController implements Observer
         {
             if (!t.isDone())
             {
-                OpenTaskComponent task = new OpenTaskComponent(t, user);
+                OpenTaskComponent task = new OpenTaskComponent(t, user, this.root);
                 task.registerObserver(this);
                 this.taskContainer.getChildren().add(task.getRoot());
             }
