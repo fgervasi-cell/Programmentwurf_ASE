@@ -1,0 +1,40 @@
+name: JaCoCo Report
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+      - name: Run Coverage
+        run: |
+          chmod +x gradlew
+          ./gradlew testCoverage
+        
+      - name: Add coverage to PR
+        id: jacoco
+        uses: Madrapps/jacoco-report@v1.3
+        with:
+          # Comma separated paths of the generated jacoco xml files
+          paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
+          # Github personal token to add commits to Pull Request
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # The minimum code coverage that is required to pass for overall project
+          min-coverage-overall: 0
+          # The minimum code coverage that is required to pass for changed files
+          min-coverage-changed-files: 0
+          # Optional title for the Pull Request comment
+          title: Jacoco
+          # Update the coverage report comment instead of creating new ones. Requires title to works properly.
+          update-comment: false
+          # Run the action in debug mode and get debug logs printed in console
+          debug-mode: false
