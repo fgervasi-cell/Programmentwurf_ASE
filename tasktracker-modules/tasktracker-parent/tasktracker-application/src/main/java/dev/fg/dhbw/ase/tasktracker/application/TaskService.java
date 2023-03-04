@@ -1,6 +1,10 @@
 package dev.fg.dhbw.ase.tasktracker.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
+import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 
 public class TaskService
@@ -30,5 +34,16 @@ public class TaskService
     public void markTaskAsUndone(Task task)
     {
         this.repository.markTaskAsUndone(task);
+    }
+
+    public List<Task> loadSubTasksForTask(Task task)
+    {
+        List<TaskList> lists = this.repository.getTaskListsForUser(null);
+        List<Task> subTasks = new ArrayList<>();
+        for (TaskList list : lists)
+        {
+            subTasks.addAll(this.repository.getTasksOfTaskListByTaskListName(list.getTitle()));
+        }
+        return subTasks.stream().filter(t -> t.getTaskId() != null && t.getTaskId().equals(task.getId())).toList();
     }
 }

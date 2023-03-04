@@ -109,7 +109,7 @@ public class ListViewController implements Observer
         List<Task> tasksForList = this.service.getTasksFromList(taskListTitle);
         for (Task t : tasksForList)
         {
-            if (!t.isDone())
+            if (!t.isDone() && !t.isSubTask())
             {
                 OpenTaskComponent task = new OpenTaskComponent(t, user, this.root);
                 task.registerObserver(this);

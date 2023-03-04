@@ -16,7 +16,7 @@
         </HBox>
     </top>
     <center>
-        <HBox alignment="center">
+        <HBox alignment="center" style="-fx-padding: 30px;">
             <VBox alignment="center">
                 <VBox spacing="30">
                     <Label text="Title" styleClass="label" />

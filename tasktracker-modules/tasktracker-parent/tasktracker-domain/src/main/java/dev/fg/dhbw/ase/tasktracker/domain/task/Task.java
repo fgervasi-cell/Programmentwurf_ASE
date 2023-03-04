@@ -99,6 +99,11 @@ public class Task
         return this.taskListId;
     }
 
+    public UUID getTaskId()
+    {
+        return this.taskId;
+    }
+
     public Title getTitle()
     {
         return this.title;
