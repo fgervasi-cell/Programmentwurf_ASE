@@ -5,6 +5,5 @@
 .task {
     -fx-border-color: #5D5A88;
     -fx-border-radius: 40px;
-    -fx-pref-width: 300px;
     -fx-pref-height: 60px;
 }

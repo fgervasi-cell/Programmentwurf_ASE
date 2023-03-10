@@ -64,8 +64,8 @@ public class Task
         this.creationDate = null;
     }
 
-    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate, DateInFuture reminder,
-            boolean done)
+    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate,
+            DateInFuture reminder, boolean done)
     {
         if (taskListId == null)
         {
@@ -82,8 +82,26 @@ public class Task
         this.creationDate = new Date(System.currentTimeMillis());
     }
 
-    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate, DateInFuture reminder,
-            boolean done, Date completionDate)
+    public Task(final UUID id, final UUID taskListId, Title title, String description, DateInFuture dueDate,
+            DateInFuture reminder)
+    {
+        if (taskListId == null)
+        {
+            throw new TaskWithoutTaskListIdException();
+        }
+        this.id = id;
+        this.taskListId = taskListId;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.reminder = reminder;
+        this.taskId = null;
+        this.done = false;
+        this.creationDate = new Date(System.currentTimeMillis());
+    }
+
+    public Task(final UUID taskListId, UUID taskId, Title title, String description, DateInFuture dueDate,
+            DateInFuture reminder, boolean done, Date completionDate)
     {
         this(taskListId, taskId, title, description, dueDate, reminder, done);
         this.completionDate = completionDate;

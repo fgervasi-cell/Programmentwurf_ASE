@@ -23,6 +23,7 @@ public class AddTaskFormController extends Observable
     private final UUID taskListId;
     private final Stage stage;
     private TaskService service;
+    private UUID taskId;
     @FXML
     private TextField taskTitleTextField;
     @FXML
@@ -37,6 +38,12 @@ public class AddTaskFormController extends Observable
         this.taskListId = taskListId;
         this.stage = stage;
         this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(user));
+    }
+
+    public AddTaskFormController(final UUID taskListId, final UUID taskId, final Stage stage)
+    {
+        this(taskListId, stage, null);
+        this.taskId = taskId;
     }
 
     @FXML
@@ -61,7 +68,11 @@ public class AddTaskFormController extends Observable
             reminderDate = Date.from(reminderDateInstant);
         }
 
-        this.service.createTask(TaskFactory.createTask(this.taskListId, title, description, dueDate, reminderDate));
+        if (this.taskId == null)
+            this.service.createTask(TaskFactory.createTask(this.taskListId, title, description, dueDate, reminderDate));
+        else
+            this.service.createTask(
+                    TaskFactory.createSubTask(taskListId, taskId, title, description, dueDate, reminderDate));
 
         notifyObservers(ComponentEvent.ADD_TASK_FORM_SAVE);
         this.stage.close();

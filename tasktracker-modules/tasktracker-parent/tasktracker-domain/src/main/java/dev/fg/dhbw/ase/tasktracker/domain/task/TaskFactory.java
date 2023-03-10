@@ -21,6 +21,20 @@ public class TaskFactory
         return new Task(taskListId, null, taskTitle, description, futureDueDate, futureReminderDate, false);
     }
 
+    public static Task createSubTask(UUID taskListId, UUID taskId, String title, String description, Date dueDate,
+            Date reminder)
+    {
+        return new Task(taskListId, taskId, new Title(title), description, new DateInFuture(dueDate),
+                new DateInFuture(reminder), false);
+    }
+
+    public static Task createTaskWithId(final UUID id, final UUID taskListId, String title, String description,
+            Date dueDate, Date reminder)
+    {
+        return new Task(id, taskListId, new Title(title), description, new DateInFuture(dueDate),
+                new DateInFuture(reminder));
+    }
+
     public static Task createTaskDone(final Task task, final UUID taskList)
     {
         return new Task(taskList, task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
