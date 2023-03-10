@@ -70,7 +70,9 @@ class TaskListFileSystemRepository implements TaskListRepository
     {
         loadTaskListsFromFile();
         this.lists.removeIf(list -> list.getId().equals(taskList.getId()));
+        this.tasks.removeAll(this.tasks.stream().filter(t -> t.getTaskListId().equals(taskList.getId())).toList());
         writeTaskListsBackToFile();
+        writeTasksBackToFile();
     }
 
     @Override
