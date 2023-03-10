@@ -121,7 +121,7 @@ Aggregate sind Zusammenfassungen von Entitäten oder VOs, die miteinander in Bez
 
 Als Aggregate wurden gewählt das _User-Aggregat_ (enthält nur die Entität _User_) und das _Task-List-Aggregat_ (enthält die Entitäten _TaskList_ und _Task_).
 
-![draw.io diagram](./entities_and_value_objects_3.png)
+![draw.io diagram](../images_and_diagrams/entities_and_value_objects_3.png)
 
 #### Repositories
 
