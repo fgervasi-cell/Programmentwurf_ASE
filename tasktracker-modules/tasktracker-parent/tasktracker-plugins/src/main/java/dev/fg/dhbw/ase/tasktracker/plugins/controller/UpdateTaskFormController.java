@@ -12,6 +12,7 @@ import dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observer;
 import dev.fg.dhbw.ase.tasktracker.application.TaskService;
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskFactory;
+import dev.fg.dhbw.ase.tasktracker.domain.user.User;
 import dev.fg.dhbw.ase.tasktracker.plugins.components.ComponentEvent;
 import dev.fg.dhbw.ase.tasktracker.plugins.components.FinishedTaskComponent;
 import dev.fg.dhbw.ase.tasktracker.plugins.components.OpenTaskComponent;
@@ -32,6 +33,7 @@ public class UpdateTaskFormController extends Observable implements Observer
 {
     private Task task;
     private BorderPane root;
+    private User user;
     private TaskService service;
     @FXML
     private TextField taskTitleTextField;
@@ -44,11 +46,12 @@ public class UpdateTaskFormController extends Observable implements Observer
     @FXML
     private VBox subTasksContainer;
 
-    public UpdateTaskFormController(Task task, BorderPane root)
+    public UpdateTaskFormController(Task task, BorderPane root, User user)
     {
         this.task = task;
         this.root = root;
-        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(null));
+        this.user = user;
+        this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(user));
     }
 
     @FXML
@@ -65,12 +68,13 @@ public class UpdateTaskFormController extends Observable implements Observer
 
     private void loadSubTasks()
     {
-        List<Task> subTasks = this.service.loadSubTasksForTask(task);
-        this.subTasksContainer.getChildren().addAll(subTasks.stream().map(t -> {
+        List<Task> subTasks = this.service.loadSubTasksForTask(task, this.user.getId());
+        this.subTasksContainer.getChildren().addAll(subTasks.stream().map(t ->
+        {
             TaskComponent taskComponent = null;
             if (t.isDone())
-                taskComponent = new FinishedTaskComponent(t, null);
-            taskComponent = new OpenTaskComponent(t, null, root);
+                taskComponent = new FinishedTaskComponent(t, this.user);
+            taskComponent = new OpenTaskComponent(t, this.user, root);
             taskComponent.getRoot().prefWidthProperty().bind(this.subTasksContainer.widthProperty());
             return taskComponent.getRoot();
         }).toList());
@@ -91,8 +95,8 @@ public class UpdateTaskFormController extends Observable implements Observer
         String description = this.taskDescriptionTextField.getText();
         LocalDate dueDate = this.taskDueDatePicker.getValue();
         LocalDate reminderDate = this.taskReminderDatePicker.getValue();
-        this.service.createTask(TaskFactory.createTaskWithId(task.getId(), taskListId, title, description, Date.valueOf(dueDate),
-                Date.valueOf(reminderDate)));
+        this.service.createTask(TaskFactory.createTaskWithId(task.getId(), taskListId, title, description,
+                Date.valueOf(dueDate), Date.valueOf(reminderDate)));
         notifyObservers(ComponentEvent.ADD_TASK_FORM_SAVE);
         this.root.rightProperty().setValue(null);
     }
@@ -104,7 +108,8 @@ public class UpdateTaskFormController extends Observable implements Observer
         Stage stage = new Stage();
         stage.setTitle("TaskTracker - Add Sub Task");
         stage.initModality(Modality.APPLICATION_MODAL);
-        AddTaskFormController controller = new AddTaskFormController(this.task.getTaskListId(), this.task.getId(), stage);
+        AddTaskFormController controller = new AddTaskFormController(this.task.getTaskListId(), this.task.getId(),
+                stage, this.user);
         controller.registerObserver(this);
         loader.setController(controller);
         try

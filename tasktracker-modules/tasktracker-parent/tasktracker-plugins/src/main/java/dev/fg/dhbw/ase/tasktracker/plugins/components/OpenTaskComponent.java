@@ -17,6 +17,7 @@ public class OpenTaskComponent extends TaskComponent implements Observer
 {
     private Task task;
     private BorderPane root;
+    private User user;
 
     public OpenTaskComponent(final Task task, User user, BorderPane root)
     {
@@ -26,6 +27,7 @@ public class OpenTaskComponent extends TaskComponent implements Observer
         this.task = task;
         this.getRoot().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleTaskComponentClicked);
         this.root = root;
+        this.user = user;
     }
 
     private void handleTaskComponentClicked(MouseEvent e)
@@ -33,7 +35,7 @@ public class OpenTaskComponent extends TaskComponent implements Observer
         if (e.isPrimaryButtonDown())
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpdateTaskForm.fxml"));
-            UpdateTaskFormController controller = new UpdateTaskFormController(this.task, this.root);
+            UpdateTaskFormController controller = new UpdateTaskFormController(this.task, this.root, this.user);
             controller.registerObserver(this);
             loader.setController(controller);
             try

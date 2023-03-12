@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS `task`;
+DROP TABLE IF EXISTS `task_list`;
+DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE `task` (
   `id` binary(16) NOT NULL,
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,

@@ -40,9 +40,9 @@ public class AddTaskFormController extends Observable
         this.service = new TaskService(PersistenceUtil.obtainTaskListRepository(user));
     }
 
-    public AddTaskFormController(final UUID taskListId, final UUID taskId, final Stage stage)
+    public AddTaskFormController(final UUID taskListId, final UUID taskId, final Stage stage, final User user)
     {
-        this(taskListId, stage, null);
+        this(taskListId, stage, user);
         this.taskId = taskId;
     }
 
