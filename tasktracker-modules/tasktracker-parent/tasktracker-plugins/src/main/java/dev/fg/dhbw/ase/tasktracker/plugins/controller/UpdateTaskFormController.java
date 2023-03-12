@@ -1,7 +1,7 @@
 package dev.fg.dhbw.ase.tasktracker.plugins.controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -68,7 +68,8 @@ public class UpdateTaskFormController extends Observable implements Observer
 
     private void loadSubTasks()
     {
-        List<Task> subTasks = this.service.loadSubTasksForTask(task, this.user.getId());
+        UUID userId = this.user != null ? this.user.getId() : null;
+        List<Task> subTasks = this.service.loadSubTasksForTask(task, userId);
         this.subTasksContainer.getChildren().addAll(subTasks.stream().map(t ->
         {
             TaskComponent taskComponent = null;
@@ -96,7 +97,8 @@ public class UpdateTaskFormController extends Observable implements Observer
         LocalDate dueDate = this.taskDueDatePicker.getValue();
         LocalDate reminderDate = this.taskReminderDatePicker.getValue();
         this.service.createTask(TaskFactory.createTaskWithId(task.getId(), taskListId, title, description,
-                Date.valueOf(dueDate), Date.valueOf(reminderDate)));
+                Date.from(dueDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                Date.from(reminderDate.atStartOfDay(ZoneId.systemDefault()).toInstant())));
         notifyObservers(ComponentEvent.ADD_TASK_FORM_SAVE);
         this.root.rightProperty().setValue(null);
     }

@@ -37,13 +37,13 @@ public class TaskFactory
 
     public static Task createTaskDone(final Task task, final UUID taskList)
     {
-        return new Task(taskList, task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
+        return new Task(taskList, task.getTaskId(), task.getTitle(), task.getDescription(), task.getDueDate(),
                 task.getReminder(), true, new Date(System.currentTimeMillis()));
     }
 
     public static Task createTaskUndone(final Task task)
     {
-        return new Task(task.getTaskListId(), task.getId(), task.getTitle(), task.getDescription(), task.getDueDate(),
+        return new Task(task.getTaskListId(), task.getTaskId(), task.getTitle(), task.getDescription(), task.getDueDate(),
                 task.getReminder(), false);
     }
 }

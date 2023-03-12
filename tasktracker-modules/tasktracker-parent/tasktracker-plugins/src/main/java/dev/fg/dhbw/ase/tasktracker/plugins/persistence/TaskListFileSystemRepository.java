@@ -151,14 +151,14 @@ class TaskListFileSystemRepository implements TaskListRepository
     public int getNumberOfDoneTasksForUser(User user)
     {
         loadTasksFromFile();
-        return this.tasks.size();
+        return this.tasks.stream().filter(Task::isDone).toList().size();
     }
 
     @Override
     public int getNumberOfOpenTasksForUser(User user)
     {
         loadTasksFromFile();
-        return this.tasks.stream().filter(Task::isDone).toList().size();
+        return this.tasks.stream().filter(t -> !t.isDone()).toList().size();
     }
 
     @Override
