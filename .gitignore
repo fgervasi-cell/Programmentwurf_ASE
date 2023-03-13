@@ -25,3 +25,7 @@ hs_err_pid*
 # Maven
 log/
 target/
+
+# IntelliJ
+*.idea/
+*.iml
