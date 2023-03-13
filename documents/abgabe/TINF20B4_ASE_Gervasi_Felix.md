@@ -83,6 +83,8 @@ Weitere Value Objects sind:
 - dev.fg.dhbw.ase.tasktracker.domain.vo.EMail (kapselt einen String um zu überprüfen, ob dieser dem Format einer E-Mail entspricht)
 - dev.fg.dhbw.ase.tasktracker.domain.vo.Password (prüft die Anforderungen an das Passwort in der Anwendung)
 
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
+
 #### Entities
 
 <!--
@@ -100,6 +102,8 @@ Entitäten im vorliegenden Projekt sind:
 - dev.fg.dhbw.ase.tasktracker.domain.entities.User
 
 Beispielsweise ist die Klasse _dev.fg.dhbw.ase.tasktracker.domain.entities.Task_ eine Entität, da sie das Kernstück der Daten darstellt mit dem ein Aufgabenplaner/eine Aufgabenliste offensichtlicher Weise arbeitet. Außerdem ist sie eindeutig durch eine ID identifizierbar und muss, um für den Anwender und die Anwendung von Nutzen zu sein, persistiert werden. Sie aggregiert dafür mehrere Daten darunter auch die VOs _dev.fg.dhbw.ase.tasktracker.domain.vo.Title_ und _dev.fg.dhbw.ase.tasktracker.domain.vo.DateInFuture_. Die Daten, die von der Entität aggregiert werden, können des Weiteren vom Anwender geändert werden d.h., es existiert ein eigener Lebenszyklus.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
 
 #### Domain Services
 
@@ -140,9 +144,13 @@ Ein Repository ist die Schnittstelle zwischen der Domäne und der Persistenzschi
 
 Um die _accidental complexity_ (Peristierung) von der _essential complexity_ zu trennen wird nur das Repository-Interface nach außen gegeben und alle Klassen die mit der Persistenzschicht zu tun haben sind in einem separaten Package abgelegt.
 
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
+
 #### Factories
 
 Factories dienen der Erzeugung von Objekten unter Einhaltung domänenspezifischer Reglementierungen. Sie sind v.a. dann nützlich, wenn diese Reglementierungen und damit die Erzeugung des Objekts sehr komplex sind. Dabei kann eine Factory eine dedizierte Klasse zur Erzeugung anderer Objekte oder eine simple Methode sein. Ein Beispiel für eine Factory ist die Klasse _dev.fg.dhbw.ase.tasktracker.domain.factories.TaskFactory_. Diese stellt einige statische Methoden zur vereinfachten Erzeugung von Objekten des Typs _Task_ bereit. Der Standardkonstruktor wird versteckt damit keine Objekte vom Typ _TaskFactory_ erzeugt werden können.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
 
 ## Clean Architecture
 
@@ -176,7 +184,7 @@ In dem vorliegenden Projekt lassen sich theoretisch 5 Schichten unterscheiden. D
 
 Zunächst wurde das _TaskTracker_-Projekt ohne Bachtung der Regeln der _Clean Architecture_ entwickelt. Das alte Projekt liegt im Ordner _./tasktracker/_ vor. Das neue modularisierte Projekt befindet sich im Ordner _./tasktracker-modules/_. Die Schichten wurden als einzelne Maven-Module umgesetzt. Das Elternprojekt _tasktracker-parent_ enthält die folgenden Module:
 
-- _tasktracker-abstraction_: Repräsentiert die Abstraktionsschicht und definiert Abhängigkeiten zu der _javax.persistence_ API sowie dem _JUnit_-Test-Framework. Diese Abhängigkeiten befinden sich in der Abstraktionsschicht, da sie öfters im Projekt verwendet werden müssen und über einen langen Zeitraum besetehn bleiben werden. Außerdem befinden sich in der Schicht die Klassen zur Umsetzung des Beobachtermusters. Hier gilt dasselbe: der Code wird sich nur sehr selten ändern und sollte aber innerhalb des gesamten Projektes nutzbar sein.
+- _tasktracker-abstraction_: Repräsentiert die Abstraktionsschicht und definiert Abhängigkeiten zu der _javax.persistence_ API sowie dem _JUnit_-Test-Framework. Diese Abhängigkeiten befinden sich in der Abstraktionsschicht, da sie öfters im Projekt verwendet werden müssen und über einen langen Zeitraum bestehen bleiben werden. Außerdem befinden sich in der Schicht die Klassen zur Umsetzung des Beobachtermusters. Hier gilt dasselbe: der Code wird sich nur sehr selten ändern und sollte aber innerhalb des gesamten Projektes nutzbar sein.
 - _tasktracker-domain_: In der Domänenschicht befinden sich die Entitäten und VOs, da diese aus der Domäne und während des DDD-Prozesses entstanden sind und die dort geltenden Regeln einhalten müssen. Ebenfalls sind dort die Repositories für die vorhandenen Aggregate untergebracht, da die Verwaltung der Entitäten ebenfalls zur Problemdomäne gehört.
 - _tasktracker-application_: Die Applikationsschicht enthält Klassen und Methoden zur Umsetzung der Use-Cases. Sie verwendet dafür die Repositories, Entitäten und VOs aus der darunterliegenden Schicht. In diesem Projekt wurden Use-Cases unterschieden die Aufgabenlisten, Aufgaben oder den Benutzer betreffen und diese jeweils in einer Klasse zusammengefasst. Die von den Klassen beereitgestellte Methoden werden von der Plugin-/Adapter-Schicht verwendet.
 - _tasktracker-adapters_: Die Adapterschicht wurde in diesem Projekt ausgespart. Hier würde der nötige Mapping-Code liegen, um vom Datenmodell der Plugin-Schicht auf das Datenmodell der Applikationsschicht abzubilden.
@@ -233,7 +241,7 @@ In diesem Projekt kann das LSP anhand der Klasse `dev.fg.dhbw.ase.tasktracker.ab
 
 <!-- Was ist ISP? -->
 
-Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben als ein allgemeines, welches alle Clientanforerdungen in sich vereint. Dadurch lässt sich die Anwendung unter Umständen leichter erweitern und es wird verhindert, dass viele leere Implementierungen bei Clients entstehen, die nur einen Bruchteil der Funktionalität des allgemeinen Interfaces brauchen.
+Das ISP besagt, dass es besser ist viele client-spezifische Interfaces zu haben als ein allgemeines, welches alle Clientanforderungen in sich vereint. Dadurch lässt sich die Anwendung unter Umständen leichter erweitern und es wird verhindert, dass viele leere Implementierungen bei Clients entstehen, die nur einen Bruchteil der Funktionalität des allgemeinen Interfaces brauchen.
 
 <!-- Wo habe ich ISP eingesetzt? -->
 
@@ -243,7 +251,7 @@ Interfaces kommen in dem vorliegenden Projekt zur Umsetzung der Datenpersistieru
 
 <!-- Was ist DIP? -->
 
-Module auf höherer Ebene sollten keine Abhängigkeiten zu Modulen auf niedrigerer Ebene aufweisen. Stattdessen sollte eine Abstraktion dazwischen geschaltet werden von denen beide Ebenen abhängen. Abstraktionen sollten wiederum unabhängig von Details sein. Stattdessen sollte die Details von der Abstaktion abhängen.
+Module auf höherer Ebene sollten keine Abhängigkeiten zu Modulen auf niedrigerer Ebene aufweisen. Stattdessen sollte eine Abstraktion dazwischen geschaltet werden von denen beide Ebenen abhängen. Abstraktionen sollten wiederum unabhängig von Details sein. Stattdessen sollten die Details von der Abstaktion abhängen.
 
 <!-- Wo habe ich DIP eingesetzt? -->
 
@@ -280,6 +288,8 @@ Unter dem Begriff der Kopplung versteht man den Grad der Abhängigkeit von zwei 
 
 _Low Coupling_ kann bspw. durch den Einsatz von Interfaces erreicht werden, da diese von der eigentlichen Implementierung abstrahieren und die Komponenten, welche die definierte Schnittstelle nutzen, von der eigentlichen Implementierung entkoppelt werden (lose Kopplung). Dies ist bspw. durch den Einsatz von _Repositories_ an diesem Projekt zu sehen (s. `dev.fg.dhbw.ase.tasktracker.persistence`).
 
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
+
 #### High Cohesion (hohe Kohäsion)
 
 <!-- Was versteht man unter dem Begriff High Cohesion? -->
@@ -294,6 +304,8 @@ Unter Kohäsion versteht man den Grad von Zusammengehörigkeit innerhalb einer S
 -->
 
 In dem vorliegenden Projekt wurde hohe Kohäsion bspw. dadurch gefördert, dass die einzelnen UI-Komponenten weitestgehend in separate Klassen ausgelagert wurden (s. das Paket `dev.fg.dhbw.ase.tasktracker.domain.components`). Die Idee hierbei ist, dass jede UI-Komponente sich selbst verwaltet und nur mit den Daten arbeitet, die sie wirklich benötigt. Zusammengehörige Variablen und Methoden werden somit in separate Klassen abgekapselt was zu einer erhöhten Kohäsion führt.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker))
 
 #### Information Expert (Informationsexperte)
 
@@ -315,6 +327,8 @@ Unter dem Begriff der Polymorphie versteht man im Zusammenhang mit GRASP das Pri
 
 In diesem Projekt kommt Polymorphie bspw. zur Unterscheidung von offenen und abgeschlossenen Aufgaben zum Einsatz (s. `dev.fg.dhbw.ase.tasktracker.domain.components.FinishedTaskComponent` und `dev.fg.dhbw.ase.tasktracker.domain.components.OpenTaskComponent`).
 
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/components))
+
 #### Pure Fabrication (reine Erfindung)
 
 <!-- Was versteht man unter dem Begriff Pure Fabrication? -->
@@ -324,6 +338,8 @@ Unter der _Pure Fabrication_ versteht man Klassen oder Module die in der Problem
 <!-- Wo habe ich in meinem Projekt Pure Fabrication eingesetzt und warum? -->
 
 Ein Beispiel für eine reine Erfindung ist die Klasse `dev.fg.dhbw.ase.tasktracker.persistence.TaskListDatabaseRepository`. Es handelt sich dabei um _Pure Fabrication_, da die Klasse kein Objekt aus der realen Welt bzw. der Problemdomäne darstellt.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/blob/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/persistence/TaskListDatabaseRepository.java))
 
 #### Indirection/Delegation (Indirektion/Delegation)
 
@@ -345,6 +361,8 @@ Das Prinzip der geschützten Veränderungen besagt, dass konkrete Implementierun
 
 In dem Package _dev.fg.dhbw.ase.tasktracker.persistence_ befinden sich die Klassen zur Persistierung und Bereitstellung von Daten mit denen die Anwendung arbeitet. Für jede Aggregate-Root existiert ein Repository welches die Schnittstellen für den domänenspezifischen Teil der Anwendung definiert. Innerhalb diesen Teils der Anwendung wird nur mit dem Interface (bzw. dem Repository) gearbeitet, sodass die Implementierungsdetails der Persistenzschicht für die Domäne unsichtbar bleiben und beliebig ausgetauscht werden können. Dadurch bleibt die Domäne nicht nur von _Accidental Complexity_ befreit sondern es wird auch das _Protected Variations Pattern_ unterstützt, da durch die Abstraktion der Implementierung mit Hilfe von Interfaces die Domäne vor Veränderungen geschützt bleibt.
 
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/persistence))
+
 #### Controller (Steuereinheit)
 
 <!-- Was versteht man unter dem Begriff Controller? -->
@@ -353,7 +371,9 @@ Ein Controller stell die erste Instanz nach dem GUI dar. Er nimmt Events aus der
 
 <!-- Wo habe ich in meinem Projekt Controller eingesetzt und warum? -->
 
-Das in diesem Projekt eingesetzte UI-Framework _JavaFX_ unterstützt die Verwendung von Controllern standardmäßig. Dabei kann eine beliebige Java-Klasse als Controller auf einem Root-Element der UI gesetzt werden. Die UI kann vollständig vom Code entkoppelt und im XML-Format in sog. FXML-Dateien ausgelagert werden (s. _/main/resources/fxml/_). Beispiele für Controller-Klassen sind im Package _dev.fg.dhbw.ase.tasktracker.domain.controller_ zu finden. Beispielsweise wird der _ListViewController_ als Controller-Klasse auf dem Root-Element der _ListView.fxml_ gesetzt. Durch Annotationen können Elemente aus FXML-Dateien im Code zugegriffen und Events verarbeitet werden. Dadurch sind alle Controller-Klasse die erste Instanz nach der UI und die Logik liegt im Controller und ist von der UI entkoppelt.
+Das in diesem Projekt eingesetzte UI-Framework _JavaFX_ unterstützt die Verwendung von Controllern standardmäßig. Dabei kann eine beliebige Java-Klasse als Controller auf einem Root-Element der UI gesetzt werden. Die UI kann vollständig vom Code entkoppelt und im XML-Format in sog. FXML-Dateien ausgelagert werden (s. _/main/resources/fxml/_). Beispiele für Controller-Klassen sind im Package _dev.fg.dhbw.ase.tasktracker.domain.controller_ zu finden. Beispielsweise wird der _ListViewController_ als Controller-Klasse auf dem Root-Element der _ListView.fxml_ gesetzt. Durch Annotationen können Elemente aus FXML-Dateien im Code zugegriffen und Events verarbeitet werden. Dadurch sind alle Controller-Klassen die erste Instanz nach der UI und die Logik liegt im Controller und ist von der UI entkoppelt.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain/controller))
 
 #### Creator (Erzeuger)
 
@@ -369,6 +389,8 @@ Das Erzeuger-Prinzip definiert Regeln die vorgeben wer für die Erzeugung von In
 <!-- Wo habe ich in meinem Projekt Creator eingesetzt und warum? -->
 
 Beispielsweise erzeugt in diesem Projekt die Klasse `dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController` Objekte vom Typ `...domain.components.TaskListComponent`. Dies ist nach dem Erzeugerprinzip damit zu rechtfertigen, da die Klasse `ListViewController` eine klare semantische Verbindung zu `TaskListComponent` hat und Objekte diesen Typs verarbeiten muss.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/domain))
 
 ### Analyse und Begründung für DRY
 
@@ -499,3 +521,134 @@ Das Observer-Pattern gehört zur Klasse der Benachrichtigungsmuster. Es ermögli
 ### Einsatz begründen
 
 Das Observer-Pattern wird in diesem Projekt genutzt um einen Großteil der Kommunikation zwischen den einzelnen Komponenten des User Interfaces zu gestalten. So implementiert bspw. die Klasse _dev.fg.dhbw.ase.tasktracker.domain.components.TaskComponent_ das Observable-Interface (später zu Klasse geändert) um registierte Observer bei dem Löschen einer Aufgabe oder dem Markieren einer Aufgabe als abgeschlossen zu benachrichtigen. Die Klasse repräsentiert die UI-Komponente einer Aufgabe innerhalb einer Liste. Die Klasse _dev.fg.dhbw.ase.tasktracker.domain.controller.ListViewController_ implementiert das Observer-Interface und registriert sich bei einem _TaskComponent_, um über diese Events benachrichtigt zu werden und das UI zu aktualisieren. Eine ähnliche Vorgehensweise wurde auch bei den anderen UI-Komponenten gewählt. Der Aufzählungstyp _dev.fg.dhbw.ase.tasktracker.domain.components.ComponentEvent_ definiert zudem die Arten der Events die auftreten können. Die Observables definieren dort die Events die sie an die Observer verteilen. Dadurch kann der Observer auf die unterschiedlichen Events verschieden reagieren.
+
+(der obige Abschnitt bezieht sich auf das noch nicht modular aufgebaute [Projekt](https://github.com/fgervasi-cell/Programmentwurf_ASE/tree/f9b6e038b0741e9111aca6a7aa5d011830af6514/tasktracker/src/main/java/dev/fg/dhbw/ase/tasktracker/observer))
+
+## UML
+
+```mermaid
+classDiagram
+direction BT
+class AddTaskFormController
+class ComponentEvent {
+<<enumeration>>
+
+}
+class DatabaseRepositoryTest
+class DateInFuture
+class DateInFutureTest
+class DateLiesInPastException
+class EMail
+class EMailTest
+class FileSystemRepositoryTest
+class FinishedTaskComponent
+class FinishedTaskComponentInitializedWithOpenTaskException
+class InvalidEMailException
+class InvalidPasswordException
+class InvalidTitleException
+class ListViewController
+class Observable
+class Observer {
+<<Interface>>
+
+}
+class OpenTaskComponent
+class OpenTaskInitializedWithClosedTaskException
+class Password
+class PasswordTest
+class PersistenceUtil
+class StartViewController
+class StatisticsViewController
+class StringToEMailMapper
+class Task
+class TaskComponent
+class TaskFactory
+class TaskList
+class TaskListComponent
+class TaskListDatabaseRepository
+class TaskListFileSystemRepository
+class TaskListRepository {
+<<Interface>>
+
+}
+class TaskListService
+class TaskListXmlWrapper
+class TaskService
+class TaskTracker
+class TaskWithoutTaskListIdException
+class TaskXmlWrapper
+class Title
+class TitleTest
+class UpdateTaskFormController
+class User
+class UserDatabaseRepository
+class UserRepository {
+<<Interface>>
+
+}
+class UserService
+class WidgetComponent
+
+AddTaskFormController  -->  Observable 
+AddTaskFormController "1" *--> "service 1" TaskService 
+DatabaseRepositoryTest "1" *--> "taskListService 1" TaskListService 
+DatabaseRepositoryTest "1" *--> "userService 1" UserService 
+DateInFuture  ..>  DateInFuture 
+FileSystemRepositoryTest "1" *--> "taskListService 1" TaskListService 
+FileSystemRepositoryTest "1" *--> "taskService 1" TaskService 
+FinishedTaskComponent "1" *--> "task 1" Task 
+FinishedTaskComponent  -->  TaskComponent 
+ListViewController  ..>  Observer 
+ListViewController  ..>  TaskList 
+ListViewController "1" *--> "service 1" TaskListService 
+ListViewController "1" *--> "user 1" User 
+Observable  ..>  Observer 
+OpenTaskComponent  ..>  Observer 
+OpenTaskComponent "1" *--> "task 1" Task 
+OpenTaskComponent  -->  TaskComponent 
+OpenTaskComponent "1" *--> "user 1" User 
+PersistenceUtil  ..>  TaskListRepository 
+PersistenceUtil  ..>  UserRepository 
+StatisticsViewController "1" *--> "service 1" TaskListService 
+StatisticsViewController "1" *--> "user 1" User 
+StatisticsViewController  ..>  WidgetComponent 
+StringToEMailMapper  ..>  EMail 
+Task "1" *--> "dueDate 1" DateInFuture 
+Task "1" *--> "title 1" Title 
+TaskComponent  -->  Observable 
+TaskComponent "1" *--> "task 1" Task 
+TaskComponent "1" *--> "service 1" TaskService 
+TaskFactory  ..>  Task 
+TaskList "1" *--> "title 1" Title 
+TaskListComponent  -->  Observable 
+TaskListComponent "1" *--> "list 1" TaskList 
+TaskListComponent "1" *--> "service 1" TaskListService 
+TaskListDatabaseRepository  ..>  Task 
+TaskListDatabaseRepository  ..>  TaskList 
+TaskListDatabaseRepository  ..>  TaskListRepository 
+TaskListFileSystemRepository  ..>  Task 
+TaskListFileSystemRepository  ..>  TaskList 
+TaskListFileSystemRepository  ..>  TaskListRepository 
+TaskListRepository  ..>  Task 
+TaskListRepository  ..>  TaskList 
+TaskListService  ..>  Task 
+TaskListService  ..>  TaskList 
+TaskListService "1" *--> "repository 1" TaskListRepository 
+TaskListXmlWrapper  ..>  TaskList 
+TaskService  ..>  Task 
+TaskService "1" *--> "repository 1" TaskListRepository 
+TaskXmlWrapper  ..>  Task 
+Title  ..>  Title 
+UpdateTaskFormController  -->  Observable 
+UpdateTaskFormController  ..>  Observer 
+UpdateTaskFormController "1" *--> "task 1" Task 
+UpdateTaskFormController "1" *--> "service 1" TaskService 
+UpdateTaskFormController "1" *--> "user 1" User 
+User "1" *--> "mail 1" EMail 
+User "1" *--> "password 1" Password 
+UserDatabaseRepository  ..>  User 
+UserDatabaseRepository  ..>  UserRepository 
+UserRepository  ..>  User 
+UserService  ..>  User 
+UserService "1" *--> "repository 1" UserRepository 
+```
