@@ -41,7 +41,7 @@
                             </tooltip>
                         </Button>
                     </HBox>
-                    <VBox fx:id="subTasksContainer"></VBox>
+                    <VBox fx:id="subTasksContainer" spacing="10"></VBox>
                 </VBox>
             </VBox>
         </HBox>

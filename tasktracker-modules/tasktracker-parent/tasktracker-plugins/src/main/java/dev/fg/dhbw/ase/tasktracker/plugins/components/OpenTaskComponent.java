@@ -32,7 +32,7 @@ public class OpenTaskComponent extends TaskComponent implements Observer
 
     private void handleTaskComponentClicked(MouseEvent e)
     {
-        if (e.isPrimaryButtonDown())
+        if (e.isPrimaryButtonDown() && !this.task.isSubTask())
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpdateTaskForm.fxml"));
             UpdateTaskFormController controller = new UpdateTaskFormController(this.task, this.root, this.user);
