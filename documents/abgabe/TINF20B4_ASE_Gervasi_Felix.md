@@ -526,129 +526,14 @@ Das Observer-Pattern wird in diesem Projekt genutzt um einen Großteil der Kommu
 
 ## UML
 
-```mermaid
-classDiagram
-direction BT
-class AddTaskFormController
-class ComponentEvent {
-<<enumeration>>
+### Klassen der Abstraktions- und Domänenschicht
 
-}
-class DatabaseRepositoryTest
-class DateInFuture
-class DateInFutureTest
-class DateLiesInPastException
-class EMail
-class EMailTest
-class FileSystemRepositoryTest
-class FinishedTaskComponent
-class FinishedTaskComponentInitializedWithOpenTaskException
-class InvalidEMailException
-class InvalidPasswordException
-class InvalidTitleException
-class ListViewController
-class Observable
-class Observer {
-<<Interface>>
+![Klassen der Abstraktions- und Domänenschicht](../images_and_diagrams/tasktracker-abstraction-domain.png)
 
-}
-class OpenTaskComponent
-class OpenTaskInitializedWithClosedTaskException
-class Password
-class PasswordTest
-class PersistenceUtil
-class StartViewController
-class StatisticsViewController
-class StringToEMailMapper
-class Task
-class TaskComponent
-class TaskFactory
-class TaskList
-class TaskListComponent
-class TaskListDatabaseRepository
-class TaskListFileSystemRepository
-class TaskListRepository {
-<<Interface>>
+### Klassen der Domänen- und Applikationsschicht
 
-}
-class TaskListService
-class TaskListXmlWrapper
-class TaskService
-class TaskTracker
-class TaskWithoutTaskListIdException
-class TaskXmlWrapper
-class Title
-class TitleTest
-class UpdateTaskFormController
-class User
-class UserDatabaseRepository
-class UserRepository {
-<<Interface>>
+![Klassen der Domänen- und Applikationsschicht](../images_and_diagrams/tasktracker-domain-application.png)
 
-}
-class UserService
-class WidgetComponent
+### Klassen der Applikations- und Pluginschicht
 
-AddTaskFormController  -->  Observable 
-AddTaskFormController "1" *--> "service 1" TaskService 
-DatabaseRepositoryTest "1" *--> "taskListService 1" TaskListService 
-DatabaseRepositoryTest "1" *--> "userService 1" UserService 
-DateInFuture  ..>  DateInFuture 
-FileSystemRepositoryTest "1" *--> "taskListService 1" TaskListService 
-FileSystemRepositoryTest "1" *--> "taskService 1" TaskService 
-FinishedTaskComponent "1" *--> "task 1" Task 
-FinishedTaskComponent  -->  TaskComponent 
-ListViewController  ..>  Observer 
-ListViewController  ..>  TaskList 
-ListViewController "1" *--> "service 1" TaskListService 
-ListViewController "1" *--> "user 1" User 
-Observable  ..>  Observer 
-OpenTaskComponent  ..>  Observer 
-OpenTaskComponent "1" *--> "task 1" Task 
-OpenTaskComponent  -->  TaskComponent 
-OpenTaskComponent "1" *--> "user 1" User 
-PersistenceUtil  ..>  TaskListRepository 
-PersistenceUtil  ..>  UserRepository 
-StatisticsViewController "1" *--> "service 1" TaskListService 
-StatisticsViewController "1" *--> "user 1" User 
-StatisticsViewController  ..>  WidgetComponent 
-StringToEMailMapper  ..>  EMail 
-Task "1" *--> "dueDate 1" DateInFuture 
-Task "1" *--> "title 1" Title 
-TaskComponent  -->  Observable 
-TaskComponent "1" *--> "task 1" Task 
-TaskComponent "1" *--> "service 1" TaskService 
-TaskFactory  ..>  Task 
-TaskList "1" *--> "title 1" Title 
-TaskListComponent  -->  Observable 
-TaskListComponent "1" *--> "list 1" TaskList 
-TaskListComponent "1" *--> "service 1" TaskListService 
-TaskListDatabaseRepository  ..>  Task 
-TaskListDatabaseRepository  ..>  TaskList 
-TaskListDatabaseRepository  ..>  TaskListRepository 
-TaskListFileSystemRepository  ..>  Task 
-TaskListFileSystemRepository  ..>  TaskList 
-TaskListFileSystemRepository  ..>  TaskListRepository 
-TaskListRepository  ..>  Task 
-TaskListRepository  ..>  TaskList 
-TaskListService  ..>  Task 
-TaskListService  ..>  TaskList 
-TaskListService "1" *--> "repository 1" TaskListRepository 
-TaskListXmlWrapper  ..>  TaskList 
-TaskService  ..>  Task 
-TaskService "1" *--> "repository 1" TaskListRepository 
-TaskXmlWrapper  ..>  Task 
-Title  ..>  Title 
-UpdateTaskFormController  -->  Observable 
-UpdateTaskFormController  ..>  Observer 
-UpdateTaskFormController "1" *--> "task 1" Task 
-UpdateTaskFormController "1" *--> "service 1" TaskService 
-UpdateTaskFormController "1" *--> "user 1" User 
-User "1" *--> "mail 1" EMail 
-User "1" *--> "password 1" Password 
-UserDatabaseRepository  ..>  User 
-UserDatabaseRepository  ..>  UserRepository 
-UserRepository  ..>  User 
-UserService  ..>  User 
-UserService "1" *--> "repository 1" UserRepository 
-```
+![Klassen der Applikations- und Pluginschicht](../images_and_diagrams/tasktracker-application-plugins.png)
