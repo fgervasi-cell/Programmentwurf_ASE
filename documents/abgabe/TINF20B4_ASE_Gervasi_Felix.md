@@ -223,11 +223,11 @@ Das OCP lässt sich durch die Anwendung von Interfaces umsetzen, da hierbei dire
 
 <!-- Was ist LSP? -->
 
-Das LSP besagt, dass eine Klasse an jeder beliebigen Stelle durch ihre Basisklasse ersetzt werden können muss ohne, dass es zu unerwünschten Nebeneffekten kommt.
+Das LSP besagt, dass eine Klasse an jeder beliebigen Stelle durch ihre Kindklassen ersetzt werden können muss ohne, dass es zu unerwünschten Nebeneffekten kommt.
 
 <!-- Wo habe ich LSP eingesetzt? -->
 
-TODO
+In diesem Projekt kann das LSP anhand der Klasse `dev.fg.dhbw.ase.tasktracker.abstraction.observer.Observable` und ihrer Kindklassen nachvollzogen werden. Man stelle sich eine Methode vor, die ein Objekt diesen Typs entgegennimmt und seine Methoden verwendet. Sollte zur Laufzeit das Objekt durch einen Subtyp von Observable ausgetauscht werden würde es zu keinen unerwünschten Nebeneffekten kommen womit das LSP erfüllt ist.
 
 #### Interface Segregation Principle (ISP)
 
