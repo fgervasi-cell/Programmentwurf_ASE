@@ -161,4 +161,14 @@ public class Task
     {
         return this.completionDate;
     }
+
+    public void markTaskAsDone()
+    {
+        this.done = true;
+    }
+
+    public void markTaskAsUndone()
+    {
+        this.done = false;
+    }
 }

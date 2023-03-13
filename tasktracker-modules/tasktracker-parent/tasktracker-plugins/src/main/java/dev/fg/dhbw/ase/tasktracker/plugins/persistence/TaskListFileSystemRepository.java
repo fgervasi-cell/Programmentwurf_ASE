@@ -14,7 +14,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListXmlWrapper;
@@ -134,7 +133,8 @@ class TaskListFileSystemRepository implements TaskListRepository
     {
         loadTasksFromFile();
         this.tasks.removeIf(t -> t.getId().equals(task.getId()));
-        this.tasks.add(TaskFactory.createTaskDone(task, task.getTaskListId()));
+        task.markTaskAsDone();
+        this.tasks.add(task);
         this.writeTasksBackToFile();
     }
 
@@ -143,7 +143,8 @@ class TaskListFileSystemRepository implements TaskListRepository
     {
         loadTasksFromFile();
         this.tasks.removeIf(t -> t.getId().equals(task.getId()));
-        this.tasks.add(TaskFactory.createTaskUndone(task));
+        task.markTaskAsUndone();
+        this.tasks.add(task);
         this.writeTasksBackToFile();
     }
 

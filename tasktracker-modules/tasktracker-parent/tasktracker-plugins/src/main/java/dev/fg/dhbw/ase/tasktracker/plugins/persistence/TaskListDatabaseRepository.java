@@ -13,7 +13,6 @@ import dev.fg.dhbw.ase.tasktracker.domain.task.Task;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskList;
 import dev.fg.dhbw.ase.tasktracker.domain.task.TaskListRepository;
 import dev.fg.dhbw.ase.tasktracker.domain.user.User;
-import dev.fg.dhbw.ase.tasktracker.domain.task.TaskFactory;
 import dev.fg.dhbw.ase.tasktracker.domain.vo.Title;
 
 class TaskListDatabaseRepository implements TaskListRepository
@@ -131,9 +130,8 @@ class TaskListDatabaseRepository implements TaskListRepository
     public void markTaskAsDone(Task task)
     {
         session.beginTransaction();
-        session.delete(task);
-        Task taskDone = TaskFactory.createTaskDone(task, task.getTaskListId());
-        session.save(taskDone);
+        task.markTaskAsDone();
+        session.update(task);
         session.getTransaction().commit();
     }
 
@@ -141,9 +139,8 @@ class TaskListDatabaseRepository implements TaskListRepository
     public void markTaskAsUndone(Task task)
     {
         session.beginTransaction();
-        session.delete(task);
-        Task taskUndone = TaskFactory.createTaskUndone(task);
-        session.save(taskUndone);
+        task.markTaskAsUndone();
+        session.update(task);
         session.getTransaction().commit();
     }
 
