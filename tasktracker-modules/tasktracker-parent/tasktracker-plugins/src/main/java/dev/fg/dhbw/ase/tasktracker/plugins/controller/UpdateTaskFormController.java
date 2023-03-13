@@ -78,7 +78,6 @@ public class UpdateTaskFormController extends Observable implements Observer
             else
                 taskComponent = new OpenTaskComponent(t, this.user, root);
             taskComponent.registerObserver(this);
-            taskComponent.getRoot().prefWidthProperty().bind(this.subTasksContainer.widthProperty());
             return taskComponent.getRoot();
         }).toList());
     }
