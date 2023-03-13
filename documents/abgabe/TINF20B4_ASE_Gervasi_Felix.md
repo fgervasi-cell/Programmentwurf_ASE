@@ -217,7 +217,7 @@ Das OCP besagt, dass Module offen für Erweiterungen aber geschlossen für Ände
 
 <!-- Wo habe ich OCP eingesetzt? -->
 
-TODO
+Das OCP lässt sich durch die Anwendung von Interfaces umsetzen, da hierbei direkte Abhängigkeiten vermieden werden, die im Normalfall Erweiterungen der Anwendung erschweren. Dies wurde beispielsweise bei der Implementierung der Persistenzschicht beachtet. Hierfür wurden Repository-Interfaces in der Domänenschicht definiert die in der Plugin-Schicht durch konkrete Implementierungen ersetzt werden. Hierdurch lassen sich beliebig neue Implementierungen hinzufügen ohne, dass die Domäne dadurch beeinflusst wird (Offenheit gegenüber Erweiterung).
 
 #### Liskov Substitution Principle (LSP)
 
