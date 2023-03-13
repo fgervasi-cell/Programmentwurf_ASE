@@ -108,6 +108,8 @@ Beispielsweise ist die Klasse _dev.fg.dhbw.ase.tasktracker.domain.entities.Task_
 - Wo und warum habe ich einen Domain Service bei mir eingesetzt?
 -->
 
+Ein Domain Service ist eine Art Hilfsklasse, die komplexe Regeln innerhalb des Domänenmodells implementiert. Die Einhaltung dieser Regeln ist keinem VO oder Entity eindeutig zuzuordnen. Dies ist bspw. der Fall, wenn mehrere Entitäten und VOs zur Überprüfung benötigt werden oder externe Dienste herangezogen werden. Um diese versehentliche Komplexität aus der Domäne herauszuhalten werden solche Prüfungen in Domain Services ausgelagert.
+
 #### Aggregates
 
 <!--
@@ -235,7 +237,7 @@ Das LSP besagt, dass es besser ist viele client-spezifische Interfaces zu haben 
 
 <!-- Wo habe ich ISP eingesetzt? -->
 
-TODO
+Interfaces kommen in dem vorliegenden Projekt zur Umsetzung der Datenpersistierung zum Einsatz, indem für jedes Aggregat ein Repository in der Domäne definiert wird, welches die Schnittstelle definiert, die von den darüberliegenden Schichten genutzt werden kann. Außerdem kommt ein Observer-Interface in der Abstraktionsschicht zum Einsatz. Die Interfaces sind so abgestimmt, dass keine leeren Implementierungen in irgendeiner Klasse dieses Projekts entstehen.
 
 #### Dependency Inversion Principle (DIP)
 
