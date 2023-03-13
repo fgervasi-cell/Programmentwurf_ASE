@@ -117,7 +117,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     public void removeTask(Task task)
     {
         loadTasksFromFile();
-        this.tasks.removeIf(t -> t.getId().equals(task.getId()));
+        this.tasks.removeIf(t -> t.getId().equals(task.getId()) || t.getTaskId().equals(task.getId()));
         writeTasksBackToFile();
     }
 
