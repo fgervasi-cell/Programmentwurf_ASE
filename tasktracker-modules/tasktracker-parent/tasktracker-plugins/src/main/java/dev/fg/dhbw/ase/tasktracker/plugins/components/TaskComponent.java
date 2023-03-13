@@ -22,7 +22,7 @@ public abstract class TaskComponent extends Observable
     private Task task;
     protected TaskService service;
     @FXML
-    private Text taskTitle;
+    protected Text taskTitle;
     @FXML
     private Text taskDescription;
     @FXML
@@ -73,7 +73,7 @@ public abstract class TaskComponent extends Observable
     }
 
     @FXML
-    private void onTaskDelete()
+    protected void onTaskDelete()
     {
         this.service.deleteTask(this.task);
         notifyObservers(ComponentEvent.TASK_DELETE);

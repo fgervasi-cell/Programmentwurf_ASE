@@ -25,11 +25,14 @@ public class OpenTaskComponent extends TaskComponent implements Observer
         if (task.isDone())
             throw new OpenTaskInitializedWithClosedTaskException();
         this.task = task;
-        this.getRoot().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleTaskComponentClicked);
+        this.taskTitle.addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleTaskComponentClicked);
+        if (!task.isSubTask())
+            this.taskTitle.getStyleClass().add("link");
         this.root = root;
         this.user = user;
     }
 
+    @FXML
     private void handleTaskComponentClicked(MouseEvent e)
     {
         if (e.isPrimaryButtonDown() && !this.task.isSubTask())
@@ -53,8 +56,18 @@ public class OpenTaskComponent extends TaskComponent implements Observer
     @Override
     protected void onMarkTaskAsDoneOrUndone()
     {
+        if (!this.task.isSubTask())
+            this.root.rightProperty().set(null);
         service.markTaskAsDone(this.task);
         notifyObservers(ComponentEvent.TASK_DONE_OR_UNDONE);
+    }
+
+    @Override
+    protected void onTaskDelete()
+    {
+        super.onTaskDelete();
+        if (!this.task.isSubTask())
+            this.root.rightProperty().set(null);
     }
 
     @Override
