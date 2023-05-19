@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 import dev.fg.dhbw.ase.tasktracker.domain.exceptions.InvalidEMailException;
 
 @Embeddable
-public class EMail implements Serializable
+public final class EMail implements Serializable
 {
     @Column(name = "mail")
     private final String mailString;

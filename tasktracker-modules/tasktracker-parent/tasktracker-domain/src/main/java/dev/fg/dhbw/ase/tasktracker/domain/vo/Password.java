@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 import dev.fg.dhbw.ase.tasktracker.domain.exceptions.InvalidPasswordException;
 
 @Embeddable
-public class Password implements Serializable
+public final class Password implements Serializable
 {
     @Column(name = "password")
     private final String passwordString;
