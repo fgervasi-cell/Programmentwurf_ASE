@@ -2,12 +2,16 @@ package dev.fg.dhbw.ase.tasktracker.plugins.persistence;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.xml.bind.JAXBException;
 
@@ -96,5 +100,17 @@ public class FileSystemRepositoryTest
         this.taskService.markTaskAsUndone(this.taskListService.getTasksFromList(taskListTitle).get(0));
         assertEquals(0, this.taskListService.getNumberOfTasksDone(null));
         assertEquals(1, this.taskListService.getTasksFromList(taskListTitle).size());
+    }
+
+    @Test
+    public void mockTest()
+    {
+        TaskListFileSystemRepository mockedRepo = mock(TaskListFileSystemRepository.class);
+        Title taskListTitle = new Title("Task list name");
+        when(mockedRepo.getTaskListByName(taskListTitle))
+                .thenAnswer(invocation -> new TaskList(UUID.randomUUID(), taskListTitle));
+        TaskListService service = new TaskListService(mockedRepo);
+        service.getTaskList(taskListTitle);
+        verify(mockedRepo).getTaskListByName(taskListTitle);
     }
 }
