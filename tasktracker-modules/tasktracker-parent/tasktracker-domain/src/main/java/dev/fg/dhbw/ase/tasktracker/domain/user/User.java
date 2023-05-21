@@ -19,7 +19,6 @@ public class User implements Serializable
     @Id
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private final UUID id;
-    @Id
     @Embedded
     private EMail mail;
     @Embedded

@@ -27,7 +27,6 @@ public class TaskList implements Serializable
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
     @XmlTransient
     private final UUID userId;
-    @Id
     @Embedded
     @XmlElement(name = "title")
     private Title title;

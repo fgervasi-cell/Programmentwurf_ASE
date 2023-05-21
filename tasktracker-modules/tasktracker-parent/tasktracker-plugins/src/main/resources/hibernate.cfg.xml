@@ -10,7 +10,8 @@
         <property name="connection.password">tasktracker</property>
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.import_files">ddl.sql</property>
         <mapping class="dev.fg.dhbw.ase.tasktracker.domain.task.TaskList" />
         <mapping class="dev.fg.dhbw.ase.tasktracker.domain.task.Task" />
         <mapping class="dev.fg.dhbw.ase.tasktracker.domain.user.User" />
