@@ -87,7 +87,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     public void addTaskToTaskList(Task t)
     {
         session.beginTransaction();
-        session.save(t);
+        session.merge(t);
         session.getTransaction().commit();
     }
 

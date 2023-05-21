@@ -91,7 +91,6 @@ public class UpdateTaskFormController extends Observable implements Observer
     @FXML
     private void onUpdateTaskButtonClicked()
     {
-        this.service.deleteTask(task);
         UUID taskListId = this.task.getTaskListId();
         String title = this.taskTitleTextField.getText();
         String description = this.taskDescriptionTextField.getText();
