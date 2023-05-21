@@ -54,7 +54,7 @@ public class TaskListService
 
     public List<Task> getTasksDone(User user)
     {
-        return this.repository.getTasksDoneForUser(user.getId());
+        return this.repository.getTasksDoneForUser(user != null ? user.getId() : null);
     }
 
     public int getTasksOpen(User user)
