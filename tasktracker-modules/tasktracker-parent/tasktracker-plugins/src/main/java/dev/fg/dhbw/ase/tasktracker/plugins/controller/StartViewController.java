@@ -80,7 +80,7 @@ public class StartViewController
     private void login(final User user)
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListView.fxml"));
-        loader.setController(new ListViewController(this.primaryStage, user));
+        loader.setController(new ListViewController(user));
         try
         {
             BorderPane layout = loader.<BorderPane>load();

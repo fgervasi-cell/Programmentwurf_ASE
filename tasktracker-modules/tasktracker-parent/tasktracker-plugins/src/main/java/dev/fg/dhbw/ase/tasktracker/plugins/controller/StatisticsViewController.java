@@ -31,13 +31,9 @@ public class StatisticsViewController
         this.user = user;
     }
 
-    public void addWidgetsToContainer() // TODO: This does not seem to be very elegant. This way you need to "remember"
-                                        // to call this function! Is there a better way?
+    public void addWidgetsToContainer()
     {
-        WidgetComponent totalTasksDoneWidget = this.createTotalTasksDoneWidget(); // TODO: make common Interface but
-                                                                                  // different class for each widget? >
-                                                                                  // Interface segregation pattern! >
-                                                                                  // many client specific interfaces! Because this class will also grow indefinetely
+        WidgetComponent totalTasksDoneWidget = this.createTotalTasksDoneWidget(); 
         WidgetComponent totalTasksOpenWidget = this.createTotalTasksOpenWidget();
         WidgetComponent averageNumberOfTasksDoneWidget = this.createTasksDoneLastWeekLineChartWidget();
         WidgetComponent averageProcessingTimeWidget = this.createAverageProcessingTimeWidget();
@@ -62,7 +58,7 @@ public class StatisticsViewController
         return new WidgetComponent("Total tasks open", totalTasksOpenLabel);
     }
 
-    private WidgetComponent createTasksDoneLastWeekLineChartWidget() // TODO: make those plain number over all time and also charts (two more widgets?)
+    private WidgetComponent createTasksDoneLastWeekLineChartWidget()
     {
         List<Task> tasksDoneLastWeek = this.service.getDoneTasksOfLastWeek(this.user);
         final CategoryAxis xAxis = new CategoryAxis();
@@ -94,7 +90,6 @@ public class StatisticsViewController
 
     private double calculateAverageProcessingTime()
     {
-        // TODO: maybe it would be better to get this data just once 
         List<Task> tasks = this.service.getTasksDone(this.user);
         int totalProcessingTime = 0;
         for (Task t : tasks)

@@ -43,7 +43,6 @@ public class TaskListComponent extends Observable
         }
         catch (IOException e)
         {
-            // TODO
             e.printStackTrace();
         }
     }
@@ -66,8 +65,6 @@ public class TaskListComponent extends Observable
     @FXML
     private void onListDelete()
     {
-        // TODO: Would it not be better to create a whole other class for this so I do not need all those checks (like "ImmutableListComponent" or so)?
-        // TOOD: Maybe I could also design an Interface for that like "ListComponent" or so
         if (this.listName.getText().equals("Done")) 
         {
             return;

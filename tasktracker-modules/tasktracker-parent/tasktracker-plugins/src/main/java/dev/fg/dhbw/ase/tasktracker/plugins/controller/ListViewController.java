@@ -32,12 +32,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-// TODO: Controllers are meant to delegate most of the work which is not the case here. Maybe refactoring is needed?
 public class ListViewController implements Observer
 {
     private static final String DEFAULT_HEADING = "Your Lists";
     private static final String NAME_OF_DONE_TASKS_LIST = "Done";
-    private final Stage primaryStage;
     private final User user;
     private final TaskListService service;
     @FXML
@@ -52,12 +50,9 @@ public class ListViewController implements Observer
     private Button addTaskButton;
     @FXML
     private BorderPane root;
-    // TODO: should also store the TaskList object itself that is currently selected
-    // because I need its ID
 
-    public ListViewController(final Stage primaryStage, final User user)
+    public ListViewController(final User user)
     {
-        this.primaryStage = primaryStage;
         this.user = user;
         this.service = new TaskListService(PersistenceUtil.obtainTaskListRepository(user));
     }
@@ -118,7 +113,7 @@ public class ListViewController implements Observer
         }
     }
 
-    private List<HBox> getTaskComponentsForDoneTasks() // TODO: I should just use a database query for this...
+    private List<HBox> getTaskComponentsForDoneTasks()
     {
         List<TaskList> lists = this.service.getTaskLists(this.user);
         lists = lists.stream().filter(list -> !list.getTitle().getTitleString().equals(NAME_OF_DONE_TASKS_LIST))
@@ -171,7 +166,6 @@ public class ListViewController implements Observer
         }
         catch (IOException e1)
         {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
@@ -201,7 +195,6 @@ public class ListViewController implements Observer
         }
         catch (IOException e1)
         {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
@@ -243,8 +236,6 @@ public class ListViewController implements Observer
     @Override
     public void notifyObserver(Object message)
     {
-        // TODO: maybe I could use inheritance to prevent this method from getting very
-        // long?
         if (message instanceof ComponentEvent)
         {
             ComponentEvent event = (ComponentEvent) message;
