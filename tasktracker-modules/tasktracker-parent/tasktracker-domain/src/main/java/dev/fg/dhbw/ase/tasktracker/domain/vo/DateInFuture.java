@@ -38,9 +38,17 @@ public final class DateInFuture
         Calendar future = Calendar.getInstance(TimeZone.getDefault());
         future.setTime(date);
 
-        return today.get(Calendar.MONTH) <= future.get(Calendar.MONTH)
-                && today.get(Calendar.DAY_OF_MONTH) <= future.get(Calendar.DAY_OF_MONTH)
-                && today.get(Calendar.YEAR) <= future.get(Calendar.YEAR);
+        if (today.get(Calendar.YEAR) < future.get(Calendar.YEAR))
+            return true;
+        if (today.get(Calendar.YEAR) > future.get(Calendar.YEAR))
+            return false;
+
+        if (today.get(Calendar.MONTH) < future.get(Calendar.MONTH))
+            return true;
+        if (today.get(Calendar.MONTH) > future.get(Calendar.MONTH))
+            return false;
+
+        return today.get(Calendar.DAY_OF_MONTH) <= future.get(Calendar.DAY_OF_MONTH);
     }
 
     public Date getDueDate()
