@@ -35,3 +35,7 @@ After logging in one way or the other you will see the main view of the applicat
 Clicking on a task will also open the update task window where the existing info of a task can be changed and sub tasks can be added.
 
 ![Updating a task](./documents/images_and_diagrams/update-task.png)
+
+## Disclaimer
+
+The application UI is not very responsive so you should not use it on small screen sizes.
