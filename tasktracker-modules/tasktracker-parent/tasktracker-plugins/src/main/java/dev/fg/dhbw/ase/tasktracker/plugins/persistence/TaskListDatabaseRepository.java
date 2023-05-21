@@ -131,7 +131,7 @@ class TaskListDatabaseRepository implements TaskListRepository
     {
         session.beginTransaction();
         task.markTaskAsDone();
-        session.update(task);
+        session.persist(task);
         session.getTransaction().commit();
     }
 

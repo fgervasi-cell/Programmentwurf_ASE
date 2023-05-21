@@ -165,10 +165,12 @@ public class Task
     public void markTaskAsDone()
     {
         this.done = true;
+        this.completionDate = new Date();
     }
 
     public void markTaskAsUndone()
     {
         this.done = false;
+        this.completionDate = null;
     }
 }
