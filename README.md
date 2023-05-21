@@ -10,7 +10,7 @@ Run: Navigate into `tasktracker-modules/tasktracker-parent`. Run the command `mv
 
 Debug: Navigate into folder `tasktracker-modules/tasktracker-parent/tasktracker-plugins`. Run the command `mvn clean javafx:run@debug`. Attach the Java debugger by running the attach configuration in the launch.json.
 
-Run tests: Navigate into folder where the pom.xml is located. Run the command `mvn test`.
+Run tests: Navigate into folder where the pom.xml is located. Run the command `mvn test`. Note that the database tests will fail if no database is currently running. You can use the command provided in ./docker/mysql.bat to start a docker container running a MySQL database.
 
 Debug tests: Run the command `mvnDebug test -DforkMode=never`.
 
