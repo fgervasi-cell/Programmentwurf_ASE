@@ -78,8 +78,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     public void updateTaskList(UUID taskListId, Title name)
     {
         loadTaskListsFromFile();
-        this.lists.removeIf(list -> list.getId().equals(taskListId));
-        this.lists.add(new TaskList(name));
+        this.lists.stream().filter(list -> list.getId().equals(taskListId)).toList().get(0).changeTitle(name);
         writeTaskListsBackToFile();
     }
 
@@ -133,9 +132,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     public void markTaskAsDone(Task task)
     {
         loadTasksFromFile();
-        this.tasks.removeIf(t -> t.getId().equals(task.getId()));
-        task.markTaskAsDone();
-        this.tasks.add(task);
+        this.tasks.stream().filter(t -> t.getId().equals(task.getId())).toList().get(0).markTaskAsDone();
         this.writeTasksBackToFile();
     }
 
@@ -143,9 +140,7 @@ class TaskListFileSystemRepository implements TaskListRepository
     public void markTaskAsUndone(Task task)
     {
         loadTasksFromFile();
-        this.tasks.removeIf(t -> t.getId().equals(task.getId()));
-        task.markTaskAsUndone();
-        this.tasks.add(task);
+        this.tasks.stream().filter(t -> t.getId().equals(task.getId())).toList().get(0).markTaskAsUndone();
         this.writeTasksBackToFile();
     }
 
