@@ -194,8 +194,10 @@ public class ListViewController implements Observer
         {
             Scene statisticsScene = new Scene(loader.<FlowPane>load());
             controller.addWidgetsToContainer();
-            this.primaryStage.setTitle("TaskTracker - Statistics");
-            this.primaryStage.setScene(statisticsScene);
+            Stage statisticsStage = new Stage();
+            statisticsStage.setTitle("TaskTracker - Statistics");
+            statisticsStage.setScene(statisticsScene);
+            statisticsStage.show();
         }
         catch (IOException e1)
         {
